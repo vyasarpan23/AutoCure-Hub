@@ -94,28 +94,35 @@
     </div>
 </section>
 
-
-  <!-- Services Section -->
-  <section id="services" class="py-16">
-    <div class="max-w-6xl mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-6 text-blue-700">Our Services</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 shadow-md rounded-xl">
-          <h4 class="font-bold text-xl">Oil Change</h4>
-          <p>Keep your engine running smoothly with our oil change service.</p>
-        </div>
-        <div class="bg-white p-6 shadow-md rounded-xl">
-          <h4 class="font-bold text-xl">Brake Repair</h4>
-          <p>Ensure your safety with our comprehensive brake repair services.</p>
-        </div>
-        <div class="bg-white p-6 shadow-md rounded-xl">
-          <h4 class="font-bold text-xl">Tire Services</h4>
-          <p>Get the best tire services including rotation, alignment, and replacement.</p>
-        </div>
+<!-- Services Section -->
+<section id="services" class="py-16">
+  <div class="max-w-6xl mx-auto text-center">
+    <h3 class="text-3xl font-bold mb-6 text-blue-700">Our Services</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="bg-white p-6 shadow-md rounded-xl">
+        <h4 class="font-bold text-xl">Oil Change</h4>
+        <p>Keep your engine running smoothly with our oil change service.</p>
+        <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
       </div>
-      <button id="services-button" class="mt-8 bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">View All Services</button>
+      <div class="bg-white p-6 shadow-md rounded-xl">
+        <h4 class="font-bold text-xl">Brake Repair</h4>
+        <p>Ensure your safety with our comprehensive brake repair services.</p>
+        <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
+      </div>
+      <div class="bg-white p-6 shadow-md rounded-xl">
+        <h4 class="font-bold text-xl">Tire Services</h4>
+        <p>Get the best tire services including rotation, alignment, and replacement.</p>
+        <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
+      </div>
+      <div class="bg-white p-6 shadow-md rounded-xl">
+        <h4 class="font-bold text-xl">Battery Replacement</h4>
+        <p>Ensure your car starts every time with our battery replacement service.</p>
+        <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
+      </div>
     </div>
-  </section>
+    <button id="services-button" class="mt-8 bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">View All Services</button>
+  </div>
+</section>
 
   <!-- Services Modal -->
 <div id="servicesModal" class="modal">
@@ -128,26 +135,38 @@
   </div>
 </div>
 
-  <!-- Why Choose Us Section -->
-  <section id="whychooseus" class="py-16 bg-gray-100">
-    <div class="max-w-6xl mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-6 text-blue-700">Why Choose Us</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 shadow-md rounded-xl">
-          <h4 class="font-bold text-xl">Expert Technicians</h4>
-          <p>Skilled professionals with years of experience in automotive services.</p>
+
+<!-- Why Choose Us Section -->
+<section id="whychooseus" class="py-16 bg-gray-100">
+  <div class="max-w-6xl mx-auto text-center">
+    <h3 class="text-3xl font-bold mb-6 text-blue-700">Why Choose Us</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 shadow-md rounded-xl">
+        <div class="mb-4">
+          <i class="fas fa-tools fa-3x icon-green"></i>
         </div>
-        <div class="bg-white p-6 shadow-md rounded-xl">
-          <h4 class="font-bold text-xl">Affordable Prices</h4>
-          <p>We offer competitive pricing without compromising on quality.</p>
+        <h4 class="font-bold text-xl">Expert Technicians</h4>
+        <p>Skilled professionals with years of experience in automotive services.</p>
+      </div>
+      <div class="bg-white p-6 shadow-md rounded-xl">
+        <div class="mb-4">
+          <i class="fas fa-dollar-sign fa-3x icon-orange"></i>
         </div>
-        <div class="bg-white p-6 shadow-md rounded-xl">
-          <h4 class="font-bold text-xl">Customer Satisfaction</h4>
-          <p>Your satisfaction is our top priority; we aim to exceed your expectations!</p>
+        <h4 class="font-bold text-xl">Affordable Prices</h4>
+        <p>We offer competitive pricing without compromising on quality.</p>
+      </div>
+      <div class="bg-white p-6 shadow-md rounded-xl">
+        <div class="mb-4">
+          <i class="fas fa-smile fa-3x icon-blue"></i>
         </div>
+        <h4 class="font-bold text-xl">Customer Satisfaction</h4>
+        <p>Your satisfaction is our top priority; we aim to exceed your expectations!</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+
 
   <!-- Help Section -->
   <section id="help" class="py-16 bg-gray-200">
@@ -213,7 +232,7 @@
       <i class="far fa-star" data-value="4"></i>
       <i class="far fa-star" data-value="5"></i>
     </div>
-    <textarea id="ratingMessage" placeholder="Any Suggestions" class="w-full p-3 border rounded-md mt-4" rows="4" required></textarea>
+    <textarea id="ratingMessage" placeholder="Leave a message" class="w-full p-3 border rounded-md mt-4" rows="4" required></textarea>
     <button id="submitRating" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 mt-4">Submit</button>
   </div>
 </div>
@@ -315,8 +334,6 @@
         <p>&copy; 2025 AutoCure Hub. All Rights Reserved.</p>
     </div>
 </footer>
-
- 
 
 
   <!-- Login Modal -->
