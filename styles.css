@@ -356,6 +356,7 @@ transform: translateY(-2px); /* Slight lift on hover */
 
 .fixed-book-service-btn:active {
 transform: translateY(0); /* Reset on click */
+=======
   color: #ffd700;
 }
 
