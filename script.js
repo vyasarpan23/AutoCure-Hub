@@ -17,7 +17,10 @@ function createReviewCard(name, rating, comment) {
   const reviews = [
     { name: 'Adarsh Patel', rating: 5, comment: 'Excellent service! Very professional team.' },
     { name: 'Arpan vyas', rating: 4, comment: 'Great experience, highly recommended!' },
-    { name: 'Manasvi Ajmera', rating: 5, comment: 'Best auto service in town!' }
+    { name: 'Manasvi Ajmera', rating: 5, comment: 'Best auto service in town!' },
+    { name: 'Anjali', rating: 5, comment: 'Excellent service! Very professional team.' },
+    { name: 'Abhishek', rating: 4, comment: 'Great experience, highly recommended!' },
+    { name: 'Atharv', rating: 5, comment: 'Best auto service in town!' }
   ];
   
   // Initialize reviews slider
@@ -43,6 +46,7 @@ function createReviewCard(name, rating, comment) {
   const contactBtn2 = document.getElementById('contactBtn2');
   const serviceBtn = document.getElementById('services-button');
   const reviewBtn = document.getElementById('reviewBtn');
+  const bookServiceBtn = document.getElementById('bookServiceBtn');
 
   
   function openModal(modalId) {
@@ -59,6 +63,7 @@ function createReviewCard(name, rating, comment) {
   contactBtn?.addEventListener('click', () => openModal('contactModal'));
   contactBtn2?.addEventListener('click', () => openModal('contactModal'));
   serviceBtn?.addEventListener('click', () => openModal('servicesModal'));
+  bookServiceBtn?.addEventListener('click', () => openModal('servicesModal'));
   reviewBtn?.addEventListener('click', () => openModal('ratingModal'));
 
   closeBtns.forEach(btn => {

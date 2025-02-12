@@ -48,11 +48,11 @@ html {
 }
 
 .review-card {
-  flex: 0 0 300px;
+  flex: 0 0 200px;
   background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   animation: slideIn 20s linear infinite;
 }
 
@@ -319,7 +319,7 @@ gap: 10px;
 }
 
 .star-rating i {
-font-size: 30px;
+font-size: 20px;
 cursor: pointer;
 color: #ccc;
 }
@@ -369,4 +369,25 @@ transform: translateY(0); /* Reset on click */
 
 .icon-blue {
   color: #b6b312;
+}
+
+
+/* Hover effects for service cards */
+.service-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effects for why choose us cards */
+.why-choose-us-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.why-choose-us-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
