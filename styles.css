@@ -325,6 +325,7 @@ color: #ccc;
 }
 
 .star-rating i.fas {
+<<<<<<< HEAD
 color: #ffd700;
 }
 
@@ -356,4 +357,19 @@ transform: translateY(-2px); /* Slight lift on hover */
 
 .fixed-book-service-btn:active {
 transform: translateY(0); /* Reset on click */
+=======
+  color: #ffd700;
+}
+
+.icon-green {
+  color: #37973b;
+}
+
+.icon-orange {
+  color: #ff7300;
+}
+
+.icon-blue {
+  color: #b6b312;
+>>>>>>> 58b3a77600b3ca095169489fd45c8702f5894e1f
 }
