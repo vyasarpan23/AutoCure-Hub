@@ -251,12 +251,10 @@
     </div>
   </section>
 
-  <!-- Book Service Button -->
-  <div class="fixed-button"><button>Book Service</button></div>
 
   <!-- Footer -->
   <footer class="bg-gray-900 text-white py-10">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16"> <!-- Increased gap to 16 -->
         <!-- Left: Logo and About -->
         <div>
             <div class="flex items-center space-x-2">
@@ -269,7 +267,7 @@
         </div>
 
         <!-- Middle: Services & Links -->
-        <div class="grid grid-cols-2 gap-6">
+        <div class="grid grid-cols-2 gap-12"> <!-- Increased gap to 12 -->
             <div>
                 <h3 class="text-lg font-semibold text-white mb-2">Services</h3>
                 <ul class="text-gray-400 space-y-2">
@@ -298,9 +296,11 @@
             <p class="text-gray-300"><i class="fas fa-map-marker-alt text-red-500"></i> Your Location Here</p>
             <p class="text-gray-300"><i class="fas fa-envelope text-red-500"></i> contact@autocurehub.com</p>
             <p class="text-gray-300"><i class="fas fa-phone text-red-500"></i> +91 73979 97979</p>
+
+            <h3 class="text-lg font-semibold text-white mt-6 mb-2">FOLLOW US:</h3>
             
             <!-- Social Icons -->
-            <div class="flex space-x-3 mt-4">
+            <div class="flex space-x-6 mt-4"> <!-- Increased space-x to 6 -->
                 <a href="https://wa.me/1234567890" class="text-green-400 hover:text-green-500"><i class="fab fa-whatsapp fa-2x"></i></a>
                 <a href="https://www.instagram.com" class="text-pink-400 hover:text-pink-500"><i class="fab fa-instagram fa-2x"></i></a>
                 <a href="https://www.twitter.com" class="text-blue-400 hover:text-blue-500"><i class="fab fa-twitter fa-2x"></i></a>
@@ -315,6 +315,12 @@
         <p>&copy; 2025 AutoCure Hub. All Rights Reserved.</p>
     </div>
 </footer>
+
+
+<!-- Fixed Book Service Button -->
+<button class="fixed-book-service-btn">
+  <i class="fas fa-calendar-alt"></i> Book Service
+</button>
 
  
 
