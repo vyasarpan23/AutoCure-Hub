@@ -156,26 +156,28 @@ function createReviewCard(name, rating, comment) {
       }
     });
   });
-  
-  // Star rating functionality
+
+
   function initializeStarRating() {
-    const starContainer = document.querySelector('.star-rating');
+    const starContainer = document.querySelector('#starRating');
     if (!starContainer) return;
   
     let currentRating = 0;
     const stars = starContainer.querySelectorAll('i');
-    
+  
     stars.forEach((star, index) => {
       star.addEventListener('mouseover', () => {
         for (let i = 0; i <= index; i++) {
-          stars[i].classList.add('text-yellow-400');
+          stars[i].classList.add('fas');
+          stars[i].classList.remove('far');
         }
       });
   
       star.addEventListener('mouseout', () => {
         stars.forEach((s, i) => {
           if (i >= currentRating) {
-            s.classList.remove('text-yellow-400');
+            s.classList.remove('fas');
+            s.classList.add('far');
           }
         });
       });
@@ -184,14 +186,77 @@ function createReviewCard(name, rating, comment) {
         currentRating = index + 1;
         stars.forEach((s, i) => {
           if (i < currentRating) {
-            s.classList.add('text-yellow-400');
+            s.classList.add('fas');
+            s.classList.remove('far');
           } else {
-            s.classList.remove('text-yellow-400');
+            s.classList.remove('fas');
+            s.classList.add('far');
           }
         });
       });
     });
+  
+    // Handle form submission
+    const submitRatingButton = document.getElementById('submitRating');
+    submitRatingButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      const name = 'Anonymous'; // You can change this to get the user's name if available
+      const comment = document.getElementById('ratingMessage').value;
+  
+      if (currentRating > 0 && comment) {
+        addNewReview(name, currentRating, comment);
+        alert('Review submitted successfully!');
+        document.getElementById('ratingMessage').value = '';
+        stars.forEach(star => {
+          star.classList.remove('fas');
+          star.classList.add('far');
+        });
+        currentRating = 0;
+        document.getElementById('ratingModal').style.display = 'none';
+      } else {
+        alert('Please fill out all fields and select a rating.');
+      }
+    });
   }
+  
+  // Call initialization functions
+  initializeStarRating();
+  
+  // Star rating functionality
+  // function initializeStarRating() {
+  //   const starContainer = document.querySelector('.star-rating');
+  //   if (!starContainer) return;
+  
+  //   let currentRating = 0;
+  //   const stars = starContainer.querySelectorAll('i');
+    
+  //   stars.forEach((star, index) => {
+  //     star.addEventListener('mouseover', () => {
+  //       for (let i = 0; i <= index; i++) {
+  //         stars[i].classList.add('text-yellow-400');
+  //       }
+  //     });
+  
+  //     star.addEventListener('mouseout', () => {
+  //       stars.forEach((s, i) => {
+  //         if (i >= currentRating) {
+  //           s.classList.remove('text-yellow-400');
+  //         }
+  //       });
+  //     });
+  
+  //     star.addEventListener('click', () => {
+  //       currentRating = index + 1;
+  //       stars.forEach((s, i) => {
+  //         if (i < currentRating) {
+  //           s.classList.add('text-yellow-400');
+  //         } else {
+  //           s.classList.remove('text-yellow-400');
+  //         }
+  //       });
+  //     });
+  //   });
+  // }
   
   // Form validation
   function validateForm(form) {
