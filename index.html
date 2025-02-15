@@ -121,21 +121,17 @@
         <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
       </div>
     </div>
-    <button id="services-button" class="mt-8 bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">View All Services</button>
+    <a href="services.html">
+      <button id="services-button" class="mt-8 bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
+        View All Services
+      </button>
+    </a>
+    
   </div>
 </section>
 
 
-  <!-- Services Modal -->
-  <div id="servicesModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h3 class="text-2xl font-bold text-blue-700 mb-4">All Services</h3>
-      <div id="servicesList" class="space-y-4">
-        <!-- Services will be dynamically added here -->
-      </div>
-    </div>
-  </div>
+
 
 
 <!-- Why Choose Us Section -->
@@ -201,9 +197,9 @@
       <div class="reviews-container bg-gray-100 py-8">
         <div class="reviews-slider">
           <div class="review-card">
-            <img src="/api/placeholder/80/80" alt="Customer 1" class="customer-img">
+            <img src="image-person.png" alt="Customer 1" class="customer-img">
             <h4 class="font-bold">Akshay Kumar Joshi</h4>
-            <div class="star-rating">
+            <div class="star-rating mt-2 mb-4">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
@@ -266,12 +262,12 @@
 <section id="specialists" class="py-16 bg-gray-100">
   <div class="max-w-6xl mx-auto px-4">
     <h2 class="text-3xl font-bold text-center text-blue-700 mb-8">Meet Our Specialists</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10"> <!-- Increased gap to 10 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12"> <!-- Increased gap to 10 -->
       <!-- Specialist 1 -->
       <div class="bg-white shadow-lg rounded-lg p-4 text-center">
         <img src="image-person.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover"> <!-- Adjusted height to 56 -->
         <h3 class="text-2xl font-semibold mt-4">Donal Bezos</h3>
-        <p class="text-gray-600">Owner</p>
+        <p class="text-gray-600">Main Mechanic</p>
       </div>
 
       <!-- Specialist 2 -->
@@ -378,9 +374,8 @@
 
  
 <!-- Fixed Book Service Button -->
-<button id="bookServiceBtn" class="fixed-book-service-btn">
+<button id="bookServiceBtn" class="fixed-book-service-btn" onclick="window.location.href='services.html'">
   <i class="fas fa-calendar-alt"></i> Book Service
-</button>
 </button>
 
 
