@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager Dashboard</title>
+    <title>Employee Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="manager.css">
+    <link rel="stylesheet" href="employee.css">
 </head>
 <body class="bg-gray-100">
 
@@ -22,10 +22,9 @@
             <div class="flex items-center space-x-8"> 
                 <ul class="flex space-x-6">
                     <li><a href="index.html" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
-                    <li><a href="#services" class="hover:text-blue-300 text-white text-lg font-semibold">Dashboard</a></li>
-                    <li><a href="#whychooseus" class="hover:text-blue-300 text-white text-lg font-semibold">Reviews</a></li>
-                    <li><a href="#help" class="hover:text-blue-300 text-white text-lg font-semibold">Employees</a></li>
-                    <li><a href="#contact" class="hover:text-blue-300 text-white text-lg font-semibold" id="contactBtn">Settings</a></li>
+                    <li><a href="#tasks" class="hover:text-blue-300 text-white text-lg font-semibold">Tasks</a></li>
+                    <li><a href="#schedule" class="hover:text-blue-300 text-white text-lg font-semibold">Schedule</a></li>
+                    <li><a href="#feedback" class="hover:text-blue-300 text-white text-lg font-semibold">Feedback</a></li>
                 </ul>
                 <div class="flex space-x-4">
                     <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200" id="logoutBtn">Logout</button>
@@ -38,132 +37,79 @@
         <!-- Sidebar -->
         <aside class="bg-gray-800 text-white w-64 p-4">
             <ul>
-                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Dashboard Overview</a></li>
-                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Task Management</a></li>
-                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Employee Management</a></li>
-                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Reviews & Feedback</a></li>
-                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Analytics & Reports</a></li>
-                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Settings</a></li>
+                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">My Tasks</a></li>
+                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Daily Schedule</a></li>
+                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Completed Tasks</a></li>
+                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Performance</a></li>
+                <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Profile Settings</a></li>
             </ul>
         </aside>
 
         <!-- Main Dashboard Area -->
         <main class="flex-1 p-8">
-            <h2 class="text-3xl font-semibold text-blue-800 mb-6">Manager Dashboard</h2>
+            <h2 class="text-3xl font-semibold text-blue-800 mb-6">Employee Dashboard</h2>
 
-            <!-- Dashboard Overview -->
+            <!-- Task Overview -->
             <section class="overview grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
-                    <h3 class="text-xl font-semibold text-gray-700">Total Employees</h3>
-                    <p class="text-2xl font-bold text-blue-600">20</p>
+                    <h3 class="text-xl font-semibold text-gray-700">Assigned Tasks</h3>
+                    <p class="text-2xl font-bold text-blue-600">10</p>
+                </div>
+                <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
+                    <h3 class="text-xl font-semibold text-gray-700">Completed Tasks</h3>
+                    <p class="text-2xl font-bold text-green-600">7</p>
                 </div>
                 <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
                     <h3 class="text-xl font-semibold text-gray-700">Pending Tasks</h3>
-                    <p class="text-2xl font-bold text-yellow-600">5</p>
-                </div>
-                <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
-                    <h3 class="text-xl font-semibold text-gray-700">Active Projects</h3>
-                    <p class="text-2xl font-bold text-green-600">3</p>
+                    <p class="text-2xl font-bold text-yellow-600">3</p>
                 </div>
             </section>
 
-            <!-- Task Management Section -->
+            <!-- Task List Section -->
             <section class="mb-8">
-                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Task Management</h2>
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Task List</h2>
                 <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-700">Task List</h3>
+                    <h3 class="text-xl font-semibold text-gray-700">Today's Tasks</h3>
                     <table class="w-full mt-4 table-auto">
                         <thead>
                             <tr class="border-b">
                                 <th class="py-2 px-4 text-left">Task</th>
-                                <th class="py-2 px-4 text-left">Assigned To</th>
                                 <th class="py-2 px-4 text-left">Status</th>
                                 <th class="py-2 px-4 text-left">Deadline</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="border-b">
-                                <td class="py-2 px-4">Complete Website Design</td>
-                                <td class="py-2 px-4">John Doe</td>
-                                <td class="py-2 px-4 text-yellow-600">Pending</td>
-                                <td class="py-2 px-4">2025-03-10</td>
+                                <td class="py-2 px-4">Car Maintenance</td>
+                                <td class="py-2 px-4 text-yellow-600">In Progress</td>
+                                <td class="py-2 px-4">2025-02-16</td>
                             </tr>
                             <tr class="border-b">
-                                <td class="py-2 px-4">Prepare Report</td>
-                                <td class="py-2 px-4">Jane Smith</td>
+                                <td class="py-2 px-4">Part Replacement</td>
                                 <td class="py-2 px-4 text-green-600">Completed</td>
-                                <td class="py-2 px-4">2025-02-20</td>
+                                <td class="py-2 px-4">2025-02-15</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- Employee Management Section -->
+            <!-- Schedule Section -->
             <section class="mb-8">
-                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Employee Management</h2>
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Daily Schedule</h2>
                 <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-700">Employee List</h3>
-                    <table class="w-full mt-4 table-auto">
-                        <thead>
-                            <tr class="border-b">
-                                <th class="py-2 px-4 text-left">Name</th>
-                                <th class="py-2 px-4 text-left">Position</th>
-                                <th class="py-2 px-4 text-left">Status</th>
-                                <th class="py-2 px-4 text-left">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b">
-                                <td class="py-2 px-4">John Doe</td>
-                                <td class="py-2 px-4">Developer</td>
-                                <td class="py-2 px-4 text-green-600">Active</td>
-                                <td class="py-2 px-4">
-                                    <button class="bg-red-600 text-white p-2 rounded hover:bg-red-700">Remove</button>
-                                </td>
-                            </tr>
-                            <tr class="border-b">
-                                <td class="py-2 px-4">Jane Smith</td>
-                                <td class="py-2 px-4">Designer</td>
-                                <td class="py-2 px-4 text-yellow-600">Inactive</td>
-                                <td class="py-2 px-4">
-                                    <button class="bg-green-600 text-white p-2 rounded hover:bg-green-700">Activate</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h3 class="text-xl font-semibold text-gray-700">Shift Timing</h3>
+                    <p class="text-lg text-gray-600 mt-2">9:00 AM - 6:00 PM</p>
                 </div>
             </section>
 
-            <!-- Analytics Section -->
+            <!-- Feedback Section -->
             <section>
-                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Analytics & Reports</h2>
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Feedback</h2>
                 <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-700">Work Done This Week/Month</h3>
-                    <table class="w-full mt-4 table-auto">
-                        <thead>
-                            <tr class="border-b">
-                                <th class="py-2 px-4 text-left">Date</th>
-                                <th class="py-2 px-4 text-left">Task</th>
-                                <th class="py-2 px-4 text-left">Assigned To</th>
-                                <th class="py-2 px-4 text-left">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b">
-                                <td class="py-2 px-4">2025-02-10</td>
-                                <td class="py-2 px-4">Complete Website Design</td>
-                                <td class="py-2 px-4">John Doe</td>
-                                <td class="py-2 px-4 text-green-600">Completed</td>
-                            </tr>
-                            <tr class="border-b">
-                                <td class="py-2 px-4">2025-02-12</td>
-                                <td class="py-2 px-4">Prepare Report</td>
-                                <td class="py-2 px-4">Jane Smith</td>
-                                <td class="py-2 px-4 text-green-600">Completed</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h3 class="text-xl font-semibold text-gray-700">Feedback Form</h3>
+                    <textarea class="w-full mt-4 p-4 border rounded-md" rows="4" placeholder="Share your feedback here..."></textarea>
+                    <button class="bg-blue-600 text-white px-5 py-2 mt-4 rounded hover:bg-blue-700">Submit</button>
                 </div>
             </section>
         </main>
@@ -233,10 +179,8 @@
         </div>
     </footer>
 
-    <!-- Add your custom scripts here -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Add custom scripts here -->
     <script>
-        
         // Logout button functionality
         document.getElementById('logoutBtn').addEventListener('click', function() {
             if (confirm('Are you sure you want to logout?')) {
