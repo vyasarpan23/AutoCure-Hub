@@ -222,42 +222,7 @@ function createReviewCard(name, rating, comment) {
   // Call initialization functions
   initializeStarRating();
   
-  // Star rating functionality
-  // function initializeStarRating() {
-  //   const starContainer = document.querySelector('.star-rating');
-  //   if (!starContainer) return;
-  
-  //   let currentRating = 0;
-  //   const stars = starContainer.querySelectorAll('i');
-    
-  //   stars.forEach((star, index) => {
-  //     star.addEventListener('mouseover', () => {
-  //       for (let i = 0; i <= index; i++) {
-  //         stars[i].classList.add('text-yellow-400');
-  //       }
-  //     });
-  
-  //     star.addEventListener('mouseout', () => {
-  //       stars.forEach((s, i) => {
-  //         if (i >= currentRating) {
-  //           s.classList.remove('text-yellow-400');
-  //         }
-  //       });
-  //     });
-  
-  //     star.addEventListener('click', () => {
-  //       currentRating = index + 1;
-  //       stars.forEach((s, i) => {
-  //         if (i < currentRating) {
-  //           s.classList.add('text-yellow-400');
-  //         } else {
-  //           s.classList.remove('text-yellow-400');
-  //         }
-  //       });
-  //     });
-  //   });
-  // }
-  
+
   // Form validation
   function validateForm(form) {
     const inputs = form.querySelectorAll('input[required], textarea[required]');
@@ -365,4 +330,4 @@ function createReviewCard(name, rating, comment) {
         contactModal.style.display = 'none';
       }
     });
-  });
+  });  

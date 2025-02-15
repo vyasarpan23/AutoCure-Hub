@@ -21,14 +21,14 @@
             </div>
             <div class="flex items-center space-x-8"> 
                 <ul class="flex space-x-6">
-                    <li><a href="#home" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
+                    <li><a href="index.html" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
                     <li><a href="#services" class="hover:text-blue-300 text-white text-lg font-semibold">Dashboard</a></li>
                     <li><a href="#whychooseus" class="hover:text-blue-300 text-white text-lg font-semibold">Reviews</a></li>
                     <li><a href="#help" class="hover:text-blue-300 text-white text-lg font-semibold">Employees</a></li>
                     <li><a href="#contact" class="hover:text-blue-300 text-white text-lg font-semibold" id="contactBtn">Settings</a></li>
                 </ul>
                 <div class="flex space-x-4">
-                    <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200" id="loginBtn">Logout</button>
+                    <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200" id="logoutBtn">Logout</button>
                 </div>
             </div>
         </div>
@@ -234,6 +234,13 @@
                         beginAtZero: true
                     }
                 }
+            }
+        });
+
+        // Logout button functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'index.html';
             }
         });
     </script>
