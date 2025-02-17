@@ -4,7 +4,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     const card = document.createElement('div');
     card.className = 'review-card';
     card.innerHTML = `
-      <img src="/api/placeholder/80/80" alt="${name}" class="customer-img">
+      <img src="image-person.png" alt="${name}" class="customer-img">
       <h4 class="font-bold">${name}</h4>
       <div class="star-rating">
         ${Array(rating).fill('<i class="fas fa-star"></i>').join('')}
@@ -114,15 +114,149 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       slider.style.animation = null;
         }
       }
+    //   //userform
+    //   document.querySelector('#userForm')?.addEventListener('submit', async (e) => {
+    //     e.preventDefault();
+    //     alert("hii");
+    //     const form = e.target;
+    //     alert("hii");
+    //     // Collect form data
+    //     const formData = new FormData(form);
+    //     const data = Object.fromEntries(formData.entries());
+    //     alert(data);
+    //     try {
+    //         // Send data to backend
+    //         const response = await fetch('http://localhost:8080/submit-user', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(data)
+    //         });
+    
+    //         const result = await response.json();
+    
+    //         if (response.ok) {
+    //             alert(result.message); // Success Message
+    //             form.reset();
+    //         } else {
+    //             alert(result.message); // Error Message
+    //         }
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         alert('An error occurred while signing up.');
+    //     }
+    // });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginForm = document.querySelector("#userForm form");
+      const signupModal = document.getElementById("signupModal");
+      const loginModal = document.getElementById("authModal");
+      const openSignupModalLink = document.getElementById("openSignupModal");
       
-      // Form submission handlers
+      if (loginForm) {
+          loginForm.addEventListener("submit", async function (event) {
+              event.preventDefault();
+            
+              const email = loginForm.querySelector('input[type="email"]').value;
+              const password = loginForm.querySelector('input[type="password"]').value;
+  
+              try {
+                  const response = await fetch("http://localhost:8080/login", {
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({ email, password })
+                  });
+  
+                  const data = await response.json();
+  
+                  if (response.ok) {
+                      alert("Login successful!");
+                      // Redirect to dashboard or another page
+                      window.location.href = "http://127.0.0.1:5500/AutoCure-Hub/index.html";
+                  } else {
+                      if (data.message === "User not found") {
+                          alert("Email not found. Redirecting to signup...");
+                          loginModal.style.display = "none"; // Close login modal
+                          signupModal.style.display = "block"; // Open signup modal
+                      } else {
+                          alert(data.message);
+                      }
+                  }
+              } catch (error) {
+                  console.error("Error:", error);
+                  alert("An error occurred. Please try again.");
+              }
+          });
+      }
+  
+      // Open Signup Modal when "Sign up" link is clicked
+      if (openSignupModalLink) {
+          openSignupModalLink.addEventListener("click", function (event) {
+              event.preventDefault();
+              loginModal.style.display = "none";
+              signupModal.style.display = "block";
+          });
+      }
+  });
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const signupForm = document.querySelector("#userForm");
+    const signupModal = document.getElementById("signupModal");
+    const loginModal = document.getElementById("authModal");
+   
+        signupForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+           alert("hii");
+            const name = signupForm.querySelector('input[name="name"]').value;
+            const email = signupForm.querySelector('input[type="email"]').value;
+            const password = signupForm.querySelector('input[type="password"]').value;
+
+            try {
+                const response = await fetch("http://localhost:8080/signup", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Signup successful! Redirecting to login...");
+                    signupModal.style.display = "none"; // Close signup modal
+                    loginModal.style.display = "block"; // Open login modal
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            }
+        });
+  
+});
+
+  
+    
+      
+      //Form submission handlers
       document.querySelectorAll('form').forEach(form => {
         form.addEventListener('submit', (e) => {
       e.preventDefault();
+      
+      console.log(e.target);
+      const nameInput = form.querySelector('[name="name"]');
+    alert(nameInput.value.trim());
+
       if (validateForm(form)) {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-        fetch('/submit-form', {
+        fetch('http://localhost:8080/submit-user', {
           method: 'POST',
           headers: {
         'Content-Type': 'application/json'
@@ -275,7 +409,7 @@ document.querySelectorAll('button[type="submit"]').forEach(button => {
       setTimeout(() => {
         this.innerHTML = 'Submitted';
         this.disabled = false;
-      }, 2000);
+      }, 1000);
     }
   });
 });
@@ -291,14 +425,14 @@ tooltips.forEach(tooltip => {
     
     const rect = e.target.getBoundingClientRect();
     tip.style.top = `${rect.bottom + 5}px`;
-    tip.style.left = `${rect.left}px`;
-  });
+    
+    tip.style.left = `${rect.le-=ft}px`;
 
   tooltip.addEventListener('mouseout', () => {
     document.querySelector('.tooltip')?.remove();
   });
 });
-
+});
 // Initialize AOS (Animate on Scroll)
 //AOS.init();
 
@@ -346,60 +480,6 @@ if (mobileMenuBtn && mobileMenu) {
 //     }
 //   });
 // });
-
-document.querySelector('#signupForm')?.addEventListener('submit', (e) => {
-  e.preventDefault(); // Prevents the default form submission
-  alert("Submitted"); // Show alert when the form is submitted
-});
-
-// Handle signup form submission
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("#signupForm");
-
-    if (form) {
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            alert("Submitted");
-        });
-    } else {
-        console.error("Signup form not found!");
-    }
-});
-
-
-// Handle signup form submission
-document.querySelector('#signupForm')?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  alert("hiii");
-  const form = e.target;
-
-  // Collect form data
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
-
-  try {
-      // Send data to backend
-      const response = await fetch('http://localhost:5500/submit-user', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-          alert(result.message); // Success Message
-          form.reset();
-      } else {
-          alert(result.message); // Error Message
-      }
-  } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while signing up.');
-  }
-});
 
 
 // ... (Your validateForm function)

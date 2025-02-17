@@ -5,33 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoCure Hub</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-//https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAkhqNpaQBl0SK5x7biW2GwHrpFTrsBEiw",
-    authDomain: "autocure-hub.firebaseapp.com",
-    projectId: "autocure-hub",
-    storageBucket: "autocure-hub.firebasestorage.app",
-    messagingSenderId: "740660358301",
-    appId: "1:740660358301:web:9e09524db63846c4327874",
-    measurementId: "G-7TDEGPVLVY"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -440,20 +415,21 @@
         <button class="tab-button" data-tab="managerSignup">Manager</button>
       </div>
     </div>
-    
-    <!-- user signup form -->
-    <div id="userSignupForm" class="tab-content active">
-      <h3 class="text-2xl font-bold text-blue-700 mb-4">User Signup</h3>
-      <form id="signupForm" class="space-y-4">
-          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required> 
-          <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required> 
-          <input type="password" name="password" placeholder="Password" class="w-full p-3 border rounded-md" required> 
-          <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
-          <button type="button" class="google-signup-btn" id="googleSignupBtn">
+  
+
+     <!-- User Signup Form -->
+<div id="userSignupForm" class="tab-content active">
+  <h3 class="text-2xl font-bold text-blue-700 mb-4">User Signup</h3>
+  <form id = "userForm"class="space-y-4">
+    <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+    <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+    <input type="password" name="password" placeholder="Password" class="w-full p-3 border rounded-md" required>
+    <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+    <button type="button" class="google-signup-btn" id="googleSignupBtn">
               <i class="fab fa-google"></i>Signup with Google
           </button>
-      </form>
-  </div>
+  </form>
+</div>
 
     <!-- Worker Signup Form -->
     <div id="workerSignupForm" class="tab-content">

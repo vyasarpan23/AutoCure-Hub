@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const port = 5500;
+const port = 8080;
 
 // Middleware
 app.use(cors());
@@ -30,7 +30,7 @@ db.connect(err => {
 // API Route to Handle User Signup
 app.post('/submit-user', async (req, res) => {
     const { name, email, password } = req.body;
-
+    console.log(req.body);
     try {
         // Check if user already exists
         const [existingUser] = await db.promise().query('SELECT * FROM Users WHERE email = ?', [email]);
@@ -48,6 +48,35 @@ app.post('/submit-user', async (req, res) => {
 
     } catch (error) {
         console.error('Error during signup:', error);
+        res.status(500).json({ message: 'Server error. Try again later.' });
+    }
+});
+
+// API Route to Handle User Login
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Check if user exists
+        const [users] = await db.promise().query('SELECT * FROM Users WHERE email = ?', [email]);
+        
+        if (users.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const user = users[0];
+
+        // Compare hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
+        
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        res.json({ message: 'Login successful', userId: user.id });
+
+    } catch (error) {
+        console.error('Error during login:', error);
         res.status(500).json({ message: 'Server error. Try again later.' });
     }
 });
