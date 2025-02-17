@@ -20,6 +20,14 @@ html {
   border-radius: 30%;
 }
 
+#clientImage{
+  width: 50px;
+  height: 50px;
+  margin-right: 8px;
+  border-width: 0.25rem;
+  border-radius: 50%;
+}
+
 /* Background animation */
 .gradient-background {
   background: linear-gradient(300deg, #5c6bc0, #9c27b0, #00bfff);

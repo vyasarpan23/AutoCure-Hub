@@ -28,7 +28,7 @@ db.connect(err => {
 });
 
 // API Route to Handle User Signup
-app.post('/submit-user', async (req, res) => {
+app.post('/signup', async (req, res) => {
     const { name, email, password } = req.body;
     console.log(req.body);
     try {
@@ -61,7 +61,7 @@ app.post('/login', async (req, res) => {
         const [users] = await db.promise().query('SELECT * FROM Users WHERE email = ?', [email]);
         
         if (users.length === 0) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'User not found!\n You need to signup first' });
         }
 
         const user = users[0];
