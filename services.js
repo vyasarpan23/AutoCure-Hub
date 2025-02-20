@@ -3,8 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     buttons.forEach(button => {
         button.addEventListener('click', function() {
-            button.textContent = 'Added to Cart';
-            button.style.backgroundColor = 'blue';
+            if (button.textContent === 'Add To Cart') {
+                button.textContent = 'Added to Cart';
+                button.style.backgroundColor = 'blue';
+            } else {
+                button.textContent = 'Add to Cart';
+                button.style.backgroundColor = '';
+            }
         });
     });
 });

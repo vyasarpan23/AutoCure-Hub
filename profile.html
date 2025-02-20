@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Modal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+
+    <!-- Button to Open Modal -->
+    <button onclick="openModal()" class="px-4 py-2 bg-blue-600 text-white rounded-lg">View Profile</button>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <!-- Profile View -->
+            <div id="profileView">
+                <div class="flex flex-col items-center">
+                    <img id="profileImage" src="https://via.placeholder.com/100" class="w-24 h-24 rounded-full border" alt="Profile">
+                    <h2 id="profileName" class="mt-2 text-lg font-semibold text-blue-600">John Doe</h2>
+                    <p id="profileEmail" class="text-gray-600">johndoe@example.com</p>
+                    <button onclick="openEditForm()" class="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Edit</button>
+                </div>
+            </div>
+
+            <!-- Profile Edit Form -->
+            <div id="editForm" class="hidden">
+                <h3 class="text-lg font-semibold text-blue-600">Edit Profile</h3>
+                <input id="editName" type="text" placeholder="Name" class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input id="editEmail" type="email" placeholder="Email" class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input id="editImageInput" type="file" accept="image/*" class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="previewImage(event)">
+                <img id="editImagePreview" src="https://via.placeholder.com/100" class="w-24 h-24 rounded-full mt-2" alt="Preview">
+                <div class="flex justify-between mt-4">
+                    <button onclick="saveProfile()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Save</button>
+                    <button onclick="closeModal()" class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById("profileModal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("profileModal").classList.add("hidden");
+        }
+
+        function openEditForm() {
+            document.getElementById("profileView").classList.add("hidden");
+            document.getElementById("editForm").classList.remove("hidden");
+
+            // Prefill existing values
+            document.getElementById("editName").value = document.getElementById("profileName").innerText;
+            document.getElementById("editEmail").value = document.getElementById("profileEmail").innerText;
+            document.getElementById("editImagePreview").src = document.getElementById("profileImage").src;
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("editImagePreview").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveProfile() {
+            // Update profile details
+            document.getElementById("profileName").innerText = document.getElementById("editName").value;
+            document.getElementById("profileEmail").innerText = document.getElementById("editEmail").value;
+            document.getElementById("profileImage").src = document.getElementById("editImagePreview").src;
+
+            // Close and reset form
+            closeModal();
+        }
+    </script>
+
+</body>
+</html>

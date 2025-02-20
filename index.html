@@ -400,7 +400,8 @@
         <form id="userLoginForm" class="space-y-4">
           <input type="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
           <input type="password" placeholder="Password" class="w-full p-3 border rounded-md" required>
-          <button id="loginSubmitBtn" type = "submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
+          <button id="loginSubmitBtn" type="submit"
+            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
           <button type="button" class="google-signup-btn" id="googleLoginBtn">
             <i class="fab fa-google"></i>Login with Google
           </button>
@@ -528,6 +529,45 @@
       </form>
     </div>
   </div>
+
+  <!-- Profile Modal -->
+  <div id="profileModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-start justify-end p-4 hidden">
+    <div class="bg-white p-4 rounded-lg shadow-lg w-80">
+      <!-- Profile View -->
+      <div id="profileView">
+        <div class="flex flex-col items-center">
+          <img id="profileImage" src="image-person.png" class="w-24 h-24 rounded-full border"
+            alt="Profile">
+          <h2 id="profileName" class="mt-2 text-lg font-semibold text-blue-600">Adarsh Patel</h2>
+          <p id="profileEmail" class="text-gray-600">adarsh@gmail.com</p>
+          <button id="editProfileBtn"
+            class="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Profile Edit Form -->
+  <div id="editForm" class="hidden">
+    <h3 class="text-lg font-semibold text-blue-600">Edit Profile</h3>
+    <input id="editName" type="text" placeholder="Name"
+      class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <input id="editEmail" type="email" placeholder="Email"
+      class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <input id="editImageInput" type="file" accept="image/*"
+      class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      onchange="previewImage(event)">
+    <img id="editImagePreview" src="https://via.placeholder.com/100" class="w-24 h-24 rounded-full mt-2" alt="Preview">
+    <div class="flex justify-between mt-4">
+      <button id="saveProfileBtn"
+        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Save</button>
+      <button id="cancelProfileBtn"
+        class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500">Cancel</button>
+    </div>
+  </div>
+
+
 
   <!-- Scripts -->
   <script src="https://cdn.tailwindcss.com"></script>
