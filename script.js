@@ -9,7 +9,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     const card = document.createElement("div");
     card.className = "review-card";
     card.innerHTML = `
-      <img src="image-person.png" alt="${name}" class="customer-img">
+      <img src="./assets/image-person.png" alt="${name}" class="customer-img">
       <h4 class="font-bold">${name}</h4>
       <div class="star-rating">
         ${Array(rating).fill('<i class="fas fa-star"></i>').join("")}
@@ -199,7 +199,6 @@ function initializeStarRating() {
       const rating = currentRating;
       const comment = document.getElementById("ratingMessage").value;
       const userId = user.id;
-      alert(userId);
 
       if (!rating || !comment.trim()) {
         alert("Please provide a rating and a comment.");
@@ -404,12 +403,28 @@ document.addEventListener("DOMContentLoaded", function () {
     signupSubmitBtn.addEventListener("click", async function (event) {
       event.preventDefault();
 
-      const name = signupForm.querySelector('input[name="name"]').value;
+      const name = signupForm.querySelector('input[name="name"]').value.trim();
       const email = signupForm.querySelector('input[name="email"]').value;
+      const mobile = signupForm.querySelector('input[name="mobile"]').value;
       const password = signupForm.querySelector('input[name="password"]').value;
+      const confirmPassword = signupForm.querySelector(
+        'input[name="confirmPassword"]'
+      ).value;
 
-      if (!name || !email || !password) {
+      // Name validation: must start with a letter (no spaces or numbers at first position)
+      const nameRegex = /^[A-Za-z][A-Za-z\s]*$/;
+      if (!nameRegex.test(name)) {
+        alert("Invalid name. The first character must be a letter.");
+        return;
+      }
+
+      if (!name || !email || !mobile || !password || !confirmPassword) {
         alert("Please fill in all fields.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match. Please try again.");
         return;
       }
 
@@ -419,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, email, password }),
+          body: JSON.stringify({ name, email, mobile, password }),
         });
 
         const data = await response.json();
@@ -427,9 +442,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.ok) {
           alert("Signup successful!\nRedirecting to login...");
           signupForm.reset();
-          loginModal.style.display = "block"; // Close signup modal
+          loginModal.style.display = "block"; // Open login modal
           signupModal.style.display = "none"; // Close signup modal
-          // Optionally handle post-signup, like redirecting or showing a logged-in view
         } else {
           alert(data.message);
         }
@@ -441,10 +455,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     signupForm.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default form submission on Enter
+        event.preventDefault(); // Prevent default form submission on Enter
 
         if (signupSubmitBtn) {
-          signupSubmitBtn.click(); // Simulate the click on the submit button
+          signupSubmitBtn.click(); // Simulate click on submit button
         }
       }
     });
@@ -458,6 +472,32 @@ document.addEventListener("DOMContentLoaded", function () {
       loginModal.style.display = "block"; // Open login modal
     });
   }
+});
+
+//password eye button
+document.addEventListener("DOMContentLoaded", function () {
+  function togglePasswordVisibility(inputClass, toggleClass) {
+    const inputFields = document.querySelectorAll(`.${inputClass}`);
+    const toggleButtons = document.querySelectorAll(`.${toggleClass}`);
+
+    if (inputFields.length > 0 && toggleButtons.length > 0) {
+      toggleButtons.forEach((toggleButton, index) => {
+        toggleButton.addEventListener("click", function () {
+          const inputField = inputFields[index]; // Match the input field with the toggle button
+          if (inputField.type === "password") {
+            inputField.type = "text"; // Show password
+            toggleButton.textContent = "🔒"; // Change icon
+          } else {
+            inputField.type = "password"; // Hide password
+            toggleButton.textContent = "👁️"; // Change back to eye icon
+          }
+        });
+      });
+    }
+  }
+
+  // Apply to all Password and Confirm Password fields
+  togglePasswordVisibility("password-input", "toggle-password");
 });
 
 //logout button
