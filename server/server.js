@@ -28,16 +28,22 @@ const authenticateUser = (req, res, next) => {
 
 // **User Signup**
 app.post("/signup", async (req, res) => {
-  const { name, email,mobile, password } = req.body;
+  const { name, email, mobile, password } = req.body;
 
   try {
-    const [existingUser] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    const [existingUser] = await db.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email]
+    );
     if (existingUser.length > 0) {
       return res.status(400).json({ message: "Email already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await db.query("INSERT INTO users (name, email, mobile, password) VALUES (?, ?, ?, ?)", [name, email,mobile, hashedPassword]);
+    await db.query(
+      "INSERT INTO users (name, email, mobile, password) VALUES (?, ?, ?, ?)",
+      [name, email, mobile, hashedPassword]
+    );
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -51,9 +57,13 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
     if (users.length === 0) {
-      return res.status(404).json({ message: "User not found! You need to sign up first" });
+      return res
+        .status(404)
+        .json({ message: "User not found! You need to sign up first" });
     }
 
     const user = users[0];
@@ -78,7 +88,10 @@ app.post("/login", async (req, res) => {
 // **Fetch User Profile (Protected Route)**
 app.get("/profile", authenticateUser, async (req, res) => {
   try {
-    const [users] = await db.query("SELECT id, name, email FROM users WHERE id = ?", [req.userId]);
+    const [users] = await db.query(
+      "SELECT id, name, email FROM users WHERE id = ?",
+      [req.userId]
+    );
     if (users.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -94,13 +107,18 @@ app.post("/reset-password", async (req, res) => {
   const { email, newPassword } = req.body;
 
   try {
-    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
     if (users.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await db.query("UPDATE users SET password = ? WHERE email = ?", [hashedPassword, email]);
+    await db.query("UPDATE users SET password = ? WHERE email = ?", [
+      hashedPassword,
+      email,
+    ]);
 
     res.json({ message: "Password reset successful" });
   } catch (error) {
@@ -112,7 +130,9 @@ app.post("/reset-password", async (req, res) => {
 // **Fetch Reviews**
 app.get("/reviews", async (req, res) => {
   try {
-    const [reviews] = await db.query("SELECT users.name AS user_name, reviews.rating, reviews.comment FROM reviews JOIN users ON reviews.user_id = users.id ORDER BY reviews.created_at DESC");
+    const [reviews] = await db.query(
+      "SELECT users.name AS user_name, reviews.rating, reviews.comment FROM reviews JOIN users ON reviews.user_id = users.id ORDER BY reviews.created_at DESC"
+    );
 
     if (reviews.length === 0) {
       return res.status(404).json({ message: "No reviews found" });
@@ -120,17 +140,21 @@ app.get("/reviews", async (req, res) => {
     res.json(reviews);
   } catch (err) {
     console.error("Error fetching reviews:", err);
-    res.status(500).json({ message: "Error fetching reviews", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching reviews", error: err.message });
   }
 });
 
 // **Submit a Review (Authenticated)**
-app.post("/submit-review", authenticateUser, async (req, res) => {
-  const { rating, comment } = req.body;
-  const userId = req.userId;
+app.post("/submit-review", async (req, res) => {
+  const { userId, rating, comment } = req.body;
 
   try {
-    await db.query("INSERT INTO reviews (user_id, rating, comment) VALUES (?, ?, ?)", [userId, rating, comment]);
+    await db.query(
+      "INSERT INTO reviews (user_id, rating, comment) VALUES (?, ?, ?)",
+      [userId, rating, comment]
+    );
     res.status(201).json({ message: "Review submitted successfully" });
   } catch (err) {
     res.status(500).json({ message: "Error submitting review" });

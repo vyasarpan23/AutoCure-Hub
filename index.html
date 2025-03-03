@@ -35,7 +35,7 @@
             id="signupBtn">Signup</button>
           <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200 hidden"
             id="logoutBtn">Logout</button>
-          <img src="image-person.png" alt="AutoCure Logo" class="h-10 w-10 hidden" id="clientImage">
+          <img src="./assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10 hidden" id="clientImage">
         </div>
       </div>
     </div>
@@ -402,7 +402,7 @@
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
-          <button type="submit"
+          <button type="submit" id="loginSubmitBtn"
             class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
           <button type="button" class="google-signup-btn">
             <i class="fab fa-google"></i> Login with Google
@@ -473,19 +473,19 @@
 
           <!-- Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
-              required>
+            <input type="password" name="password" placeholder="Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
           <!-- Confirm Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Confirm Password"
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
               class="password-input w-full p-3 border rounded-md pr-10" required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
-          <button type="submit"
+          <button type="submit" id="signupSubmitBtn"
             class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
         </form>
       </div>

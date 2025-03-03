@@ -2,24 +2,6 @@
 let isLoggedIn = false;
 let user = {};
 
-// Ensure the code runs only in a browser environment
-if (typeof window !== "undefined" && typeof document !== "undefined") {
-  // Customer Reviews Slider
-  function createReviewCard(name, rating, comment) {
-    const card = document.createElement("div");
-    card.className = "review-card";
-    card.innerHTML = `
-      <img src="./assets/image-person.png" alt="${name}" class="customer-img">
-      <h4 class="font-bold">${name}</h4>
-      <div class="star-rating">
-        ${Array(rating).fill('<i class="fas fa-star"></i>').join("")}
-      </div>
-      <p class="mt-2">"${comment}"</p>
-    `;
-    return card;
-  }
-}
-
 // Modal Handling
 const modals = document.querySelectorAll(".modal");
 const closeBtns = document.querySelectorAll(".close");
@@ -81,26 +63,48 @@ window.onclick = function (event) {
 };
 
 // Function to add new reviews dynamically
-function addNewReview(name, rating, comment) {
-  if (slider) {
-    const newReview = createReviewCard(name, rating, comment);
-    slider.appendChild(newReview);
-    slider.appendChild(newReview.cloneNode(true));
+// function addNewReview(name, rating, comment) {
+//   if (slider) {
+//     const newReview = createReviewCard(name, rating, comment);
+//     slider.appendChild(newReview);
+//     slider.appendChild(newReview.cloneNode(true));
 
-    // Reset animation
-    slider.style.animation = "none";
-    slider.offsetHeight; // Trigger reflow
-    slider.style.animation = null;
+//     // Reset animation
+//     slider.style.animation = "none";
+//     slider.offsetHeight; // Trigger reflow
+//     slider.style.animation = null;
+//   }
+// }
+
+// Ensure the code runs only in a browser environment
+if (typeof window !== "undefined" && typeof document !== "undefined") {
+  // Customer Reviews Slider
+  function createReviewCard(name, rating, comment) {
+    const card = document.createElement("div");
+    card.className = "review-card";
+    card.innerHTML = `
+      <img src="./assets/image-person.png" alt="${name}" class="customer-img">
+      <h4 class="font-bold">${name}</h4>
+      <div class="star-rating">
+        ${Array(rating).fill('<i class="fas fa-star"></i>').join("")}
+      </div>
+      <p class="mt-2">"${comment}"</p>
+    `;
+    return card;
   }
 }
-
 // Initialize Swiper
+// Initialize Swiper with loop and continuous autoplay
 const swiper = new Swiper(".swiper-container", {
-  loop: true,
+  loop: true, // Enables infinite loop
   autoplay: {
-    delay: 5000,
-    disableOnInteraction: false,
+    delay: 5000, // Adjust speed as needed
+    disableOnInteraction: false, // Keeps autoplay even after interaction
   },
+  speed: 600, // Transition speed
+  slidesPerView: "auto", // Ensures smooth continuous scrolling
+  centeredSlides: true, // Keeps the active slide in center
+  spaceBetween: 20, // Spacing between slides
   pagination: {
     el: ".swiper-pagination",
     clickable: true,
@@ -109,7 +113,9 @@ const swiper = new Swiper(".swiper-container", {
     nextEl: ".swiper-button-next",
     prevEl: ".swiper-button-prev",
   },
+  effect: "slide", // Keeps smooth sliding effect
 });
+
 
 // Smooth scroll for navigation links
 const navLinks = document.querySelectorAll(".nav-link");
@@ -169,9 +175,10 @@ function initializeStarRating() {
 
       slider.innerHTML = ""; // Clear existing reviews
 
+
       reviews2.map((review) => {
         const card = createReviewCard(
-          review.name,
+          review.user_name,
           review.rating,
           review.comment
         );
@@ -228,13 +235,15 @@ function initializeStarRating() {
         alert("Error submitting review. Please try again.");
       }
     });
+    
   const reviewForm = document.getElementById("ratingModal");
   reviewForm.addEventListener("keydown", function (event) {
+    const submitReview = document.getElementById("submitRating");
     if (event.key === "Enter") {
       event.preventDefault(); // Prevent the default form submission on Enter
 
-      if (signupSubmitBtn) {
-        signupSubmitBtn.click(); // Simulate the click on the submit button
+      if (submitReview) {
+        submitReview.click(); // Simulate the click on the submit button
       }
     }
   });
@@ -405,7 +414,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const name = signupForm.querySelector('input[name="name"]').value.trim();
       const email = signupForm.querySelector('input[name="email"]').value;
-      const mobile = signupForm.querySelector('input[name="mobile"]').value;
+      const mobile = signupForm
+        .querySelector('input[name="mobile"]')
+        .value.trim();
       const password = signupForm.querySelector('input[name="password"]').value;
       const confirmPassword = signupForm.querySelector(
         'input[name="confirmPassword"]'
@@ -420,6 +431,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (!name || !email || !mobile || !password || !confirmPassword) {
         alert("Please fill in all fields.");
+        return;
+      }
+
+      if (!/^\d{10}$/.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number");
         return;
       }
 
@@ -451,16 +467,16 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error:", error);
         alert("An error occurred. Please try again.");
       }
-    });
 
-    signupForm.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Prevent default form submission on Enter
-
-        if (signupSubmitBtn) {
-          signupSubmitBtn.click(); // Simulate click on submit button
+      signupForm.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault(); // Prevent default form submission on Enter
+  
+          if (signupSubmitBtn) {
+            signupSubmitBtn.click(); // Simulate click on submit button
+          }
         }
-      }
+      });
     });
   }
 
