@@ -94,17 +94,12 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   }
 }
 // Initialize Swiper
-// Initialize Swiper with loop and continuous autoplay
 const swiper = new Swiper(".swiper-container", {
-  loop: true, // Enables infinite loop
+  loop: true,
   autoplay: {
-    delay: 5000, // Adjust speed as needed
-    disableOnInteraction: false, // Keeps autoplay even after interaction
+    delay: 5000,
+    disableOnInteraction: false,
   },
-  speed: 600, // Transition speed
-  slidesPerView: "auto", // Ensures smooth continuous scrolling
-  centeredSlides: true, // Keeps the active slide in center
-  spaceBetween: 20, // Spacing between slides
   pagination: {
     el: ".swiper-pagination",
     clickable: true,
@@ -113,9 +108,7 @@ const swiper = new Swiper(".swiper-container", {
     nextEl: ".swiper-button-next",
     prevEl: ".swiper-button-prev",
   },
-  effect: "slide", // Keeps smooth sliding effect
 });
-
 
 // Smooth scroll for navigation links
 const navLinks = document.querySelectorAll(".nav-link");
@@ -335,8 +328,8 @@ document.addEventListener("DOMContentLoaded", function () {
     loginSubmitBtn.addEventListener("click", async function (e) {
       e.preventDefault();
 
-      const email = loginForm.querySelector('input[type="email"]').value;
-      const password = loginForm.querySelector('input[type="password"]').value;
+      const email = loginForm.querySelector('input[name="user_email"]').value;
+      const password = loginForm.querySelector('input[name="user_password"]').value;
 
       if (!email || !password) {
         alert("Please enter email and password.");
@@ -400,7 +393,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Handle Signup form submission
+// user signup 
 document.addEventListener("DOMContentLoaded", function () {
   const signupForm = document.querySelector("#userSignup");
   const loginModal = document.getElementById("authModal");
@@ -445,7 +438,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       try {
-        const response = await fetch("http://localhost:8080/signup", {
+        const response = await fetch("http://localhost:8080/user-signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -486,6 +479,361 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
       signupModal.style.display = "none"; // Close signup modal
       loginModal.style.display = "block"; // Open login modal
+    });
+  }
+});
+
+//manager signup
+document.addEventListener("DOMContentLoaded", function () {
+  const signupForm = document.querySelector("#managerSignupForm");
+  const loginModal = document.getElementById("authModal");
+  const signupModal = document.getElementById("signupModal");
+  const openLoginModalLink = document.getElementById("openLoginModal");
+  const signupSubmitBtn = document.querySelector("#managerSignupBtn");
+
+  if (signupForm) {
+    signupSubmitBtn.addEventListener("click", async function (event) {
+      event.preventDefault();
+
+      const name = signupForm.querySelector('input[name="name"]').value.trim();
+      const email = signupForm.querySelector('input[name="email"]').value;
+      const mobile = signupForm
+        .querySelector('input[name="mobile"]')
+        .value.trim();
+      const password = signupForm.querySelector('input[name="password"]').value;
+      const confirmPassword = signupForm.querySelector(
+        'input[name="confirmPassword"]'
+      ).value;
+      const security_key = signupForm.querySelector('input[name="securityKey"]').value;
+
+      if(security_key !== "Apsingh@23"){
+        alert("Please enter the correct secuity key !\n Or choose the correct role to signup");
+        return;
+      }
+
+      // Name validation: must start with a letter (no spaces or numbers at first position)
+      const nameRegex = /^[A-Za-z][A-Za-z\s]*$/;
+      if (!nameRegex.test(name)) {
+        alert("Invalid name. The first character must be a letter.");
+        return;
+      }
+
+      if (!name || !email || !mobile || !password || !confirmPassword || !security_key) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (!/^\d{10}$/.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match. Please try again.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:8080/manager-signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, mobile, password, security_key }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert(data.message,"\nRedirecting to login...");
+          signupForm.reset();
+          loginModal.style.display = "block"; // Open login modal
+          signupModal.style.display = "none"; // Close signup modal
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again later.");
+      }
+
+      signupForm.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault(); // Prevent default form submission on Enter
+  
+          if (signupSubmitBtn) {
+            signupSubmitBtn.click(); // Simulate click on submit button
+          }
+        }
+      });
+    });
+  }
+
+  // Open Login Modal when "Login" link is clicked
+  if (openLoginModalLink) {
+    openLoginModalLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      signupModal.style.display = "none"; // Close signup modal
+      loginModal.style.display = "block"; // Open login modal
+    });
+  }
+});
+
+//manager login
+document.addEventListener("DOMContentLoaded", function () {
+  const loginForm = document.querySelector("#managerLoginForm");
+  const signupModal = document.getElementById("signupModal");
+  const loginModal = document.getElementById("authModal");
+  const openSignupModalLink = document.getElementById("openSignupModal");
+  const loginSubmitBtn = document.querySelector("#managerLoginBtn");
+ 
+  if (loginForm) {
+    loginSubmitBtn.addEventListener("click", async function (e) {
+      e.preventDefault();
+      
+      const manager_id = loginForm.querySelector('input[placeholder="Manager ID"]').value;
+      const password = loginForm.querySelector('input[placeholder="Password"]').value;
+      const security_key = loginForm.querySelector('input[placeholder="Security Key"]').value;
+    
+      if(security_key !== "Apsingh@23"){
+        alert("Please enter the correct secuity key !\n Or choose the correct role to signup");
+        return;
+      }
+
+      if (!manager_id || !password || !security_key) {
+        alert("Please enter email and password.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:8080/manager-login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ manager_id, password }),
+        });
+
+        const data = await response.json();
+        user = data.user;
+
+        if (response.ok) {
+          alert("Login successful!");
+          loginForm.reset();
+          isLoggedIn = true;
+          loginBtn.classList.add("hidden");
+          signupBtn.classList.add("hidden");
+          logoutBtn.classList.remove("hidden");
+          clientImage.classList.remove("hidden");
+          loginModal.style.display = "none";
+          window.location.href = "./manager/manager.html";
+        } else {
+          if (data.message === "User not found") {
+            alert("ID not found. Redirecting to signup...");
+            loginModal.style.display = "none"; // Close login modal
+            signupModal.style.display = "block"; // Open signup modal
+          } else {
+            alert(data.message);
+          }
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again.");
+      }
+    });
+
+    loginForm.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Prevent the default form submission on Enter
+
+        if (loginSubmitBtn) {
+          loginSubmitBtn.click(); // Simulate the click on the submit button
+        }
+      }
+    });
+  }
+
+  // Open Signup Modal when "Sign up" link is clicked
+  if (openSignupModalLink) {
+    openSignupModalLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      loginModal.style.display = "none";
+      signupModal.style.display = "block";
+    });
+  }
+});
+
+//employee signup
+document.addEventListener("DOMContentLoaded", function () {
+  const signupForm = document.querySelector("#employeeSignupForm");
+  const loginModal = document.getElementById("authModal");
+  const signupModal = document.getElementById("signupModal");
+  const openLoginModalLink = document.getElementById("openLoginModal");
+  const signupSubmitBtn = document.querySelector("#employeeSignupBtn");
+
+  if (signupForm) {
+    signupSubmitBtn.addEventListener("click", async function (event) {
+      event.preventDefault();
+
+      const name = signupForm.querySelector('input[name="name"]').value.trim();
+      const email = signupForm.querySelector('input[name="email"]').value;
+      const mobile = signupForm
+        .querySelector('input[name="mobile"]')
+        .value.trim();
+      const password = signupForm.querySelector('input[name="password"]').value;
+      const confirmPassword = signupForm.querySelector(
+        'input[name="confirmPassword"]'
+      ).value;
+      
+
+      // Name validation: must start with a letter (no spaces or numbers at first position)
+      const nameRegex = /^[A-Za-z][A-Za-z\s]*$/;
+      if (!nameRegex.test(name)) {
+        alert("Invalid name. The first character must be a letter.");
+        return;
+      }
+
+      if (!name || !email || !mobile || !password || !confirmPassword ) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (!/^\d{10}$/.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match. Please try again.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:8080/employee-signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, mobile, password}),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert(data.message,"\nRedirecting to login...");
+          //signupForm.reset();
+          loginModal.style.display = "block"; // Open login modal
+          signupModal.style.display = "none"; // Close signup modal
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again later.");
+      }
+
+      signupForm.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault(); // Prevent default form submission on Enter
+  
+          if (signupSubmitBtn) {
+            signupSubmitBtn.click(); // Simulate click on submit button
+          }
+        }
+      });
+    });
+  }
+
+  // Open Login Modal when "Login" link is clicked
+  if (openLoginModalLink) {
+    openLoginModalLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      signupModal.style.display = "none"; // Close signup modal
+      loginModal.style.display = "block"; // Open login modal
+    });
+  }
+});
+
+//employee login
+document.addEventListener("DOMContentLoaded", function () {
+  const loginForm = document.querySelector("#employeeLoginForm");
+  const signupModal = document.getElementById("signupModal");
+  const loginModal = document.getElementById("authModal");
+  const openSignupModalLink = document.getElementById("openSignupModal");
+  const loginSubmitBtn = document.querySelector("#employeeLoginBtn");
+ 
+  if (loginForm) {
+    loginSubmitBtn.addEventListener("click", async function (e) {
+      e.preventDefault();
+
+      const employee_id = loginForm.querySelector('input[name="employee_id"]').value;
+      const password = loginForm.querySelector('input[name="employeePassword"]').value;
+      // const security_key = loginForm.querySelector('input[placeholder="Security Key"]').value;
+    
+      // if(security_key !== "Apsingh@23"){
+      //   alert("Please enter the correct secuity key !\n Or choose the correct role to signup");
+      //   return;
+      // }
+
+      if (!employee_id || !password ) {
+        alert("Please enter email and password.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:8080/employee-login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ employee_id, password }),
+        });
+
+        const data = await response.json();
+        user = data.user;
+
+        if (response.ok) {
+          alert("Login successful!");
+          loginForm.reset();
+          isLoggedIn = true;
+          loginBtn.classList.add("hidden");
+          signupBtn.classList.add("hidden");
+          logoutBtn.classList.remove("hidden");
+          clientImage.classList.remove("hidden");
+          loginModal.style.display = "none";
+          window.location.href = "./employee/employee.html";
+        } else {
+          if (data.message === "User not found") {
+            alert("ID not found. Redirecting to signup...");
+            loginModal.style.display = "none"; // Close login modal
+            signupModal.style.display = "block"; // Open signup modal
+          } else {
+            alert(data.message);
+          }
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again.");
+      }
+    });
+
+    loginForm.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Prevent the default form submission on Enter
+
+        if (loginSubmitBtn) {
+          loginSubmitBtn.click(); // Simulate the click on the submit button
+        }
+      }
+    });
+  }
+
+  // Open Signup Modal when "Sign up" link is clicked
+  if (openSignupModalLink) {
+    openSignupModalLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      loginModal.style.display = "none";
+      signupModal.style.display = "block";
     });
   }
 });
@@ -541,12 +889,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Add event listener for logout button
   logoutBtn.addEventListener("click", function () {
     // Perform logout actions here
-    isLoggedIn = false;
-    alert("Logged out successfully!");
-    loginBtn.classList.remove("hidden");
-    signupBtn.classList.remove("hidden");
-    logoutBtn.classList.add("hidden");
-    clientImage.classList.add("hidden");
+   if(confirm("Are you sure you want to logout!")){
+      isLoggedIn = false;
+      alert("Logged out successfully!");
+      loginBtn.classList.remove("hidden");
+      signupBtn.classList.remove("hidden");
+      logoutBtn.classList.add("hidden");
+      clientImage.classList.add("hidden");
+   }
   });
 });
 

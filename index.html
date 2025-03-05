@@ -94,7 +94,7 @@
           <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
         </div>
         <div class="bg-white p-6 shadow-md rounded-xl service-card">
-          <h4 class="font-bold text-xl">Tire Services</h4>
+          <h4 class="font-bold text-xl">Tyer Services</h4>
           <p>Get the best tire services including rotation, alignment, and replacement.</p>
           <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
         </div>
@@ -393,11 +393,11 @@
       <div id="userForm" class="tab-content active">
         <h3 class="text-2xl font-bold text-blue-700 mb-4">User Login</h3>
         <form id="userLoginForm" class="space-y-4">
-          <input type="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="user_email" placeholder="Email" class="w-full p-3 border rounded-md" required>
 
           <!-- Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+            <input type="password" name="user_password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
               required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
@@ -415,17 +415,17 @@
       <!-- Employee Form -->
       <div id="EmployeeForm" class="tab-content">
         <h3 class="text-2xl font-bold text-blue-700 mb-4">Employee Login</h3>
-        <form class="space-y-4">
-          <input type="text" placeholder="Employee ID" class="w-full p-3 border rounded-md" required>
+        <form class="space-y-4" id="employeeLoginForm">
+          <input type="text" name="employee_id" placeholder="Employee ID" class="w-full p-3 border rounded-md" required>
 
           <!-- Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+            <input type="password" name="employeePassword" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
               required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
-          <button type="submit"
+          <button type="submit" id="employeeLoginBtn"
             class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
         </form>
       </div>
@@ -433,18 +433,24 @@
       <!-- Manager Form -->
       <div id="managerForm" class="tab-content">
         <h3 class="text-2xl font-bold text-blue-700 mb-4">Manager Login</h3>
-        <form class="space-y-4">
-          <input type="text" placeholder="Manager ID" class="w-full p-3 border rounded-md" required>
+        <form class="space-y-4" id="managerLoginForm">
+          <input type="text" name="managerId" placeholder="Manager ID" class="w-full p-3 border rounded-md" required>
 
           <!-- Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+            <input type="password" name="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
               required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
-          <input type="text" placeholder="Security Key" class="w-full p-3 border rounded-md" required>
-          <button type="submit"
+          <!-- Seccurity Key -->
+          <div class="relative">
+            <input type="password" name="securityKey" placeholder="Security Key" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit"  id="managerLoginBtn"
             class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
         </form>
       </div>
@@ -486,62 +492,62 @@
           </div>
 
           <button type="submit" id="signupSubmitBtn"
-            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
         </form>
       </div>
 
       <!-- Employee Signup Form -->
       <div id="employeeSignupForm" class="tab-content">
         <h3 class="text-2xl font-bold text-blue-700 mb-4">Employee Signup</h3>
-        <form class="space-y-4">
-          <input type="text" placeholder="Name" class="w-full p-3 border rounded-md" required>
-          <input type="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
-          <input type="tel" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+        <form class="space-y-4" id="employeeSignupForm">
+          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
 
           <!-- Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+            <input type="password" name="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
               required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
           <!-- Confirm Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Confirm Password"
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
               class="password-input w-full p-3 border rounded-md pr-10" required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
-          <button type="submit"
-            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+          <button type="submit" id="employeeSignupBtn"
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
         </form>
       </div>
 
       <!-- Manager Signup Form -->
       <div id="managerSignupForm" class="tab-content">
         <h3 class="text-2xl font-bold text-blue-700 mb-4">Manager Signup</h3>
-        <form class="space-y-4">
-          <input type="text" placeholder="Name" class="w-full p-3 border rounded-md" required>
-          <input type="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
-          <input type="tel" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+        <form class="space-y-4" id="managerSignupForm">
+          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="email"  placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="tel" name="mobile"  placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
 
           <!-- Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+            <input type="password" name="password"  placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
               required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
           <!-- Confirm Password Field -->
           <div class="relative">
-            <input type="password" placeholder="Confirm Password"
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
               class="password-input w-full p-3 border rounded-md pr-10" required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
 
-          <input type="text" placeholder="Security Key" class="w-full p-3 border rounded-md" required>
-          <button type="submit"
-            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+          <input type="text" name="securityKey" placeholder="Security Key" class="w-full p-3 border rounded-md" required>
+          <button type="submit" id="managerSignupBtn"
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
         </form>
       </div>
     </div>

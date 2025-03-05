@@ -27,7 +27,7 @@ const authenticateUser = (req, res, next) => {
 };
 
 // **User Signup**
-app.post("/signup", async (req, res) => {
+app.post("/user-signup", async (req, res) => {
   const { name, email, mobile, password } = req.body;
 
   try {
@@ -55,7 +55,7 @@ app.post("/signup", async (req, res) => {
 // **User Login with JWT**
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
+  
   try {
     const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
       email,
@@ -84,6 +84,123 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server error. Try again later." });
   }
 });
+
+// **Manager Signup**
+app.post("/manager-signup", async (req, res) => {
+  const { name, email, mobile, password, security_key } = req.body;
+ 
+  try {
+    const [existingManager] = await db.query(
+      "SELECT * FROM managers WHERE email = ?",
+      [email]
+    );
+    if (existingManager.length > 0) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await db.query(
+      "INSERT INTO managers (name, email, mobile, password, security_key) VALUES (?, ?, ?, ?, ?)",
+      [name, email, mobile, hashedPassword, security_key]
+    );
+
+    res.status(201).json({ message: "Manager registered successfully" });
+  } catch (error) {
+    console.error("Error during signup:", error);
+    res.status(500).json({ message: "Server error. Try again later." });
+  }
+});
+
+// **Manager Login
+app.post("/manager-login", async (req, res) => {
+  const { manager_id, password } = req.body;
+  
+  try {
+    const [managers] = await db.query("SELECT * FROM managers WHERE manager_id = ?", [
+      manager_id,
+    ]);
+    if (managers.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "User not found! You need to sign up first" });
+    }
+
+    const manager = managers[0];
+    const isMatch = await bcrypt.compare(password, manager.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    //const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
+
+    res.json({
+      message: "Login successful",
+      manager: { id: manager.id, name: manager.name, email: manager.email },
+    });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Server error. Try again later." });
+  }
+});
+
+// **Employee Signup**
+app.post("/employee-signup", async (req, res) => {
+  const { name, email, mobile, password } = req.body;
+
+  try {
+    const [existingEmployee] = await db.query(
+      "SELECT * FROM employees WHERE email = ?",
+      [email]
+    );
+    if (existingEmployee.length > 0) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await db.query(
+      "INSERT INTO employees (name, email, mobile, password) VALUES (?, ?, ?, ?)",
+      [name, email, mobile, hashedPassword]
+    );
+
+    res.status(201).json({ message: "Employee registered successfully" });
+  } catch (error) {
+    console.error("Error during signup:", error);
+    res.status(500).json({ message: "Server error. Try again later." });
+  }
+});
+
+// **Employee Login 
+app.post("/employee-login", async (req, res) => {
+  const { employee_id, password } = req.body;
+  
+  try {
+    const [employees] = await db.query("SELECT * FROM employees WHERE employee_id = ?", [
+      employee_id,
+    ]);
+    if (employees.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "User not found! You need to sign up first" });
+    }
+
+    const employee = employees[0];
+    const isMatch = await bcrypt.compare(password, employee.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    //const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
+
+    res.json({
+      message: "Login successful",
+      manager: { id: employee.id, name: employee.name, email: employee.email },
+    });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Server error. Try again later." });
+  }
+});
+
 
 // **Fetch User Profile (Protected Route)**
 app.get("/profile", authenticateUser, async (req, res) => {

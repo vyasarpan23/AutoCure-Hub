@@ -399,3 +399,22 @@ transform: translateY(0); /* Reset on click */
   transform: translateY(-10px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
+
+.swiper-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.swiper-wrapper {
+  display: flex;
+  transition-timing-function: linear !important; /* Ensures smooth looping */
+}
+
+.review-card {
+  flex-shrink: 0;
+  width: 300px; /* Adjust card width */
+  height: auto;
+  margin-right: 5px;
+}
+
