@@ -28,6 +28,27 @@ html {
   border-radius: 50%;
 }
 
+/* Dark Mode */
+.dark-mode nav, .dark-mode aside {
+  background-color: #2d3748;
+}
+
+.dark-mode .bg-white {
+  background-color: #4a5568;
+  color: white;
+}
+
+.dark-mode .shadow-lg {
+  box-shadow: none;
+}
+
+/* General Styling */
+body.dark-mode {
+  background-color: #1a202c;
+  color: white;
+}
+
+
 /* Background animation */
 .gradient-background {
   background: linear-gradient(300deg, #5c6bc0, #9c27b0, #00bfff);

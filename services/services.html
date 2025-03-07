@@ -11,30 +11,38 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="services.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-    <!-- Header (Copied from index.html) -->
-    <nav class="bg-blue-800 shadow-md sticky top-0 z-50 gradient-background">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="logo flex items-center space-x-2">
-                <img src="logo.jpg" alt="AutoCure Logo" class="h-10 w-10">
-                <span class="text-white text-2xl font-bold">AutoCure Hub</span>
-            </div>
-            <div class="flex items-center space-x-8">
-                <ul class="flex space-x-6">
-                    <li><a href="index.html" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
-                    <li><a href="#services" class="hover:text-blue-300 text-white text-lg font-semibold">Services</a></li>
-                    <li><a href="#whychooseus" class="hover:text-blue-300 text-white text-lg font-semibold">Why Choose Us</a></li>
-                    <li><a href="#help" class="hover:text-blue-300 text-white text-lg font-semibold">Help</a></li>
-                    <li><a href="#contact" class="hover:text-blue-300 text-white text-lg font-semibold" id="contactBtn">Contact</a></li>
-                </ul>
-                <div class="flex space-x-4">
-                    <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200" id="loginBtn">Login</button>
-                    <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200" id="signupBtn">Signup</button>
-                </div>
-            </div>
+    <!-- Navbar -->
+  <nav class="bg-blue-800 shadow-md sticky top-0 z-50 gradient-background">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="logo flex items-center space-x-2">
+        <img src="../assets/logo.jpg" alt="AutoCure Logo" class="h-10 w-10">
+        <span class="text-white text-2xl font-bold">AutoCure Hub</span>
+      </div>
+      <div class="flex items-center space-x-8">
+        <ul class="flex space-x-6">
+          <li><a href="#home" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
+          <li><a href="#services" class="hover:text-blue-300 text-white text-lg font-semibold">Services</a></li>
+          <li><a href="#whychooseus" class="hover:text-blue-300 text-white text-lg font-semibold">Why Choose Us</a></li>
+          <li><a href="#help" class="hover:text-blue-300 text-white text-lg font-semibold">Help</a></li>
+          <li><a href="#contact" class="hover:text-blue-300 text-white text-lg font-semibold"
+              id="contactBtn">Contact</a></li>
+        </ul>
+        <div class="flex space-x-4">
+          <button id="darkModeToggle" class="text-white text-lg"><i class="fas fa-moon"></i></button>
+          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200"
+            id="loginBtn">Login</button>
+          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200"
+            id="signupBtn">Signup</button>
+          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200 hidden"
+            id="logoutBtn">Logout</button>
+          <img src="./assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10 hidden" id="clientImage">
         </div>
-    </nav>
+      </div>
+    </div>
+  </nav>
 
     <div class="container">
         <h1 class="title">All Services</h1>
@@ -273,6 +281,239 @@
         </div>
     </footer>
 
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Cart Button -->
+    <button id="cartBtn" class="fixed-cart-btn">
+        <i class="fas fa-shopping-cart"></i> Cart <span id="cartCount">0</span>
+    </button>
+
+    <!-- Cart Popup -->
+    <div class="overlay" id="cartOverlay"></div>
+    <div class="popup cart-popup" id="cartPopup">
+        <h3>Your Cart</h3>
+        <ul id="cartItems"></ul>
+        <p class="total">Total: $<span id="cartTotal">0.00</span></p>
+        <div class="popup-buttons">
+            <button class="cancel-btn" onclick="closeCart()">Cancel</button>
+            <button class="checkout-btn" onclick="openCheckout()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Checkout Popup -->
+    <div class="overlay" id="checkoutOverlay"></div>
+    <div class="popup checkout-popup" id="checkoutPopup">
+        <h3>Book Your Service</h3>
+        <label for="service-date">Choose a Date:</label>
+        <input type="date" id="service-date">
+        <label for="service-time">Choose a Time:</label>
+        <select id="service-time">
+            <option value="08:00 AM">08:00 AM</option>
+            <option value="09:00 AM">09:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="01:00 PM">01:00 PM</option>
+            <option value="02:00 PM">02:00 PM</option>
+            <option value="03:00 PM">03:00 PM</option>
+            <option value="04:00 PM">04:00 PM</option>
+        </select>
+        <div class="popup-buttons">
+            <button class="cancel-btn" onclick="closeCheckout()">Cancel</button>
+            <button class="confirm-btn" onclick="confirmBooking()">Confirm</button>
+        </div>
+    </div>
+
+
+  <!-- Login Modal -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="text-center mb-6">
+        <div class="flex justify-center space-x-4 mb-6">
+          <button class="tab-button active" data-tab="user">User</button>
+          <button class="tab-button" data-tab="Employee">Employee</button>
+          <button class="tab-button" data-tab="manager">Manager</button>
+        </div>
+      </div>
+
+      <!-- User Form -->
+      <div id="userForm" class="tab-content active">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">User Login</h3>
+        <form id="userLoginForm" class="space-y-4">
+          <input type="email" name="user_email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="user_password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit" id="loginSubmitBtn"
+            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
+          <button type="button" class="google-signup-btn">
+            <i class="fab fa-google"></i> Login with Google
+          </button>
+          <p class="text-center">Don't have an account? <a href="#" class="text-blue-600" id="openSignupModal">Sign
+              up</a></p>
+        </form>
+      </div>
+
+      <!-- Employee Form -->
+      <div id="EmployeeForm" class="tab-content">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">Employee Login</h3>
+        <form class="space-y-4" id="employeeLoginForm">
+          <input type="text" name="employee_id" placeholder="Employee ID" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="employeePassword" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit" id="employeeLoginBtn"
+            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
+        </form>
+      </div>
+
+      <!-- Manager Form -->
+      <div id="managerForm" class="tab-content">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">Manager Login</h3>
+        <form class="space-y-4" id="managerLoginForm">
+          <input type="text" name="managerId" placeholder="Manager ID" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <!-- Seccurity Key -->
+          <div class="relative">
+            <input type="password" name="securityKey" placeholder="Security Key" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit"  id="managerLoginBtn"
+            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="text-center mb-6">
+        <div class="flex justify-center space-x-4 mb-6">
+          <button class="tab-button active" data-tab="userSignup">User</button>
+          <button class="tab-button" data-tab="employeeSignup">Employee</button>
+          <button class="tab-button" data-tab="managerSignup">Manager</button>
+        </div>
+      </div>
+
+      <!-- User Signup Form -->
+      <div id="userSignupForm" class="tab-content active">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">User Signup</h3>
+        <form id="userSignup" class="space-y-4">
+          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="password" placeholder="Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="relative">
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit" id="signupSubmitBtn"
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+        </form>
+      </div>
+
+      <!-- Employee Signup Form -->
+      <div id="employeeSignupForm" class="tab-content">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">Employee Signup</h3>
+        <form class="space-y-4" id="employeeSignupForm">
+          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="relative">
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit" id="employeeSignupBtn"
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+        </form>
+      </div>
+
+      <!-- Manager Signup Form -->
+      <div id="managerSignupForm" class="tab-content">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">Manager Signup</h3>
+        <form class="space-y-4" id="managerSignupForm">
+          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="email"  placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="tel" name="mobile"  placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="password"  placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="relative">
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <input type="text" name="securityKey" placeholder="Security Key" class="w-full p-3 border rounded-md" required>
+          <button type="submit" id="managerSignupBtn"
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
     <script src="services.js"></script>
+    <Script src="../script.js"></Script>
+
+
+
 </body>
 </html>

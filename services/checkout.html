@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f4;
+        }
+        .checkout-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        h2 {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .checkout-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .checkout-buttons button {
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+        .cancel-btn {
+            background: #ccc;
+        }
+        .confirm-btn {
+            background: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-container">
+        <h2>Book Your Service</h2>
+
+        <label for="service-date">Choose a Date:</label>
+        <input type="date" id="service-date">
+
+        <label for="service-time">Choose a Time:</label>
+        <select id="service-time">
+            <option value="08:00 AM">08:00 AM</option>
+            <option value="09:00 AM">09:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="01:00 PM">01:00 PM</option>
+            <option value="02:00 PM">02:00 PM</option>
+            <option value="03:00 PM">03:00 PM</option>
+            <option value="04:00 PM">04:00 PM</option>
+        </select>
+
+        <div class="checkout-buttons">
+            <button class="cancel-btn" onclick="cancelBooking()">Cancel</button>
+            <button class="confirm-btn" onclick="confirmBooking()">Confirm</button>
+        </div>
+    </div>
+
+    <script>
+        function confirmBooking() {
+            let date = document.getElementById("service-date").value;
+            let time = document.getElementById("service-time").value;
+
+            if (!date) {
+                alert("Please select a date!");
+                return;
+            }
+
+            alert("Booking Confirmed for " + date + " at " + time);
+            // Redirect to a confirmation page if needed
+            // window.location.href = "confirmation.html";
+        }
+
+        function cancelBooking() {
+            window.location.href = "../index.html"; // Change to your homepage or previous page
+        }
+    </script>
+
+</body>
+</html>

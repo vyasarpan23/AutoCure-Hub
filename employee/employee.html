@@ -24,9 +24,10 @@
                     <li><a href="index.html" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
                     <li><a href="#tasks" class="hover:text-blue-300 text-white text-lg font-semibold">Tasks</a></li>
                     <li><a href="#schedule" class="hover:text-blue-300 text-white text-lg font-semibold">Schedule</a></li>
-                    <li><a href="#feedback" class="hover:text-blue-300 text-white text-lg font-semibold">Feedback</a></li>
+                    <li><a href="#notifications" class="hover:text-blue-300 text-white text-lg font-semibold">Notifications</a></li>
                 </ul>
                 <div class="flex space-x-4">
+                    <button id="darkModeToggle" class="text-white text-lg"><i class="fas fa-moon"></i></button>
                     <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200" id="logoutBtn">Logout</button>
                     <img src="../assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10 " id="clientImage">
                 </div>
@@ -188,6 +189,12 @@
                 window.location.href = '../index.html';
             }
         });
+        // Dark Mode Toggle
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
     </script>
+    <Script src="../script.js"></Script>
+
 </body>
 </html>

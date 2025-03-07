@@ -2,6 +2,11 @@
 let isLoggedIn = false;
 let user = {};
 
+// Dark Mode Toggle
+document.getElementById('darkModeToggle').addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+});
+
 // Modal Handling
 const modals = document.querySelectorAll(".modal");
 const closeBtns = document.querySelectorAll(".close");
