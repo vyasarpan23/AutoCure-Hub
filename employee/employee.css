@@ -31,3 +31,12 @@ button {
 button:hover {
     transform: scale(1.05);
 }
+
+#profilePopup {
+    position: absolute;
+    top: 60px; /* Adjust based on your navbar height */
+    right: 70px;
+    z-index: 100;
+}
+
+
