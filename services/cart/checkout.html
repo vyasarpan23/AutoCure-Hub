@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Service Booking</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+    <div class="booking-container">
+        <h2>Book Your Car Service</h2>
+        <form id="booking-form">
+            <label for="vehicle-model">Vehicle Model:</label>
+            <input type="text" id="vehicle-model" name="vehicle-model" required>
+
+            <label for="vehicle-number">Vehicle Number:</label>
+            <input type="text" id="vehicle-number" name="vehicle-number" required>
+
+
+            <label for="booking-date">Booking Date:</label>
+            <input type="date" id="booking-date" name="booking-date" required>
+
+            <label for="booking-time">Booking Time:</label>
+            <input type="time" id="booking-time" name="booking-time" required>
+
+            <button type="submit">Book Now</button>
+        </form>
+        <p id="confirmation-message"></p>
+    </div>
+    <script src="checkout.js"></script>
+</body>
+</html>
