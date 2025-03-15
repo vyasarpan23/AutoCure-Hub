@@ -208,6 +208,9 @@
     </div>
   </section>
 
+  
+
+
   <!-- Rating Modal -->
   <div id="ratingModal" class="modal">
     <div class="modal-content">
@@ -248,14 +251,68 @@
         </div>
       </div>
     </div>
-
-
-
   </section>
+
+  <section id="gallery" class="py-16 bg-gray-100">
+    <div class="max-w-6xl mx-auto text-center">
+      <h3 class="text-3xl font-bold mb-6 text-blue-700">Gallery</h3>
+  
+      <div class="gallery-container relative overflow-hidden w-full max-w-4xl mx-auto">
+        <div class="gallery-slider flex transition-transform duration-700 ease-in-out">
+          <img src="./assets/image-1.jpg" alt="Gallery Image 1" class="gallery-img w-1/2">
+          <img src="./assets/image-2.jpg" alt="Gallery Image 2" class="gallery-img w-1/2">
+          <img src="./assets/image-3.jpg" alt="Gallery Image 3" class="gallery-img w-1/2">
+          <img src="./assets/image-2.jpg" alt="Gallery Image 4" class="gallery-img w-1/2">
+        </div>
+  
+        <!-- Navigation Arrows -->
+        <button id="prevBtn" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+          &#10094;
+        </button>
+        <button id="nextBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+          &#10095;
+        </button>
+      </div>
+    </div>
+  </section>
+  
+
+<!-- JavaScript for Slider -->
+<script>
+const slider = document.querySelector(".gallery-slider");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+let index = 0;
+const totalSlides = Math.ceil(slider.children.length / 2); // Since we show 2 at a time
+
+function updateSlider() {
+  slider.style.transform = `translateX(-${index * 100}%)`;
+}
+
+nextBtn.addEventListener("click", () => {
+  if (index < totalSlides - 1) {
+    index++;
+  } else {
+    index = 0; // Loop back to start
+  }
+  updateSlider();
+});
+
+prevBtn.addEventListener("click", () => {
+  if (index > 0) {
+    index--;
+  } else {
+    index = totalSlides - 1; // Loop to the end
+  }
+  updateSlider();
+});
+
+</script>
 
 
   <!-- Meet Our Specialists Section -->
-  <section id="specialists" class="py-16 bg-gray-100">
+  <section id="specialists" class="py-16 bg-white">
     <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-3xl font-bold text-center text-blue-700 mb-8">Meet Our Specialists</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12"> <!-- Increased gap to 10 -->
@@ -295,7 +352,7 @@
   </section>
 
   <!-- Franchise Locator -->
-  <section id="franchise" class="py-16 bg-white" data-aos="fade-up">
+  <section id="franchise" class="py-16 bg-gray-100" data-aos="fade-up">
     <div class="max-w-5xl mx-auto text-center">
       <h3 class="text-3xl font-bold mb-4 text-blue-700">Our Franchises</h3>
       <p class="mb-8">Find the nearest AutoCure Hub franchise for quick and reliable service.</p>
@@ -314,7 +371,7 @@
       <!-- Left: Logo and About -->
       <div>
         <div class="flex flex-col items-center space-y-2"> <!-- Stack logo and name vertically -->
-          <img src="./assets/logo.jpg" alt="AutoCure Logo" class="h-[5rem]"> <!-- Increased logo size -->
+          <img src="./assets/logo.jpg" alt="AutoCure Logo" style="height: 10rem; width: auto;"> <!-- Increased logo size -->
           <span class="text-4xl font-bold text-center">AutoCure Hub</span> <!-- Centered the name -->
         </div>
         <p class="mt-3 text-gray-300 text-sm text-center">
