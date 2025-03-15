@@ -3,212 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automotive Service Dashboard</title>
+    <title>User Profile</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./assets/css/tailwind.min.css">
+    <link rel="stylesheet" href="./assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../styles.css">    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        .content {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 10px;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .profile-card, .info-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profile-card {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            justify-content: center;
+        }
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .profile-card h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .profile-card .edit {
+            justify-content: center;
+            align-items: center;
+            color: #007bff;
+            cursor: pointer;
+        }
+        .info-section {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .info-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .info-card ul {
+            list-style: none;
+        }
+        .info-card ul li {
+            padding: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        #profile-image{
+            justify-content: center;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-title">Yousuf Name</div>
-        <div class="header-right">Cont'l nedo</div>
-    </div>
-    
-    <div class="tabs">
-        <div class="tab active">Census</div>
-        <div class="tab">Book</div>
-        <div class="tab">Apoi</div>
-        <div class="tab">7</div>
-        <div class="menu-icon">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-    
-    <div class="main-content">
-        <!-- Left Column -->
-        <div class="left-column">
-            <div class="user-profile">
-                <div class="avatar">
-                    <svg viewBox="0 0 24 24">
-                        <path fill="#888" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                    </svg>
-                </div>
-                <div class="username">User Name</div>
+
+    <!-- Navbar -->
+    <nav class="bg-blue-800 shadow-md sticky top-0 z-50 gradient-background">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="logo flex items-center space-x-2">
+                <img src="../assets/logo.jpg" alt="AutoCure Logo" class="h-10 w-10"> 
+                <span class="text-white text-2xl font-bold">AutoCure Hub</span>
             </div>
-            
-            <div class="parts-section">
-                <div class="section-title">Parts</div>
-                <ul class="parts-list">
-                    <li>
-                        <div class="parts-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path fill="#F44336" d="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3Z" />
-                            </svg>
-                        </div>
-                        <span>Parts</span>
-                    </li>
-                    <li>
-                        <div class="parts-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path fill="#4CAF50" d="M16,9H19L14,16M10,9H14L12,17M5,9H8L10,16M15,4H17L19,7H16M11,4H13L14,7H10M7,4H9L8,7H5M6,2L2,8L12,22L22,8L18,2H6Z" />
-                            </svg>
-                        </div>
-                        <span>Parts</span>
-                    </li>
-                    <li>
-                        <div class="parts-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path fill="#4CAF50" d="M14,10H19.5L14,4.5V10M5,3H15L21,9V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3M5,5V19H19V12H12V5H5Z" />
-                            </svg>
-                        </div>
-                        <span>Parts</span>
-                    </li>
+            <div class="flex items-center space-x-8"> 
+                <ul class="flex space-x-6">
+                    <li><a href="../index.html" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
+                    <li><a href="#employeeDashboard" class="hover:text-blue-300 text-white text-lg font-semibold">Dashboard</a></li>
+                    <li><a href="#notifications" class="hover:text-blue-300 text-white text-lg font-semibold">Notifications</a></li>
+                    <li><a href="#tasks" class="hover:text-blue-300 text-white text-lg font-semibold">Tasks</a></li>
                 </ul>
-                <button class="borrow-btn">Borrow</button>
+                <div class="flex items-center space-x-4">
+                    <button id="darkModeToggle" class="text-white text-lg"><i class="fas fa-moon"></i></button>
+                    <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200" id="logoutBtn">Logout</button>
+                    <img src="../assets/image-person.png" alt="Profile Picture" class="h-10 w-10 rounded-full" id="clientImage">
+                </div>
             </div>
         </div>
-        
-        <!-- Right Column -->
-        <div class="right-column">
-            <!-- User Header Card -->
-            <div class="grid-item user-header">
-                <div class="user-header-content">
-                    <div class="user-header-left">
-                        <div class="avatar-small">
-                            <svg viewBox="0 0 24 24">
-                                <path fill="#888" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="user-header-name">Usring Name</div>
-                            <div class="user-header-subtitle">Found <span class="green-dot">1</span></div>
-                        </div>
-                    </div>
-                    <div class="user-header-middle">
-                        <div class="user-header-title">Services Service</div>
-                        <div class="user-header-subtitle">Flowlocs</div>
-                    </div>
-                    <div class="user-header-right">
-                        <div class="green-circle">
-                            <svg viewBox="0 0 24 24" width="20" height="20">
-                                <path fill="#4CAF50" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8L10,17Z" />
-                            </svg>
-                        </div>
-                        <div class="user-header-title">Coping</div>
-                    </div>
-                </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <div class="profile-card">
+                <img id="profile-image" src="../assets/image-person.png" alt="Profile Picture">
+                <h2>John Doe</h2>
+                <p>Email: johndoe@example.com</p>
+                <p>Phone: +1234567890</p>
+                <i class="fas fa-edit edit"></i>
             </div>
-            
-            <!-- Grid Container -->
-            <div class="grid-container">
-                <!-- Grid Item 1: Dpy -->
-                <div class="grid-item">
-                    <div class="grid-item-header">
-                        <div class="grid-item-title">Dpy</div>
-                        <div class="grid-item-title text-right">Vorliac <span class="chevron">›</span></div>
-                    </div>
-                    <div class="grid-content">
-                        <div class="icon-container green">
-                            <svg viewBox="0 0 24 24" class="icon-green">
-                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z" />
-                            </svg>
-                        </div>
-                        <div class="progress-info">
-                            <div>Servicce</div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 80%;"></div>
-                            </div>
-                            <div class="text-right">Rarihidebe</div>
-                        </div>
-                    </div>
-                    <div class="percentage text-right">32,8 %</div>
-                    <div class="grid-item-footer">
-                        <div>Andetoste Denos</div>
-                        <div>Fysca</div>
-                    </div>
+    
+            <div class="info-section">
+                <div class="info-card">
+                    <h3><i class="fas fa-car"></i> Current Booked Services</h3>
+                    <ul>
+                        <li>Oil Change <span>🚗</span></li>
+                        <li>Brake Inspection <span>🔧</span></li>
+                    </ul>
                 </div>
                 
-                <!-- Grid Item 2: Dervices -->
-                <div class="grid-item">
-                    <div class="grid-item-header">
-                        <div class="grid-item-title">Dervices</div>
-                        <div class="grid-item-title text-right">Sip</div>
-                    </div>
-                    <div class="service-content">
-                        <div class="service-row">
-                            <div>Servicee</div>
-                            <div><svg viewBox="0 0 24 24" width="20" height="20" class="icon-green">
-                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
-                            </svg></div>
-                            <div>Services</div>
-                        </div>
-                        <div class="service-illustration">
-                            <div class="flask-icon">
-                                <svg viewBox="0 0 24 24" width="50" height="50" class="icon-green">
-                                    <path d="M6,22A3,3 0 0,1 3,19C3,18.4 3.18,17.84 3.5,17.37L9,7.81V6A1,1 0 0,1 8,5V4A2,2 0 0,1 10,2H14A2,2 0 0,1 16,4V5A1,1 0 0,1 15,6V7.81L20.5,17.37C20.82,17.84 21,18.4 21,19A3,3 0 0,1 18,22H6Z" />
-                                </svg>
-                            </div>
-                            <div class="beaker-icon">
-                                <svg viewBox="0 0 24 24" width="50" height="50" class="icon-green">
-                                    <path d="M19,8C19.56,8 20,8.43 20,9A1,1 0 0,1 19,10C18.43,10 18,9.55 18,9C18,8.43 18.43,8 19,8M2,2V11C2,13.96 4.19,16.5 7.14,16.91C7.76,19.92 10.42,22 13.5,22A6.5,6.5 0 0,0 20,15.5V11.81C21.16,11.39 22,10.29 22,9A3,3 0 0,0 19,6A3,3 0 0,0 16,9C16,10.29 16.84,11.4 18,11.81V15.41C18,17.91 16,19.91 13.5,19.91C11.5,19.91 9.82,18.7 9.22,16.9C12,16.3 14,13.8 14,11V2H10V5H12V11A4,4 0 0,1 8,15A4,4 0 0,1 4,11V5H6V2H2Z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-history"></i> Past Services</h3>
+                    <ul>
+                        <li>Wheel Alignment <span>✅</span></li>
+                        <li>Battery Check <span>✅</span></li>
+                    </ul>
                 </div>
                 
-                <!-- Grid Item 3: Unarticies -->
-                <div class="grid-item">
-                    <div class="grid-item-header">
-                        <div class="grid-item-title">Unarticies</div>
-                        <div class="grid-item-title text-right">Apoointmets <span class="chevron">›</span></div>
-                    </div>
-                    <div class="grid-content">
-                        <div class="icon-container light-green">
-                            <svg class="car-icon" viewBox="0 0 24 24">
-                                <path fill="#4CAF50" d="M5,11L6.5,6.5H17.5L19,11M17.5,16A1.5,1.5 0 0,1 16,14.5A1.5,1.5 0 0,1 17.5,13A1.5,1.5 0 0,1 19,14.5A1.5,1.5 0 0,1 17.5,16M6.5,16A1.5,1.5 0 0,1 5,14.5A1.5,1.5 0 0,1 6.5,13A1.5,1.5 0 0,1 8,14.5A1.5,1.5 0 0,1 6.5,16M18.92,6C18.72,5.42 18.16,5 17.5,5H6.5C5.84,5 5.28,5.42 5.08,6L3,12V20A1,1 0 0,0 4,21H5A1,1 0 0,0 6,20V19H18V20A1,1 0 0,0 19,21H20A1,1 0 0,0 21,20V12L18.92,6Z" />
-                            </svg>
-                        </div>
-                        <div class="progress-info">
-                            <div class="appointments-list">
-                                <div class="appointment">
-                                    <div class="appointment-color"></div>
-                                    <div class="appointment-content">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 75%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="appointment">
-                                    <div class="appointment-color"></div>
-                                    <div class="appointment-content">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 60%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="appointment">
-                                    <div class="appointment-color"></div>
-                                    <div class="appointment-content">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 45%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="appointment">
-                                    <div class="appointment-color"></div>
-                                    <div class="appointment-content">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 90%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-car"></i> Vehicle Details</h3>
+                    <ul>
+                        <li>Make: Toyota</li>
+                        <li>Model: Camry</li>
+                        <li>Year: 2020</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+   <footer class="bg-gray-900 text-white py-10">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16"> <!-- Increased gap to 16 -->
+      <!-- Left: Logo and About -->
+      <div>
+        <div class="flex flex-col items-center space-y-2"> <!-- Stack logo and name vertically -->
+          <img src="../assets/logo.jpg" alt="AutoCure Logo" class="h-[1rem]"> <!-- Increased logo size -->
+          <span class="text-4xl font-bold text-center">AutoCure Hub</span> <!-- Centered the name -->
+        </div>
+        <p class="mt-3 text-gray-300 text-sm text-center">
+          AutoCure Hub provides premium quality car services at affordable prices. We ensure real-time updates for a
+          smooth and transparent service experience.
+        </p>
+      </div>
+
+      <!-- Middle: Services & Links -->
+      <div class="grid grid-cols-2 gap-16"> <!-- Increased gap between Services and Quick Links -->
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-4">Services</h3> <!-- Increased margin-bottom -->
+          <ul class="text-gray-400 space-y-3"> <!-- Increased space between list items -->
+            <li class="whitespace-nowrap">• Periodic Maintenance</li>
+            <li>• Dent & Paint</li>
+            <li>• Bumper Repair</li>
+            <li>• Accidental Repair</li>
+            <li>• Scratch Removal</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3> <!-- Increased margin-bottom -->
+          <ul class="text-gray-400 space-y-3"> <!-- Increased space between list items -->
+            <li><a href="#home" class="hover:text-white">• Home</a></li>
+            <li><a href="#about" class="hover:text-white">• About</a></li>
+            <li><a href="#contact" class="hover:text-white">• FAQ</a></li>
+            <li><a href="#" class="hover:text-white">• Blog</a></li>
+            <li><a href="#contactus" class="hover:text-white">• Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right: Contact Details -->
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Contact</h3> <!-- Increased margin-bottom -->
+        <p class="text-gray-300 mb-3"><i class="fas fa-map-marker-alt text-red-500"></i> Your Location Here</p>
+        <p class="text-gray-300 mb-3"><i class="fas fa-envelope text-red-500"></i> contact@autocurehub.com</p>
+        <p class="text-gray-300 mb-3"><i class="fas fa-phone text-red-500"></i> +91 73979 97979</p>
+
+        <h3 class="text-lg font-semibold text-white mt-8 mb-4">FOLLOW US:</h3>
+        <!-- Increased margin-top and margin-bottom -->
+
+        <!-- Social Icons -->
+        <div class="flex space-x-6 mt-4"> <!-- Increased space between icons -->
+          <a href="https://wa.me/1234567890" class="text-green-400 hover:text-green-500"><i
+              class="fab fa-whatsapp fa-2x"></i></a>
+          <a href="https://www.instagram.com" class="text-pink-400 hover:text-pink-500"><i
+              class="fab fa-instagram fa-2x"></i></a>
+          <a href="https://www.twitter.com" class="text-blue-400 hover:text-blue-500"><i
+              class="fab fa-twitter fa-2x"></i></a>
+          <a href="https://www.linkedin.com" class="text-blue-600 hover:text-blue-700"><i
+              class="fab fa-linkedin fa-2x"></i></a>
+          <a href="https://www.youtube.com" class="text-red-500 hover:text-red-600"><i
+              class="fab fa-youtube fa-2x"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="mt-12 border-t border-gray-700 text-center pt-6 text-gray-400">
+      <!-- Increased margin-top and padding-top -->
+      <p>&copy; 2025 AutoCure Hub. All Rights Reserved.</p>
+    </div>
+  </footer>
+  
+
+    <script>
+        document.querySelector('.edit').addEventListener('click', function() {
+            alert('Edit functionality can be implemented here!');
+        });
+    </script>
 </body>
 </html>
