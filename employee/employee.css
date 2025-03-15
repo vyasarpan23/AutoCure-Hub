@@ -23,6 +23,10 @@ main {
     padding: 2rem;
 }
 
+/* Section padding */
+section {
+    padding-top: 2rem;
+}
 
 /* Dark Mode */
 .dark-mode nav, .dark-mode aside {
@@ -53,7 +57,6 @@ button:hover {
     right: 70px;
     z-index: 100;
 }
-
 
 /* Profile Sidebar */
 #profileSidebar {

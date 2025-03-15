@@ -21,9 +21,10 @@
             <div class="flex items-center space-x-8"> 
                 <ul class="flex space-x-6">
                     <li><a href="../index.html" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
-                    <li><a href="#Dashboard" class="hover:text-blue-300 text-white text-lg font-semibold">Dashboard</a></li>
-                    <li><a href="#tasks" class="hover:text-blue-300 text-white text-lg font-semibold">Tasks</a></li>
+                    <li><a href="#employeeDashboard" class="hover:text-blue-300 text-white text-lg font-semibold">Dashboard</a></li>
                     <li><a href="#notifications" class="hover:text-blue-300 text-white text-lg font-semibold">Notifications</a></li>
+                    <li><a href="#tasks" class="hover:text-blue-300 text-white text-lg font-semibold">Tasks</a></li>
+
                 </ul>
                 <div class="flex items-center space-x-4">
                     <button id="darkModeToggle" class="text-white text-lg"><i class="fas fa-moon"></i></button>
@@ -73,7 +74,7 @@
 
         <!-- Main Dashboard Area -->
         <main class="flex-1 p-8 ml-64 mt-16">
-            <h2 class="text-3xl font-semibold text-blue-800 mb-6">Employee Dashboard</h2>
+            <h2 id="employeeDashboard" class="text-3xl font-semibold text-blue-800 mb-6">Employee Dashboard</h2>
 
             <!-- Task Overview -->
             <section class="overview grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -91,8 +92,29 @@
                 </div>
             </section>
 
+            <!-- Notifications Section -->
+            <section id="notifications" class="mb-8">
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Notifications</h2>
+                <div class="bg-white shadow-lg rounded-lg p-6">
+                    <ul class="space-y-4">
+                        <li class="bg-gray-100 p-4 rounded-lg shadow">
+                            <p class="text-gray-700 font-semibold">New task assigned: Car Maintenance for MP09AB1234</p>
+                            <p class="text-gray-500 text-sm">2 hours ago</p>
+                        </li>
+                        <li class="bg-gray-100 p-4 rounded-lg shadow">
+                            <p class="text-gray-700 font-semibold">Task completed: Part Replacement for MP09CD5678</p>
+                            <p class="text-gray-500 text-sm">1 day ago</p>
+                        </li>
+                        <li class="bg-gray-100 p-4 rounded-lg shadow">
+                            <p class="text-gray-700 font-semibold">Reminder: Complete the pending tasks by end of the week</p>
+                            <p class="text-gray-500 text-sm">3 days ago</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
             <!-- Task List Section -->
-            <section class="mb-8">
+            <section id="tasks" class="mb-8">
                 <h2 class="text-2xl font-semibold text-blue-800 mb-4">Task List</h2>
                 <div class="bg-white shadow-lg rounded-lg p-6">
                     <h3 class="text-xl font-semibold text-gray-700">Today's Tasks</h3>
