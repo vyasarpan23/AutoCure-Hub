@@ -9,38 +9,44 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="./assets/css/tailwind.min.css">
+  <link rel="stylesheet" href="./assets/css/fontawesome.min.css">
+  <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="styles.css">
+  
+
 </head>
 
 <body class="bg-gray-50 text-gray-800">
-  <!-- Navbar -->
-  <nav class="bg-blue-800 shadow-md sticky top-0 z-50 gradient-background">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="logo flex items-center space-x-2">
-        <img src="./assets/logo.jpg" alt="AutoCure Logo" class="h-10 w-10">
-        <span class="text-white text-2xl font-bold">AutoCure Hub</span>
-      </div>
-      <div class="flex items-center space-x-8">
-        <ul class="flex space-x-6">
-          <li><a href="#home" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
-          <li><a href="#services" class="hover:text-blue-300 text-white text-lg font-semibold">Services</a></li>
-          <li><a href="#whychooseus" class="hover:text-blue-300 text-white text-lg font-semibold">Why Choose Us</a></li>
-          <li><a href="#help" class="hover:text-blue-300 text-white text-lg font-semibold">Help</a></li>
-          <li><a href="#contact" class="hover:text-blue-300 text-white text-lg font-semibold"
-              id="contactBtn">Contact</a></li>
-        </ul>
-        <div class="flex space-x-4">
-          <button id="darkModeToggle" class="text-white text-lg"><i class="fas fa-moon"></i></button>
-          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200"
-            id="loginBtn">Login</button>
-          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200"
-            id="signupBtn">Signup</button>
-          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200 hidden"
-            id="logoutBtn">Logout</button>
-          <img src="./assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10 hidden" id="clientImage">
-        </div>
+   <!-- Navbar -->
+<nav class="bg-blue-800 shadow-md sticky top-0 z-50 gradient-background">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <div class="logo flex items-center space-x-2">
+      <img src="./assets/logo.jpg" alt="AutoCure Logo" class="h-10 w-10">
+      <span class="text-white text-2xl font-bold">AutoCure Hub</span>
+    </div>
+    <div class="flex items-center space-x-8">
+      <ul class="flex space-x-6">
+        <li><a href="#home" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
+        <li><a href="#services" class="hover:text-blue-300 text-white text-lg font-semibold">Services</a></li>
+        <li><a href="#whychooseus" class="hover:text-blue-300 text-white text-lg font-semibold">Why Choose Us</a></li>
+        <li><a href="#help" class="hover:text-blue-300 text-white text-lg font-semibold">Help</a></li>
+        <li><a href="#contact" class="hover:text-blue-300 text-white text-lg font-semibold"
+            id="contactBtn">Contact</a></li>
+      </ul>
+      <div class="flex space-x-4">
+        <button id="darkModeToggle" class="text-white text-lg"><i class="fas fa-moon"></i></button>
+        <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200"
+          id="loginBtn">Login</button>
+        <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200"
+          id="signupBtn">Signup</button>
+        <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200 hidden"
+          id="logoutBtn">Logout</button>
+        <img src="./assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10 hidden" id="clientImage">
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
 
   <!-- Hero Section -->
@@ -85,21 +91,25 @@
       <h3 class="text-3xl font-bold mb-6 text-blue-700">Our Services</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <div class="bg-white p-6 shadow-md rounded-xl service-card">
+          <img src="./assets/oli.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover">
           <h4 class="font-bold text-xl">Oil Change</h4>
           <p>Keep your engine running smoothly with our oil change service.</p>
           <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
         </div>
         <div class="bg-white p-6 shadow-md rounded-xl service-card">
+          <img src="./assets/brake.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover">
           <h4 class="font-bold text-xl">Brake Repair</h4>
           <p>Ensure your safety with our comprehensive brake repair services.</p>
           <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
         </div>
         <div class="bg-white p-6 shadow-md rounded-xl service-card">
+          <img src="./assets/tyre.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover">
           <h4 class="font-bold text-xl">Tyer Services</h4>
           <p>Get the best tire services including rotation, alignment, and replacement.</p>
           <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
         </div>
         <div class="bg-white p-6 shadow-md rounded-xl service-card">
+          <img src="./assets/battery.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover">
           <h4 class="font-bold text-xl">Battery Replacement</h4>
           <p>Ensure your car starts every time with our battery replacement service.</p>
           <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Now</button>
@@ -298,14 +308,13 @@
     </div>
   </section>
 
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-10">
+   <!-- Footer -->
+   <footer class="bg-gray-900 text-white py-10">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16"> <!-- Increased gap to 16 -->
       <!-- Left: Logo and About -->
       <div>
         <div class="flex flex-col items-center space-y-2"> <!-- Stack logo and name vertically -->
-          <img src="./assets/logo.jpg" alt="AutoCure Logo" class="h-[10rem]"> <!-- Increased logo size -->
+          <img src="./assets/logo.jpg" alt="AutoCure Logo" class="h-[5rem]"> <!-- Increased logo size -->
           <span class="text-4xl font-bold text-center">AutoCure Hub</span> <!-- Centered the name -->
         </div>
         <p class="mt-3 text-gray-300 text-sm text-center">
@@ -329,11 +338,11 @@
         <div>
           <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3> <!-- Increased margin-bottom -->
           <ul class="text-gray-400 space-y-3"> <!-- Increased space between list items -->
-            <li><a href="#" class="hover:text-white">• Home</a></li>
-            <li><a href="#" class="hover:text-white">• About</a></li>
-            <li><a href="#" class="hover:text-white">• FAQ</a></li>
+            <li><a href="#home" class="hover:text-white">• Home</a></li>
+            <li><a href="#about" class="hover:text-white">• About</a></li>
+            <li><a href="#contact" class="hover:text-white">• FAQ</a></li>
             <li><a href="#" class="hover:text-white">• Blog</a></li>
-            <li><a href="#" class="hover:text-white">• Contact Us</a></li>
+            <li><a href="#contactus" class="hover:text-white">• Contact Us</a></li>
           </ul>
         </div>
       </div>
@@ -370,8 +379,7 @@
       <p>&copy; 2025 AutoCure Hub. All Rights Reserved.</p>
     </div>
   </footer>
-
-
+  
   <!-- Fixed Book Service Button -->
   <button id="bookServiceBtn" class="fixed-book-service-btn" onclick="window.location.href='./services/services.html'">
     <i class="fas fa-calendar-alt"></i> Book Service
