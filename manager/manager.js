@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
         profileImage.classList.toggle("hidden"); // Hide profile image
         logoutBtn.classList.toggle("hidden"); // Hide logout button
         sidebarProfileImage.src = profileImage.src; // Set sidebar profile image
-        sidebarProfileName.textContent = "John Doe"; // Set sidebar profile name
-        sidebarProfilePost.textContent = "Employee"; // Set sidebar profile post
+        sidebarProfileName.textContent = "Nattu Kaka"; // Set sidebar profile name
+        sidebarProfilePost.textContent = "Manager"; // Set sidebar profile post
     });
 
     document.addEventListener("click", function (event) {
@@ -60,3 +60,4 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("clientImage").addEventListener("click", function () {
     document.getElementById("profileSidebar").classList.toggle("active");
 });
+

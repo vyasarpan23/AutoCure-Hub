@@ -20,34 +20,49 @@
             </div>
             <div class="flex items-center space-x-8"> 
                 <ul class="flex space-x-6">
-                    <li><a href="index.html" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
+                    <li><a href="../index.html" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
+                    <li><a href="#Dashboard" class="hover:text-blue-300 text-white text-lg font-semibold">Dashboard</a></li>
                     <li><a href="#tasks" class="hover:text-blue-300 text-white text-lg font-semibold">Tasks</a></li>
-                    <li><a href="#schedule" class="hover:text-blue-300 text-white text-lg font-semibold">Schedule</a></li>
                     <li><a href="#notifications" class="hover:text-blue-300 text-white text-lg font-semibold">Notifications</a></li>
                 </ul>
-                <div class="flex space-x-4">
+                <div class="flex items-center space-x-4">
                     <button id="darkModeToggle" class="text-white text-lg"><i class="fas fa-moon"></i></button>
                     <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200" id="logoutBtn">Logout</button>
-                    <img src="../assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10 " id="clientImage">
-                </div>
-                <!-- Profile Popup -->
-                <div id="profilePopup" class="absolute right-10 mt-2 w-48 bg-white shadow-md rounded-lg p-2 hidden">
-                    <ul>
-                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">View Profile</li>
-                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Edit Profile</li>
-                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Settings</li>
-                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Logout</li>
-                    </ul>
+                    <img src="../assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10" id="clientImage">
                 </div>
             </div>
         </div>
     </nav>
 
+<!-- Profile Sidebar -->
+<div id="profileSidebar" class="fixed inset-y-0 right-0 bg-white shadow-lg w-60 p-4 hidden z-50">
+    <!-- Profile Header with Gray Background -->
+    <div class="bg-gray-100 p-4 rounded-t-lg">
+        <img src="../assets/image-person.png" alt="Profile Photo" class="h-20 w-20 mx-auto mb-2 rounded-full" id="sidebarProfileImage">
+        <p class="text-center font-semibold" id="sidebarProfileName">John Doe</p>
+        <p class="text-center text-gray-600 text-sm" id="sidebarProfilePost">Employee</p>
+    </div>
+    <hr class="my-4">
+    <ul>
+        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center">
+            <i class="fas fa-user mr-2"></i> View Profile
+        </li>
+        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center">
+            <i class="fas fa-edit mr-2"></i> Edit Profile
+        </li>
+        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center">
+            <i class="fas fa-cog mr-2"></i> Settings
+        </li>
+        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center" id="sidebarLogoutBtn">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+        </li>
+    </ul>
+</div>
 
 
     <div class="flex">
         <!-- Sidebar -->
-        <aside class="bg-gray-800 text-white w-64 p-4 hidden md:block">
+        <aside class="bg-gray-800 text-white w-64 p-4 hidden md:block fixed top-2 left-0 mt-16">
             <ul>
                 <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">My Tasks</a></li>
                 <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Completed Tasks</a></li>
@@ -57,7 +72,7 @@
         </aside>
 
         <!-- Main Dashboard Area -->
-        <main class="flex-1 p-8">
+        <main class="flex-1 p-8 ml-64 mt-16">
             <h2 class="text-3xl font-semibold text-blue-800 mb-6">Employee Dashboard</h2>
 
             <!-- Task Overview -->
@@ -127,11 +142,68 @@
     </div>
 
 <!-- Footer -->
-<footer class="bg-gray-900 text-white py-10 text-center border-t border-gray-700 pt-6 text-gray-400">   
-    <p>&copy; 2025 AutoCure Hub. All Rights Reserved.</p>
+<footer class="bg-gray-900 text-white py-10" style="margin-left: 16rem;">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16">
+        <!-- Left: Logo and About -->
+        <div>
+            <div class="flex flex-col items-center space-y-2">
+                <img src="../assets/logo.jpg" alt="AutoCure Logo" style="height: 10rem; width: auto;">
+                <span class="text-4xl font-bold text-center">AutoCure Hub</span>
+            </div>
+            <p class="mt-3 text-gray-300 text-sm text-center">
+                AutoCure Hub provides premium quality car services at affordable prices. We ensure real-time updates for a smooth and transparent service experience.
+            </p>
+        </div>
+
+        <!-- Middle: Services & Links -->
+        <div class="grid grid-cols-2 gap-16">
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Services</h3>
+                <ul class="text-gray-400 space-y-3">
+                    <li class="whitespace-nowrap">• Periodic Maintenance</li>
+                    <li>• Dent & Paint</li>
+                    <li>• Bumper Repair</li>
+                    <li>• Accidental Repair</li>
+                    <li>• Scratch Removal</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                <ul class="text-gray-400 space-y-3">
+                    <li><a href="#" class="hover:text-white">• Home</a></li>
+                    <li><a href="#" class="hover:text-white">• About</a></li>
+                    <li><a href="#" class="hover:text-white">• FAQ</a></li>
+                    <li><a href="#" class="hover:text-white">• Blog</a></li>
+                    <li><a href="#" class="hover:text-white">• Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right: Contact Details -->
+        <div>
+            <h3 class="text-lg font-semibold text-white mb-4">Contact</h3>
+            <p class="text-gray-300 mb-3"><i class="fas fa-map-marker-alt text-red-500"></i> Your Location Here</p>
+            <p class="text-gray-300 mb-3"><i class="fas fa-envelope text-red-500"></i> contact@autocurehub.com</p>
+            <p class="text-gray-300 mb-3"><i class="fas fa-phone text-red-500"></i> +91 73979 97979</p>
+
+            <h3 class="text-lg font-semibold text-white mt-8 mb-4">FOLLOW US:</h3>
+
+            <!-- Social Icons -->
+            <div class="flex space-x-6 mt-4">
+                <a href="https://wa.me/1234567890" class="text-green-400 hover:text-green-500"><i class="fab fa-whatsapp fa-2x"></i></a>
+                <a href="https://www.instagram.com" class="text-pink-400 hover:text-pink-500"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="https://www.twitter.com" class="text-blue-400 hover:text-blue-500"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="https://www.linkedin.com" class="text-blue-600 hover:text-blue-700"><i class="fab fa-linkedin fa-2x"></i></a>
+                <a href="https://www.youtube.com" class="text-red-500 hover:text-red-600"><i class="fab fa-youtube fa-2x"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="mt-12 border-t border-gray-700 text-center pt-6 text-gray-400">
+        <p>&copy; 2025 AutoCure Hub. All Rights Reserved.</p>
+    </div>
 </footer>
-
-
 
     <!-- JavaScript -->
     <script src="employee.js"></script>

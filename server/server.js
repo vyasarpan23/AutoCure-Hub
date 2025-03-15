@@ -55,7 +55,7 @@ app.post("/user-signup", async (req, res) => {
 // **User Login with JWT**
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  
+  console.log(req.body);
   try {
     const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
       email,

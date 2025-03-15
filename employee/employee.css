@@ -6,8 +6,23 @@ body.dark-mode {
 
 /* Sidebar */
 aside {
-    min-height: 100vh;
+    position: fixed;
+    top: 4.58rem; /* Adjusted to start below navbar */
+    left: 0;
+    width: 250px;
+    background-color: #2d3748; /* Dark background */
+    color: white;
+    height: calc(100vh - 4rem); /* Adjust height dynamically */
+    overflow-y: auto; /* Enable scrolling if needed */
 }
+
+/* Main content adjustment */
+main {
+    margin-left: 250px; /* Adjust based on sidebar width */
+    margin-top: 4rem; /* Adjust to match navbar height */
+    padding: 2rem;
+}
+
 
 /* Dark Mode */
 .dark-mode nav, .dark-mode aside {
@@ -40,3 +55,21 @@ button:hover {
 }
 
 
+/* Profile Sidebar */
+#profileSidebar {
+    position: fixed;
+    top: 4.58rem; /* Adjusted to start below the navbar */
+    right: 0;
+    width: 275px; /* Set a proper width */
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    height: calc(100vh - 4rem); /* Adjust height dynamically */
+    overflow-y: auto; /* Enables scrolling if needed */
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%); /* Hide sidebar by default */
+}
+
+/* Show the sidebar when active */
+#profileSidebar.active {
+    transform: translateX(0);
+}

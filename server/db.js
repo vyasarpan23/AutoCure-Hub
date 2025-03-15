@@ -5,10 +5,10 @@ dotenv.config(); // Load environment variables from .env file
 
 // Create a MySQL connection pool (for better connection management)
 const pool = mysql.createPool({
-    host: process.env.DB_HOST, // Load from .env
-    user: process.env.DB_USER, // Load from .env
-    password: process.env.DB_PASS, // Load from .env
-    database: process.env.DB_NAME, // Load from .env
+    host: process.env.DB_HOST||"localhost", // Load from .env
+    user: process.env.DB_USER || "root", // Load from .env
+    password: process.env.DB_PASS || "2310", // Load from .env
+    database: process.env.DB_NAME || "autocure_hub", // Load from .env
     waitForConnections: true,  // Ensures that the pool waits for connections if the limit is reached
     connectionLimit: process.env.DB_CONNECTION_LIMIT || 10, // Load from .env or default to 10
     queueLimit: 0             // No queue limit
