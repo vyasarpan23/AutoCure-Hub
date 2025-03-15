@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+</head>
+<body>
+    <!-- Navbar -->
+<nav class="bg-blue-800 shadow-md sticky top-0 z-50 gradient-background">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="logo flex items-center space-x-2">
+        <img src="../assets/logo.jpg" alt="AutoCure Logo" class="h-10 w-10">
+        <span class="text-white text-2xl font-bold">AutoCure Hub</span>
+      </div>
+      <div class="flex items-center space-x-8">
+        <ul class="flex space-x-6">
+          <li><a href="../index.html#home" class="hover:text-blue-300 text-white text-lg font-semibold">Home</a></li>
+          <li><a href="../index.html#services" class="hover:text-blue-300 text-white text-lg font-semibold">Services</a></li>
+          <li><a href="#whychooseus" class="hover:text-blue-300 text-white text-lg font-semibold">Why Choose Us</a></li>
+          <li><a href="#help" class="hover:text-blue-300 text-white text-lg font-semibold">Help</a></li>
+          <li><a href="#contact" class="hover:text-blue-300 text-white text-lg font-semibold"
+              id="contactBtn">Contact</a></li>
+        </ul>
+        <div class="flex space-x-4">
+          <button id="darkModeToggle" class="text-white text-lg"><i class="fas fa-moon"></i></button>
+          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200"
+            id="loginBtn">Login</button>
+          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200"
+            id="signupBtn">Signup</button>
+          <button class="bg-white text-blue-800 px-5 py-2 text-lg font-semibold rounded-md hover:bg-gray-200 hidden"
+            id="logoutBtn">Logout</button>
+          <img src="./assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10 hidden" id="clientImage">
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Login Modal -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="text-center mb-6">
+        <div class="flex justify-center space-x-4 mb-6">
+          <button class="tab-button active" data-tab="user">User</button>
+          <button class="tab-button" data-tab="Employee">Employee</button>
+          <button class="tab-button" data-tab="manager">Manager</button>
+        </div>
+      </div>
+
+      <!-- User Form -->
+      <div id="userForm" class="tab-content active">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">User Login</h3>
+        <form id="userLoginForm" class="space-y-4">
+          <input type="email" name="user_email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="user_password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit" id="loginSubmitBtn"
+            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
+          <button type="button" class="google-signup-btn">
+            <i class="fab fa-google"></i> Login with Google
+          </button>
+          <p class="text-center">Don't have an account? <a href="#" class="text-blue-600" id="openSignupModal">Sign
+              up</a></p>
+        </form>
+      </div>
+
+      <!-- Employee Form -->
+      <div id="EmployeeForm" class="tab-content">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">Employee Login</h3>
+        <form class="space-y-4" id="employeeLoginForm">
+          <input type="text" name="employee_id" placeholder="Employee ID" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="employeePassword" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit" id="employeeLoginBtn"
+            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
+        </form>
+      </div>
+
+      <!-- Manager Form -->
+      <div id="managerForm" class="tab-content">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">Manager Login</h3>
+        <form class="space-y-4" id="managerLoginForm">
+          <input type="text" name="managerId" placeholder="Manager ID" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <!-- Seccurity Key -->
+          <div class="relative">
+            <input type="password" name="securityKey" placeholder="Security Key" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit"  id="managerLoginBtn"
+            class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="text-center mb-6">
+        <div class="flex justify-center space-x-4 mb-6">
+          <button class="tab-button active" data-tab="userSignup">User</button>
+          <button class="tab-button" data-tab="employeeSignup">Employee</button>
+          <button class="tab-button" data-tab="managerSignup">Manager</button>
+        </div>
+      </div>
+
+      <!-- User Signup Form -->
+      <div id="userSignupForm" class="tab-content active">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">User Signup</h3>
+        <form id="userSignup" class="space-y-4">
+          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="password" placeholder="Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="relative">
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit" id="signupSubmitBtn"
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+        </form>
+      </div>
+
+      <!-- Employee Signup Form -->
+      <div id="employeeSignupForm" class="tab-content">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">Employee Signup</h3>
+        <form class="space-y-4" id="employeeSignupForm">
+          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="relative">
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <button type="submit" id="employeeSignupBtn"
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+        </form>
+      </div>
+
+      <!-- Manager Signup Form -->
+      <div id="managerSignupForm" class="tab-content">
+        <h3 class="text-2xl font-bold text-blue-700 mb-4">Manager Signup</h3>
+        <form class="space-y-4" id="managerSignupForm">
+          <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+          <input type="email" name="email"  placeholder="Email" class="w-full p-3 border rounded-md" required>
+          <input type="tel" name="mobile"  placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+
+          <!-- Password Field -->
+          <div class="relative">
+            <input type="password" name="password"  placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10"
+              required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="relative">
+            <input type="password" name="confirmPassword" placeholder="Confirm Password"
+              class="password-input w-full p-3 border rounded-md pr-10" required>
+            <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+          </div>
+
+          <input type="text" name="securityKey" placeholder="Security Key" class="w-full p-3 border rounded-md" required>
+          <button type="submit" id="managerSignupBtn"
+            class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 class="text-2xl font-bold text-blue-700 mb-6">Contact Us</h3>
+
+      <!-- Social Media Buttons -->
+      <div class="flex flex-wrap justify-center gap-4 mb-6">
+        <a href="https://wa.me/1234567890" class="social-btn whatsapp-btn">
+          <i class="fab fa-whatsapp mr-2"></i>
+          WhatsApp
+        </a>
+        <a href="tel:+1234567890" class="social-btn call-btn">
+          <i class="fas fa-phone-alt mr-2"></i>
+          Call Us
+        </a>
+      </div>
+
+      <!-- Contact Numbers -->
+      <div class="mb-6">
+        <h4 class="font-semibold mb-2">Our Numbers:</h4>
+        <p><i class="fas fa-phone-alt mr-2"></i>Main: +1 (234) 567-8900</p>
+        <p><i class="fas fa-phone-alt mr-2"></i>Service: +1 (234) 567-8901</p>
+        <p><i class="fas fa-phone-alt mr-2"></i>Emergency: +1 (234) 567-8902</p>
+      </div>
+
+      <!-- Message Form -->
+      <form class="space-y-4">
+        <input type="text" placeholder="Your Name" class="w-full p-3 border rounded-md" required>
+        <input type="email" placeholder="Your Email" class="w-full p-3 border rounded-md" required>
+        <textarea placeholder="Your Message" class="w-full p-3 border rounded-md" rows="4" required></textarea>
+        <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div id="profileModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-start justify-end p-4 hidden">
+    <div class="bg-white p-4 rounded-lg shadow-lg w-80">
+      <!-- Profile View -->
+      <div id="profileView">
+        <div class="flex flex-col items-center">
+          <img id="profileImage" src="image-person.png" class="w-24 h-24 rounded-full border" alt="Profile">
+          <h2 id="profileName" class="mt-2 text-lg font-semibold text-blue-600">Adarsh Patel</h2>
+          <p id="profileEmail" class="text-gray-600">adarsh@gmail.com</p>
+          <button id="editProfileBtn"
+            class="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Profile Edit Form -->
+  <div id="editForm" class="hidden">
+    <h3 class="text-lg font-semibold text-blue-600">Edit Profile</h3>
+    <input id="editName" type="text" placeholder="Name"
+      class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <input id="editEmail" type="email" placeholder="Email"
+      class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <input id="editImageInput" type="file" accept="image/*"
+      class="w-full p-2 border rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      onchange="previewImage(event)">
+    <img id="editImagePreview" src="https://via.placeholder.com/100" class="w-24 h-24 rounded-full mt-2" alt="Preview">
+    <div class="flex justify-between mt-4">
+      <button id="saveProfileBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Save</button>
+      <button id="cancelProfileBtn"
+        class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500">Cancel</button>
+    </div>
+  </div>
+
+
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="../script.js"></script>
+</body>
+</html>

@@ -8,7 +8,7 @@ require("dotenv").config();
 
 const app = express();
 const port = 8080;
-const SECRET_KEY = process.env.JWT_SECRET || "Adarsh@23"; // Change for production
+const SECRET_KEY = process.env.JWT_SECRET; // Change for production
 
 // Middleware
 app.use(cors());
@@ -201,56 +201,12 @@ app.post("/employee-login", async (req, res) => {
   }
 });
 
-
-// **Fetch User Profile (Protected Route)**
-app.get("/profile", authenticateUser, async (req, res) => {
-  try {
-    const [users] = await db.query(
-      "SELECT id, name, email FROM users WHERE id = ?",
-      [req.userId]
-    );
-    if (users.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.json(users[0]);
-  } catch (error) {
-    console.error("Error fetching profile:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// **Password Reset (Future Feature)**
-app.post("/reset-password", async (req, res) => {
-  const { email, newPassword } = req.body;
-
-  try {
-    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
-      email,
-    ]);
-    if (users.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await db.query("UPDATE users SET password = ? WHERE email = ?", [
-      hashedPassword,
-      email,
-    ]);
-
-    res.json({ message: "Password reset successful" });
-  } catch (error) {
-    console.error("Error resetting password:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
 // **Fetch Reviews**
 app.get("/reviews", async (req, res) => {
   try {
     const [reviews] = await db.query(
-      "SELECT users.name AS user_name, reviews.rating, reviews.comment FROM reviews JOIN users ON reviews.user_id = users.id ORDER BY reviews.created_at DESC"
-    );
-
+      "SELECT users.name AS user_name, reviews.rating, reviews.comment FROM reviews JOIN users ON reviews.user_id = users.id ORDER BY reviews.created_at DESC" );
+    
     if (reviews.length === 0) {
       return res.status(404).json({ message: "No reviews found" });
     }
