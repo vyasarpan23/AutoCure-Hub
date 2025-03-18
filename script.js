@@ -536,3 +536,9 @@ document.addEventListener("DOMContentLoaded", function () {
     profileId.textContent = user.id;
   }
 });
+
+document.querySelectorAll(".contactBtn").forEach((button) => {
+  button.addEventListener("click", () => {
+    openModal("contactModal");
+  });
+});
