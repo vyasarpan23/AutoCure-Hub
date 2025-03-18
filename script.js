@@ -67,20 +67,6 @@ window.onclick = function (event) {
   });
 };
 
-// Function to add new reviews dynamically
-// function addNewReview(name, rating, comment) {
-//   if (slider) {
-//     const newReview = createReviewCard(name, rating, comment);
-//     slider.appendChild(newReview);
-//     slider.appendChild(newReview.cloneNode(true));
-
-//     // Reset animation
-//     slider.style.animation = "none";
-//     slider.offsetHeight; // Trigger reflow
-//     slider.style.animation = null;
-//   }
-// }
-
 // Ensure the code runs only in a browser environment
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   // Customer Reviews Slider
@@ -321,74 +307,139 @@ if (mobileMenuBtn && mobileMenu) {
   });
 }
 
-//login form Handler
 document.addEventListener("DOMContentLoaded", function () {
-  const loginForm = document.querySelector("#userLoginForm");
-  const signupModal = document.getElementById("signupModal");
+  const loginForm = document.getElementById("userLoginForm");
+  const signupForm = document.getElementById("userSignup");
+  const managerSignupForm = document.getElementById("managerSignupForm");
+  const managerLoginForm = document.getElementById("managerLoginForm");
+  const employeeSignupForm = document.getElementById("employeeSignupForm");
+  const employeeLoginForm = document.getElementById("employeeLoginForm");
+
   const loginModal = document.getElementById("authModal");
+  const signupModal = document.getElementById("signupModal");
+
   const openSignupModalLink = document.getElementById("openSignupModal");
-  const loginSubmitBtn = document.querySelector("#loginSubmitBtn");
+  const openLoginModalLink = document.getElementById("openLoginModal");
 
-  if (loginForm) {
-    loginSubmitBtn.addEventListener("click", async function (e) {
-      e.preventDefault();
+  async function handleLogin(event, endpoint, redirect = null, role) {
+    event.preventDefault();
 
-      const email = loginForm.querySelector('input[name="user_email"]').value;
-      const password = loginForm.querySelector('input[name="user_password"]').value;
+    const form = event.target;
+    const formData = new FormData(form);
+    const requestBody = {};
 
-      if (!email || !password) {
-        alert("Please enter email and password.");
-        return;
-      }
+    requestBody.role = role;
 
-      try {
-        const response = await fetch("http://localhost:8080/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
+    formData.forEach((value, key) => {
+      requestBody[key] = value;
+    });
 
-        const data = await response.json();
-        user = data.user;
+   
 
-        if (response.ok) {
-          alert("Login successful!");
-          loginForm.reset();
+    try {
+      const response = await fetch(`http://localhost:8080/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await response.json();
+      user = data.user;
+
+      if (response.ok) {
+        alert("Login successful!");
+        form.reset();
+        loginModal.style.display = "none";
+        isLoggedIn = true;
+
+        if (redirect) {
+          window.location.href = redirect;
+        }else{
           isLoggedIn = true;
           loginBtn.classList.add("hidden");
           signupBtn.classList.add("hidden");
           logoutBtn.classList.remove("hidden");
           clientImage.classList.remove("hidden");
-          loginModal.style.display = "none";
-        } else {
-          if (data.message === "User not found") {
-            alert("Email not found. Redirecting to signup...");
-            loginModal.style.display = "none"; // Close login modal
-            signupModal.style.display = "block"; // Open signup modal
-          } else {
-            alert(data.message);
-          }
         }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again.");
+      } else {
+        alert(data.message || "Invalid credentials. Try again.");
       }
-    });
-
-    loginForm.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default form submission on Enter
-
-        if (loginSubmitBtn) {
-          loginSubmitBtn.click(); // Simulate the click on the submit button
-        }
-      }
-    });
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("An error occurred. Please try again.");
+    }
   }
 
-  // Open Signup Modal when "Sign up" link is clicked
+  async function handleSignup(event, endpoint, role) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const requestBody = {};
+
+    formData.forEach((value, key) => {
+      requestBody[key] = value;
+    });
+
+    requestBody.role = role;
+
+    if (requestBody.password !== requestBody.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Signup successful! Redirecting to login...");
+        form.reset();
+        signupModal.style.display = "none";
+        loginModal.style.display = "block";
+      } else {
+        alert(data.message || "Signup failed. Try again.");
+      }
+    } catch (error) {
+      console.error("Signup Error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  }
+
+  // Event Listeners
+  if (loginForm) {
+    loginForm.addEventListener("submit", (event) => handleLogin(event, "login", null ,"user"));
+  }
+
+  if (employeeLoginForm) {
+    employeeLoginForm.addEventListener("submit", (event) => 
+      handleLogin(event, "login" , "./employee/employee.html", "employee")
+  );
+  }
+
+  if (managerLoginForm) {
+    managerLoginForm.addEventListener("submit", (event) =>
+      handleLogin(event, "login", "./manager/manager.html", "manager")
+    );
+  }
+
+  if (signupForm) {
+    signupForm.addEventListener("submit", (event) => handleSignup(event, "signup" , "user"));
+  }
+
+  if (managerSignupForm) {
+    managerSignupForm.addEventListener("submit", (event) => handleSignup(event, "signup", "manager"));
+  }
+
+  if (employeeSignupForm) {
+    employeeSignupForm.addEventListener("submit", (event) => handleSignup(event, "signup", "employee"));
+  }
+
   if (openSignupModalLink) {
     openSignupModalLink.addEventListener("click", function (event) {
       event.preventDefault();
@@ -396,452 +447,16 @@ document.addEventListener("DOMContentLoaded", function () {
       signupModal.style.display = "block";
     });
   }
-});
 
-// user signup 
-document.addEventListener("DOMContentLoaded", function () {
-  const signupForm = document.querySelector("#userSignup");
-  const loginModal = document.getElementById("authModal");
-  const signupModal = document.getElementById("signupModal");
-  const openLoginModalLink = document.getElementById("openLoginModal");
-  const signupSubmitBtn = document.querySelector("#signupSubmitBtn");
-
-  if (signupForm) {
-    signupSubmitBtn.addEventListener("click", async function (event) {
-      event.preventDefault();
-
-      const name = signupForm.querySelector('input[name="name"]').value.trim();
-      const email = signupForm.querySelector('input[name="email"]').value;
-      const mobile = signupForm
-        .querySelector('input[name="mobile"]')
-        .value.trim();
-      const password = signupForm.querySelector('input[name="password"]').value;
-      const confirmPassword = signupForm.querySelector(
-        'input[name="confirmPassword"]'
-      ).value;
-
-      // Name validation: must start with a letter (no spaces or numbers at first position)
-      const nameRegex = /^[A-Za-z][A-Za-z\s]*$/;
-      if (!nameRegex.test(name)) {
-        alert("Invalid name. The first character must be a letter.");
-        return;
-      }
-
-      if (!name || !email || !mobile || !password || !confirmPassword) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      if (!/^\d{10}$/.test(mobile)) {
-        alert("Please enter a valid 10-digit mobile number");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert("Passwords do not match. Please try again.");
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:8080/user-signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, mobile, password }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          alert("Signup successful!\nRedirecting to login...");
-          signupForm.reset();
-          loginModal.style.display = "block"; // Open login modal
-          signupModal.style.display = "none"; // Close signup modal
-        } else {
-          alert(data.message);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again.");
-      }
-
-      signupForm.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-          event.preventDefault(); // Prevent default form submission on Enter
-  
-          if (signupSubmitBtn) {
-            signupSubmitBtn.click(); // Simulate click on submit button
-          }
-        }
-      });
-    });
-  }
-
-  // Open Login Modal when "Login" link is clicked
   if (openLoginModalLink) {
     openLoginModalLink.addEventListener("click", function (event) {
       event.preventDefault();
-      signupModal.style.display = "none"; // Close signup modal
-      loginModal.style.display = "block"; // Open login modal
+      signupModal.style.display = "none";
+      loginModal.style.display = "block";
     });
   }
 });
 
-//manager signup
-document.addEventListener("DOMContentLoaded", function () {
-  const signupForm = document.querySelector("#managerSignupForm");
-  const loginModal = document.getElementById("authModal");
-  const signupModal = document.getElementById("signupModal");
-  const openLoginModalLink = document.getElementById("openLoginModal");
-  const signupSubmitBtn = document.querySelector("#managerSignupBtn");
-
-  if (signupForm) {
-    signupSubmitBtn.addEventListener("click", async function (event) {
-      event.preventDefault();
-
-      const name = signupForm.querySelector('input[name="name"]').value.trim();
-      const email = signupForm.querySelector('input[name="email"]').value;
-      const mobile = signupForm
-        .querySelector('input[name="mobile"]')
-        .value.trim();
-      const password = signupForm.querySelector('input[name="password"]').value;
-      const confirmPassword = signupForm.querySelector(
-        'input[name="confirmPassword"]'
-      ).value;
-      const security_key = signupForm.querySelector('input[name="securityKey"]').value;
-
-      if(security_key !== "Apsingh@23"){
-        alert("Please enter the correct secuity key !\n Or choose the correct role to signup");
-        return;
-      }
-
-      // Name validation: must start with a letter (no spaces or numbers at first position)
-      const nameRegex = /^[A-Za-z][A-Za-z\s]*$/;
-      if (!nameRegex.test(name)) {
-        alert("Invalid name. The first character must be a letter.");
-        return;
-      }
-
-      if (!name || !email || !mobile || !password || !confirmPassword || !security_key) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      if (!/^\d{10}$/.test(mobile)) {
-        alert("Please enter a valid 10-digit mobile number");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert("Passwords do not match. Please try again.");
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:8080/manager-signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, mobile, password, security_key }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          alert(data.message,"\nRedirecting to login...");
-          signupForm.reset();
-          loginModal.style.display = "block"; // Open login modal
-          signupModal.style.display = "none"; // Close signup modal
-        } else {
-          alert(data.message);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again later.");
-      }
-
-      signupForm.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-          event.preventDefault(); // Prevent default form submission on Enter
-  
-          if (signupSubmitBtn) {
-            signupSubmitBtn.click(); // Simulate click on submit button
-          }
-        }
-      });
-    });
-  }
-
-  // Open Login Modal when "Login" link is clicked
-  if (openLoginModalLink) {
-    openLoginModalLink.addEventListener("click", function (event) {
-      event.preventDefault();
-      signupModal.style.display = "none"; // Close signup modal
-      loginModal.style.display = "block"; // Open login modal
-    });
-  }
-});
-
-//manager login
-document.addEventListener("DOMContentLoaded", function () {
-  const loginForm = document.querySelector("#managerLoginForm");
-  const signupModal = document.getElementById("signupModal");
-  const loginModal = document.getElementById("authModal");
-  const openSignupModalLink = document.getElementById("openSignupModal");
-  const loginSubmitBtn = document.querySelector("#managerLoginBtn");
- 
-  if (loginForm) {
-    loginSubmitBtn.addEventListener("click", async function (e) {
-      e.preventDefault();
-      
-      const manager_id = loginForm.querySelector('input[placeholder="Manager ID"]').value;
-      const password = loginForm.querySelector('input[placeholder="Password"]').value;
-      const security_key = loginForm.querySelector('input[placeholder="Security Key"]').value;
-    
-      if(security_key !== "Apsingh@23"){
-        alert("Please enter the correct secuity key !\n Or choose the correct role to signup");
-        return;
-      }
-
-      if (!manager_id || !password || !security_key) {
-        alert("Please enter email and password.");
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:8080/manager-login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ manager_id, password }),
-        });
-
-        const data = await response.json();
-        user = data.user;
-
-        if (response.ok) {
-          alert("Login successful!");
-          loginForm.reset();
-          isLoggedIn = true;
-          loginBtn.classList.add("hidden");
-          signupBtn.classList.add("hidden");
-          logoutBtn.classList.remove("hidden");
-          clientImage.classList.remove("hidden");
-          loginModal.style.display = "none";
-          window.location.href = "./manager/manager.html";
-        } else {
-          if (data.message === "User not found") {
-            alert("ID not found. Redirecting to signup...");
-            loginModal.style.display = "none"; // Close login modal
-            signupModal.style.display = "block"; // Open signup modal
-          } else {
-            alert(data.message);
-          }
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again.");
-      }
-    });
-
-    loginForm.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default form submission on Enter
-
-        if (loginSubmitBtn) {
-          loginSubmitBtn.click(); // Simulate the click on the submit button
-        }
-      }
-    });
-  }
-
-  // Open Signup Modal when "Sign up" link is clicked
-  if (openSignupModalLink) {
-    openSignupModalLink.addEventListener("click", function (event) {
-      event.preventDefault();
-      loginModal.style.display = "none";
-      signupModal.style.display = "block";
-    });
-  }
-});
-
-//employee signup
-document.addEventListener("DOMContentLoaded", function () {
-  const signupForm = document.querySelector("#employeeSignupForm");
-  const loginModal = document.getElementById("authModal");
-  const signupModal = document.getElementById("signupModal");
-  const openLoginModalLink = document.getElementById("openLoginModal");
-  const signupSubmitBtn = document.querySelector("#employeeSignupBtn");
-
-  if (signupForm) {
-    signupSubmitBtn.addEventListener("click", async function (event) {
-      event.preventDefault();
-
-      const name = signupForm.querySelector('input[name="name"]').value.trim();
-      const email = signupForm.querySelector('input[name="email"]').value;
-      const mobile = signupForm
-        .querySelector('input[name="mobile"]')
-        .value.trim();
-      const password = signupForm.querySelector('input[name="password"]').value;
-      const confirmPassword = signupForm.querySelector(
-        'input[name="confirmPassword"]'
-      ).value;
-      
-
-      // Name validation: must start with a letter (no spaces or numbers at first position)
-      const nameRegex = /^[A-Za-z][A-Za-z\s]*$/;
-      if (!nameRegex.test(name)) {
-        alert("Invalid name. The first character must be a letter.");
-        return;
-      }
-
-      if (!name || !email || !mobile || !password || !confirmPassword ) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      if (!/^\d{10}$/.test(mobile)) {
-        alert("Please enter a valid 10-digit mobile number");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert("Passwords do not match. Please try again.");
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:8080/employee-signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email, mobile, password}),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          alert(data.message,"\nRedirecting to login...");
-          //signupForm.reset();
-          loginModal.style.display = "block"; // Open login modal
-          signupModal.style.display = "none"; // Close signup modal
-        } else {
-          alert(data.message);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again later.");
-      }
-
-      signupForm.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-          event.preventDefault(); // Prevent default form submission on Enter
-  
-          if (signupSubmitBtn) {
-            signupSubmitBtn.click(); // Simulate click on submit button
-          }
-        }
-      });
-    });
-  }
-
-  // Open Login Modal when "Login" link is clicked
-  if (openLoginModalLink) {
-    openLoginModalLink.addEventListener("click", function (event) {
-      event.preventDefault();
-      signupModal.style.display = "none"; // Close signup modal
-      loginModal.style.display = "block"; // Open login modal
-    });
-  }
-});
-
-//employee login
-document.addEventListener("DOMContentLoaded", function () {
-  const loginForm = document.querySelector("#employeeLoginForm");
-  const signupModal = document.getElementById("signupModal");
-  const loginModal = document.getElementById("authModal");
-  const openSignupModalLink = document.getElementById("openSignupModal");
-  const loginSubmitBtn = document.querySelector("#employeeLoginBtn");
- 
-  if (loginForm) {
-    loginSubmitBtn.addEventListener("click", async function (e) {
-      e.preventDefault();
-
-      const employee_id = loginForm.querySelector('input[name="employee_id"]').value;
-      const password = loginForm.querySelector('input[name="employeePassword"]').value;
-      // const security_key = loginForm.querySelector('input[placeholder="Security Key"]').value;
-    
-      // if(security_key !== "Apsingh@23"){
-      //   alert("Please enter the correct secuity key !\n Or choose the correct role to signup");
-      //   return;
-      // }
-
-      if (!employee_id || !password ) {
-        alert("Please enter email and password.");
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:8080/employee-login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ employee_id, password }),
-        });
-
-        const data = await response.json();
-        user = data.user;
-
-        if (response.ok) {
-          alert("Login successful!");
-          loginForm.reset();
-          isLoggedIn = true;
-          loginBtn.classList.add("hidden");
-          signupBtn.classList.add("hidden");
-          logoutBtn.classList.remove("hidden");
-          clientImage.classList.remove("hidden");
-          loginModal.style.display = "none";
-          window.location.href = "./employee/employee.html";
-        } else {
-          if (data.message === "User not found") {
-            alert("ID not found. Redirecting to signup...");
-            loginModal.style.display = "none"; // Close login modal
-            signupModal.style.display = "block"; // Open signup modal
-          } else {
-            alert(data.message);
-          }
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again.");
-      }
-    });
-
-    loginForm.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default form submission on Enter
-
-        if (loginSubmitBtn) {
-          loginSubmitBtn.click(); // Simulate the click on the submit button
-        }
-      }
-    });
-  }
-
-  // Open Signup Modal when "Sign up" link is clicked
-  if (openSignupModalLink) {
-    openSignupModalLink.addEventListener("click", function (event) {
-      event.preventDefault();
-      loginModal.style.display = "none";
-      signupModal.style.display = "block";
-    });
-  }
-});
 
 //password eye button
 document.addEventListener("DOMContentLoaded", function () {

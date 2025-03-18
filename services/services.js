@@ -1,84 +1,56 @@
-var isLoggedIn = false;
+document.addEventListener("DOMContentLoaded", () => {
+    const servicesGrid = document.querySelector(".services-grid");
+    let selectedServices = new Set(); // Use Set to track selected services
 
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.edit-btn');
-
-   
-
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-
-            if(isLoggedIn == false){
-                alert("You need to loggin first");
-                return ;
-            }
-            
-            if (button.textContent === 'Add To Cart') {
-                button.textContent = 'Added to Cart';
-                button.style.backgroundColor = 'blue';
-            } else {
-                button.textContent = 'Add to Cart';
-                button.style.backgroundColor = '';
-            }
-        });
-    });
-});
-
-let selectedServices = ["Service 1", "Service 2", "Service 3"]; // Sample data
-
-let cart = [
-    { name: "Service 1", price: 50 },
-    { name: "Service 2", price: 30 },
-];
-
-function openCart() {
-    displayCartItems();
-    document.getElementById("cartPopup").style.display = "block";
-    document.getElementById("cartOverlay").style.display = "block";
-}
-
-function closeCart() {
-    document.getElementById("cartPopup").style.display = "none";
-    document.getElementById("cartOverlay").style.display = "none";
-}
-
-function displayCartItems() {
-    let cartList = document.getElementById("cartItems");
-    let totalPrice = 0;
-    cartList.innerHTML = "";
-
-    cart.forEach(item => {
-        let li = document.createElement("li");
-        li.textContent = `${item.name} - $${item.price}`;
-        cartList.appendChild(li);
-        totalPrice += item.price;
-    });
-
-    document.getElementById("cartTotal").textContent = totalPrice.toFixed(2);
-}
-
-function openCheckout() {
-    closeCart();
-    document.getElementById("checkoutPopup").style.display = "block";
-    document.getElementById("checkoutOverlay").style.display = "block";
-}
-
-function closeCheckout() {
-    document.getElementById("checkoutPopup").style.display = "none";
-    document.getElementById("checkoutOverlay").style.display = "none";
-}
-
-function confirmBooking() {
-    let date = document.getElementById("service-date").value;
-    let time = document.getElementById("service-time").value;
-
-    if (!date) {
-        alert("Please select a date!");
-        return;
+    // Function to fetch services from the database
+    async function fetchServices() {
+        try {
+            const response = await fetch("/api/services"); // Replace with actual API endpoint
+            const services = await response.json();
+            renderServices(services);
+        } catch (error) {
+            console.error("Error fetching services:", error);
+        }
     }
 
-    alert("Booking Confirmed for " + date + " at " + time);
-    closeCheckout();
-}
+    // Function to render services dynamically
+    function renderServices(services) {
+        servicesGrid.innerHTML = ""; // Clear existing services
+        services.forEach(service => {
+            const serviceCard = document.createElement("div");
+            serviceCard.classList.add("service-card");
+            serviceCard.dataset.serviceId = service.id;
+            
+            serviceCard.innerHTML = `
+                <h3>${service.name}</h3>
+                <p>Price: ₹${service.price}</p>
+                <p>${service.description}</p>
+                <div class="actions">
+                    <button class="add-btn">Add To Cart</button>
+                </div>
+            `;
+            
+            const addButton = serviceCard.querySelector(".add-btn");
+            addButton.addEventListener("click", () => toggleService(service.id, addButton));
+            
+            servicesGrid.appendChild(serviceCard);
+        });
+    }
 
-document.getElementById("cartBtn").addEventListener("click", openCart);
+    // Function to add/remove service from cart
+    function toggleService(serviceId, button) {
+        if (selectedServices.has(serviceId)) {
+            selectedServices.delete(serviceId);
+            button.textContent = "Add To Cart";
+            button.classList.remove("selected");
+        } else {
+            selectedServices.add(serviceId);
+            button.textContent = "Remove From Cart";
+            button.classList.add("selected");
+        }
+        console.log("Selected Services:", Array.from(selectedServices));
+    }
+
+    // Fetch services on page load
+    fetchServices();
+});

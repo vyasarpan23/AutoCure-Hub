@@ -29,7 +29,7 @@ const authenticateUser = (req, res, next) => {
 // **User Signup**
 app.post("/user-signup", async (req, res) => {
   const { name, email, mobile, password } = req.body;
-
+ console.log(req.body);
   try {
     const [existingUser] = await db.query(
       "SELECT * FROM users WHERE email = ?",
@@ -54,11 +54,11 @@ app.post("/user-signup", async (req, res) => {
 
 // **User Login with JWT**
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  console.log(req.body);
+  const { user_email, user_password } = req.body;
+
   try {
     const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
-      email,
+      user_email,
     ]);
     if (users.length === 0) {
       return res
@@ -67,7 +67,7 @@ app.post("/login", async (req, res) => {
     }
 
     const user = users[0];
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(user_password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -87,8 +87,11 @@ app.post("/login", async (req, res) => {
 
 // **Manager Signup**
 app.post("/manager-signup", async (req, res) => {
-  const { name, email, mobile, password, security_key } = req.body;
- 
+  const { name, email, mobile, password, securityKey } = req.body;
+ if(securityKey !== SECRET_KEY) {
+  return res.status(400).json({ message: "Invalid security key\n Please select the correct role" });
+}
+
   try {
     const [existingManager] = await db.query(
       "SELECT * FROM managers WHERE email = ?",
@@ -101,7 +104,7 @@ app.post("/manager-signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     await db.query(
       "INSERT INTO managers (name, email, mobile, password, security_key) VALUES (?, ?, ?, ?, ?)",
-      [name, email, mobile, hashedPassword, security_key]
+      [name, email, mobile, hashedPassword, securityKey]
     );
 
     res.status(201).json({ message: "Manager registered successfully" });
@@ -113,11 +116,15 @@ app.post("/manager-signup", async (req, res) => {
 
 // **Manager Login
 app.post("/manager-login", async (req, res) => {
-  const { manager_id, password } = req.body;
+  const { managerId, password ,securityKey} = req.body;
   
+  if(securityKey !== SECRET_KEY) {
+    return res.status(400).json({ message: "Invalid security key\n Please select the correct role" });
+  }
+
   try {
     const [managers] = await db.query("SELECT * FROM managers WHERE manager_id = ?", [
-      manager_id,
+      managerId,
     ]);
     if (managers.length === 0) {
       return res
@@ -146,7 +153,7 @@ app.post("/manager-login", async (req, res) => {
 // **Employee Signup**
 app.post("/employee-signup", async (req, res) => {
   const { name, email, mobile, password } = req.body;
-
+  console.log(req.body);
   try {
     const [existingEmployee] = await db.query(
       "SELECT * FROM employees WHERE email = ?",
@@ -171,7 +178,7 @@ app.post("/employee-signup", async (req, res) => {
 
 // **Employee Login 
 app.post("/employee-login", async (req, res) => {
-  const { employee_id, password } = req.body;
+  const { employee_id, employeePassword } = req.body;
   
   try {
     const [employees] = await db.query("SELECT * FROM employees WHERE employee_id = ?", [
@@ -184,7 +191,7 @@ app.post("/employee-login", async (req, res) => {
     }
 
     const employee = employees[0];
-    const isMatch = await bcrypt.compare(password, employee.password);
+    const isMatch = await bcrypt.compare(employeePassword, employee.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -193,7 +200,7 @@ app.post("/employee-login", async (req, res) => {
 
     res.json({
       message: "Login successful",
-      manager: { id: employee.id, name: employee.name, email: employee.email },
+      employee: { id: employee.id, name: employee.name, email: employee.email },
     });
   } catch (error) {
     console.error("Error during login:", error);

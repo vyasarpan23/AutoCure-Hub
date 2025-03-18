@@ -17,7 +17,7 @@
     <nav class="bg-blue-800 shadow-md sticky top-0 z-50 gradient-background">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="logo flex items-center space-x-2">
-                <img src="logo.jpg" alt="AutoCure Logo" class="h-10 w-10">
+                <img src="../assets/logo.jpg" alt="AutoCure Logo" class="h-10 w-10">
                 <span class="text-white text-2xl font-bold">AutoCure Hub</span>
             </div>
             <div class="flex items-center space-x-8">
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Edit Popup -->
-    <div id="edit-popup" class="popup hidden">
+    <div id="edit-popup" class="popup2 hidden">
         <div class="popup-content">
             <h2>Edit Service</h2>
             <label for="service-name">Name:</label>
@@ -91,12 +91,12 @@
             <label for="service-description">Description:</label>
             <textarea id="service-description"></textarea>
             <button id="save-btn">Save</button>
-            <button id="cancel-btn">Cancel</button>
+            <button class="cancel-btn">Cancel</button>
         </div>
     </div>
 
     <!-- Add Service Popup -->
-    <div id="add-popup" class="popup hidden">
+    <div id="add-popup" class="popup2 hidden ">
         <div class="popup-content">
             <h2>Add Service</h2>
             <label for="new-service-name">Name:</label>
@@ -106,16 +106,17 @@
             <label for="new-service-description">Description:</label>
             <textarea id="new-service-description"></textarea>
             <button id="add-save-btn">Add</button>
-            <button id="add-cancel-btn">Cancel</button>
+            <button class="cancel-btn">Cancel</button>
         </div>
     </div>
 
-    <div id="confirm-popup" class="confirm-popup hidden">
+    <!-- Confirm Delete Popup -->
+    <div id="confirm-popup" class="popup2 hidden">
         <div class="confirm-popup-content">
             <h2>Confirm Delete</h2>
             <p>Are you sure you want to delete this service?</p>
             <button id="confirm-delete-btn">Yes, Delete</button>
-            <button id="cancel-delete-btn">Cancel</button>
+            <button class="cancel-btn">Cancel</button>
         </div>
     </div>
 
@@ -125,7 +126,7 @@
             <!-- Left: Logo and About -->
             <div>
                 <div class="flex flex-col items-center space-y-2">
-                    <img src="logo.jpg" alt="AutoCure Logo" class="h-[10rem]">
+                    <img src="../assets/logo.jpg" alt="AutoCure Logo" class="h-[10rem]">
                     <span class="text-4xl font-bold text-center">AutoCure Hub</span>
                 </div>
                 <p class="mt-3 text-gray-300 text-sm text-center">
@@ -183,7 +184,6 @@
         </div>
     </footer>
 
-    <script src="services_1.js"></script>
-    <Script src="../script.js"></Script>
+    <Script src="manager-services.js"></Script>
 </body>
 </html>
