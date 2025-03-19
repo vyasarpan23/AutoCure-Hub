@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             serviceCard.dataset.serviceId = service.id;
 
             serviceCard.innerHTML = `
-                <h3>${service.service_id}.${service.service_name}</h3>
+                <h3>${service.service_name}</h3>
                 <p>Price: ₹${service.price}</p>
                 <p>${service.description}</p>
                 <div class="actions">

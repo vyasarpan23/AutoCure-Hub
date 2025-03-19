@@ -54,18 +54,71 @@
     </div>
 
 
-    <!-- cart -->
-    <div class="cart-container">
-      <h2>Your Cart</h2>
-      <ul id="cartItems">
-          
-      </ul>
-      <p class="total">Total: ₹<span id="cartTotal">0.00</span></p>
-      <div class="cart-buttons">
-          <button class="cancel-btn" onclick="clearCart()">Cancel</button>
-          <button class="confirm-btn" onclick="confirmCart()">Confirm</button>
-      </div>
+    <!-- Cart Button -->
+<button id="cartBtn" class="fixed-cart-btn" >
+  <i class="fas fa-shopping-cart"></i> Cart <span id="cartCount">0</span>
+</button>
+
+<!-- Cart -->
+<div class="overlay" id="cartOverlay"></div>
+<div class="cart-container popup" id="cartPopup">
+  <h2>Your Cart</h2>
+  <ul id="cartItems">
+  </ul>
+  <p class="total">Total: ₹<span id="cartTotal">0.00</span></p>
+  <div class="cart-buttons">
+      <button class="cancel-btn" onclick="clearCart()">Cancel</button>
+      <button class="confirm-btn" onclick="openCheckout()">Confirm</button>
   </div>
+</div>
+
+<!-- Checkout Popup -->
+<div class="overlay" id="checkoutOverlay"></div>
+<div class="popup" id="checkoutPopup">
+  <h3>Book Your Service</h3>
+
+  <label for="owner-name">Owner Name:</label>
+  <input type="text" id="owner-name" placeholder="Enter your name" required>
+
+  <label for="car-number">Car Number:</label>
+  <input type="text" id="car-number" placeholder="Enter car number" required>
+
+  <label for="contact-number">Contact Number:</label>
+  <input type="tel" id="contact-number" placeholder="Enter contact number" required>
+
+  <label for="service-date">Choose a Date:</label>
+  <input type="date" id="service-date" required>
+
+  <label for="service-time">Choose a Time:</label>
+  <select id="service-time" required>
+      <option value="08:00 AM">08:00 AM</option>
+      <option value="09:00 AM">09:00 AM</option>
+      <option value="10:00 AM">10:00 AM</option>
+      <option value="11:00 AM">11:00 AM</option>
+      <option value="01:00 PM">01:00 PM</option>
+      <option value="02:00 PM">02:00 PM</option>
+      <option value="03:00 PM">03:00 PM</option>
+      <option value="04:00 PM">04:00 PM</option>
+  </select>
+
+  <div class="popup-buttons">
+      <button class="cancel-btn" onclick="closeCheckout()">Cancel</button>
+      <button class="confirm-btn" onclick="confirmBooking()">Confirm</button>
+  </div>
+</div>
+
+
+<!-- Cancel Booking Popup -->
+<div class="overlay" id="cancelOverlay"></div>
+<div class="popup" id="cancelPopup">
+  <h3>Cancel Your Booking</h3>
+  <p>Are you sure you want to cancel this booking?</p>
+  <div class="popup-buttons">
+      <button class="cancel-btn" onclick="closeCancelPopup()">No, Keep It</button>
+      <button class="confirm-btn" onclick="confirmCancellation()">Yes, Cancel</button>
+  </div>
+</div>
+
 
     <!-- Footer (Copied from index.html) -->
     <footer class="bg-gray-900 text-white py-10">
@@ -161,47 +214,6 @@
         </div>
     </footer>
 
-  
-
-    <!-- Cart Button -->
-    <button id="cartBtn" class="fixed-cart-btn">
-        <i class="fas fa-shopping-cart"></i> Cart <span id="cartCount">0</span>
-    </button>
-
-    <!-- Cart Popup -->
-    <div class="overlay" id="cartOverlay"></div>
-    <div class="popup cart-popup" id="cartPopup">
-        <h3>Your Cart</h3>
-        <ul id="cartItems"></ul>
-        <p class="total">Total: $<span id="cartTotal">0.00</span></p>
-        <div class="popup-buttons">
-            <button class="cancel-btn" onclick="closeCart()">Cancel</button>
-            <button class="checkout-btn" onclick="openCheckout()">Checkout</button>
-        </div>
-    </div>
-
-    <!-- Checkout Popup -->
-    <div class="overlay" id="checkoutOverlay"></div>
-    <div class="popup checkout-popup" id="checkoutPopup">
-        <h3>Book Your Service</h3>
-        <label for="service-date">Choose a Date:</label>
-        <input type="date" id="service-date">
-        <label for="service-time">Choose a Time:</label>
-        <select id="service-time">
-            <option value="08:00 AM">08:00 AM</option>
-            <option value="09:00 AM">09:00 AM</option>
-            <option value="10:00 AM">10:00 AM</option>
-            <option value="11:00 AM">11:00 AM</option>
-            <option value="01:00 PM">01:00 PM</option>
-            <option value="02:00 PM">02:00 PM</option>
-            <option value="03:00 PM">03:00 PM</option>
-            <option value="04:00 PM">04:00 PM</option>
-        </select>
-        <div class="popup-buttons">
-            <button class="cancel-btn" onclick="closeCheckout()">Cancel</button>
-            <button class="confirm-btn" onclick="confirmBooking()">Confirm</button>
-        </div>
-    </div>
 
 
   <!-- Login Modal -->
