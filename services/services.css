@@ -61,6 +61,11 @@ body {
     color: #fff;
 }
 
+.add-to-cart-btn{
+    background-color: #1ec66a;
+    color: #fff;
+}
+
 .delete-btn {
     background-color: #dc3545;
     color: #fff;

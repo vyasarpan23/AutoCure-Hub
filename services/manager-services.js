@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             serviceCard.dataset.serviceId = service.id;
 
             serviceCard.innerHTML = `
-                <h3>${service.name}</h3>
+                <h3>${service.service_id}.${service.service_name}</h3>
                 <p>Price: ₹${service.price}</p>
                 <p>${service.description}</p>
                 <div class="actions">
@@ -51,15 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
 
             serviceCard.querySelector(".edit-btn").addEventListener("click", () => openEditPopup(service));
-            serviceCard.querySelector(".delete-btn").addEventListener("click", () => openDeletePopup(service.id));
+            serviceCard.querySelector(".delete-btn").addEventListener("click", () => openDeletePopup(service.service_id));
             
             servicesGrid.appendChild(serviceCard);
         });
     }
 
     function openEditPopup(service) {
-        editingServiceId = service.id;
-        serviceName.value = service.name;
+        editingServiceId = service.service_id;
+        serviceName.value = service.service_name;
         servicePrice.value = service.price;
         serviceDescription.value = service.description;
         editPopup.classList.remove("hidden");
@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     addSaveBtn.addEventListener("click", async () => {
+        
         const serviceData = {
             name: newServiceName.value,
             price: newServicePrice.value,
@@ -102,6 +103,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetchServices();
                 alert("Service added successfully!");
                 addPopup.classList.add("hidden");
+            }else{
+                alert("Error in adding service");
             }
         } catch (error) {
             console.error("Error in adding service:", error);
@@ -128,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetchServices();
                 alert("Service Updated successfully!");
                 editPopup.classList.add("hidden");
+
             }
         } catch (error) {
             console.error("Error updating service:", error);

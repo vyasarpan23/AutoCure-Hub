@@ -520,7 +520,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//porfile page
+//profile page
 document.addEventListener("DOMContentLoaded", function () {
   const profile = document.querySelector("#clientImage");
   const profilePage = document.querySelector("#profileModal");
@@ -535,4 +535,39 @@ document.addEventListener("DOMContentLoaded", function () {
     profileEmail.textContent = user.email;
     profileId.textContent = user.id;
   }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  // Profile Sidebar Toggle
+  const profileImage = document.getElementById("clientImage");
+  const profileSidebar = document.getElementById("profileSidebar");
+  const sidebarProfileImage = document.getElementById("sidebarProfileImage");
+  const sidebarProfileName = document.getElementById("sidebarProfileName");
+  const sidebarProfilePost = document.getElementById("sidebarProfilePost");
+
+  profileImage.addEventListener("click", function (event) {
+    event.stopPropagation(); // Prevents the event from bubbling up
+    profileSidebar.classList.toggle("hidden"); // Toggle visibility
+    profileImage.classList.toggle("hidden"); // Hide profile image
+    logoutBtn.classList.toggle("hidden"); // Hide logout button
+    sidebarProfileImage.src = profileImage.src; // Set sidebar profile image
+    sidebarProfileName.textContent = "John Doe"; // Set sidebar profile name
+    sidebarProfilePost.textContent = "Employee"; // Set sidebar profile post
+  });
+
+  document.addEventListener("click", function (event) {
+    if (
+      !profileSidebar.contains(event.target) &&
+      event.target !== profileImage
+    ) {
+      profileSidebar.classList.add("hidden");
+      profileImage.classList.remove("hidden"); // Show profile image
+      logoutBtn.classList.remove("hidden"); // Show logout button
+    }
+  });
+});
+
+document.getElementById("clientImage").addEventListener("click", function () {
+  document.getElementById("profileSidebar").classList.toggle("active");
 });
