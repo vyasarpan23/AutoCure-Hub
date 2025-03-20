@@ -48,7 +48,7 @@
         <li><a href="#Analytics" class="block py-2 hover:bg-blue-700 rounded">Analytics & Reports</a></li>
         <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Settings</a></li>
         <li><a href="#" id="addManagerBtn" class="block py-2 hover:bg-blue-700 rounded">Add Manager</a></li>
-<li><a href="#" id="addEmployeeBtn" class="block py-2 hover:bg-blue-700 rounded">Add Employee</a></li>
+
     </ul>
 </aside>
 
@@ -142,91 +142,7 @@ document.getElementById('managerSignupBtn').addEventListener('click', function (
     </ul>
 </aside>
 
-<!-- Add Employee Button -->
-<li><a href="#" id="addEmployeeBtn" class="block py-2 hover:bg-blue-700 rounded">Add Employee</a></li>
 
-<!-- Employee Signup Modal (Initially Hidden) -->
-<div id="employeeSignupModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
-    <div class="bg-white p-6 rounded-lg shadow-2xl w-96 relative z-60">
-        <!-- Close Button -->
-        <button id="closeEmployeeModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
-
-        <!-- Signup Form -->
-        <h3 class="text-2xl font-bold text-blue-700 mb-4 text-center">Employee Signup</h3>
-        <form id="employeeSignupForm" class="space-y-4">
-            <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
-            <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
-            <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
-            <input type="text" name="employeeID" placeholder="Employee ID" class="w-full p-3 border rounded-md" required>
-
-            <!-- Password Field -->
-            <div class="relative">
-                <input type="password" name="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10" required>
-                <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
-            </div>
-
-            <!-- Confirm Password Field -->
-            <div class="relative">
-                <input type="password" name="confirmPassword" placeholder="Confirm Password" class="password-input w-full p-3 border rounded-md pr-10" required>
-                <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
-            </div>
-
-            <button id="employeeSignupBtn" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
-                Signup
-            </button>
-        </form>
-    </div>
-</div>
-
-<!-- JavaScript for Modal & Validation -->
-<script>
-    // Open modal when clicking "Add Employee" button
-    document.getElementById('addEmployeeBtn').addEventListener('click', function (event) {
-        event.preventDefault();
-        document.getElementById('employeeSignupModal').classList.remove('hidden');
-    });
-
-    // Close modal when clicking the close button
-    document.getElementById('closeEmployeeModal').addEventListener('click', function () {
-        document.getElementById('employeeSignupModal').classList.add('hidden');
-    });
-
-    // Toggle password visibility
-    document.querySelectorAll('.toggle-password').forEach(item => {
-        item.addEventListener('click', function () {
-            let passwordInput = this.previousElementSibling;
-            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
-            this.innerHTML = passwordInput.type === "password" ? "👁️" : "👁️‍🗨️";
-        });
-    });
-
-    // Form validation
-    document.getElementById('employeeSignupBtn').addEventListener('click', function (event) {
-        event.preventDefault();
-
-        let password = document.querySelector('input[name="password"]').value;
-        let confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
-        let mobile = document.querySelector('input[name="mobile"]').value;
-        let email = document.querySelector('input[name="email"]').value;
-
-        if (password !== confirmPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
-
-        if (!/^\d{10}$/.test(mobile)) {
-            alert("Mobile number must be exactly 10 digits!");
-            return;
-        }
-
-        if (!email.endsWith("@gmail.com")) {
-            alert("Email must be a Gmail address (@gmail.com)!");
-            return;
-        }
-
-        alert("Employee signup successful!");
-    });
-</script>
 
         <!-- Main Dashboard Area -->
         <main class="flex-1 p-8">
@@ -313,16 +229,108 @@ document.getElementById('managerSignupBtn').addEventListener('click', function (
                             </tr>
                         </tbody>
                     </table>
-                   <!-- Container for buttons -->
+                  
+                    <!-- Container for buttons -->
 <div class="flex justify-between mt-4 px-4">
-    
-
-
     <!-- View All Employees button (Right) -->
     <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         View All 
     </button>
+    <div class="flex justify-end mt-4 px-4">
+        <!-- Add Employee button (Right) -->
+        <a href="#" id="addEmployeeBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Add Employee
+        </a>
+    </div>
 </div>
+
+
+
+
+<!-- Employee Signup Modal (Initially Hidden) -->
+<div id="employeeSignupModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-2xl w-96 relative z-60">
+        <!-- Close Button -->
+        <button id="closeEmployeeModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
+
+        <!-- Signup Form -->
+        <h3 class="text-2xl font-bold text-blue-700 mb-4 text-center">Employee Signup</h3>
+        <form id="employeeSignupForm" class="space-y-4">
+            <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+            <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+            <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md" required>
+
+            <!-- Password Field -->
+            <div class="relative">
+                <input type="password" name="password" placeholder="Password" class="password-input w-full p-3 border rounded-md pr-10" required>
+                <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="relative">
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" class="password-input w-full p-3 border rounded-md pr-10" required>
+                <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+            </div>
+
+            <input type="text" name="securityKey" placeholder="Security Key" class="w-full p-3 border rounded-md" required>
+
+
+            <button id="employeeSignupBtn" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
+                Signup
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- JavaScript for Modal & Validation -->
+<script>
+    // Open modal when clicking "Add Employee" button
+    document.getElementById('addEmployeeBtn').addEventListener('click', function (event) {
+        event.preventDefault();
+        document.getElementById('employeeSignupModal').classList.remove('hidden');
+    });
+
+    // Close modal when clicking the close button
+    document.getElementById('closeEmployeeModal').addEventListener('click', function () {
+        document.getElementById('employeeSignupModal').classList.add('hidden');
+    });
+
+    // Toggle password visibility
+    document.querySelectorAll('.toggle-password').forEach(item => {
+        item.addEventListener('click', function () {
+            let passwordInput = this.previousElementSibling;
+            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+            this.innerHTML = passwordInput.type === "password" ? "👁️" : "👁️‍🗨️";
+        });
+    });
+
+    // Form validation
+    document.getElementById('employeeSignupBtn').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        let password = document.querySelector('input[name="password"]').value;
+        let confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+        let mobile = document.querySelector('input[name="mobile"]').value;
+        let email = document.querySelector('input[name="email"]').value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        if (!/^\d{10}$/.test(mobile)) {
+            alert("Mobile number must be exactly 10 digits!");
+            return;
+        }
+
+        if (!email.endsWith("@gmail.com")) {
+            alert("Email must be a Gmail address (@gmail.com)!");
+            return;
+        }
+
+        alert("Employee signup successful!");
+    });
+</script>
 
 
                     

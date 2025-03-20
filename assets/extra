@@ -27,6 +27,8 @@
               class="password-input w-full p-3 border rounded-md pr-10" required>
             <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
           </div>
+          <input type="text" name="securityKey" placeholder="Security Key" class="w-full p-3 border rounded-md" required>
+
 
           <button  id="employeeSignupBtn"
             class=" w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Signup</button>
