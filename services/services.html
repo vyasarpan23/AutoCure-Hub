@@ -47,50 +47,78 @@
                 <p>Price: ₹5000</p>
                 <p>Regular maintenance to keep your car in top condition.</p>
                 <div class="actions">
-                    <button class="edit-btn">Add To Cart</button>
+                    <button class="add-to-cart-btn">Add To Cart</button>
                 </div>
             </div>
           </div>  
     </div>
 
-    <!-- Add To Cart Popup -->
-    <div id="Add To Cart-popup" class="popup hidden">
-        <div class="popup-content">
-            <h2>Add To Cart Service</h2>
-            <label for="service-name">Name:</label>
-            <input type="text" id="service-name">
-            <label for="service-price">Price:</label>
-            <input type="number" id="service-price">
-            <label for="service-description">Description:</label>
-            <textarea id="service-description"></textarea>
-            <button id="save-btn">Save</button>
-            <button id="cancel-btn">Cancel</button>
-        </div>
-    </div>
 
-    <!-- Add Service Popup -->
-    <div id="add-popup" class="popup hidden">
-        <div class="popup-content">
-            <h2>Add Service</h2>
-            <label for="new-service-name">Name:</label>
-            <input type="text" id="new-service-name">
-            <label for="new-service-price">Price:</label>
-            <input type="number" id="new-service-price">
-            <label for="new-service-description">Description:</label>
-            <textarea id="new-service-description"></textarea>
-            <button id="add-save-btn">Add</button>
-            <button id="add-cancel-btn">Cancel</button>
-        </div>
-    </div>
+    <!-- Cart Button -->
+<button id="cartBtn" class="fixed-cart-btn" >
+  <i class="fas fa-shopping-cart"></i> Cart <span id="cartCount">0</span>
+</button>
 
-    <div id="confirm-popup" class="confirm-popup hidden">
-        <div class="confirm-popup-content">
-            <h2>Confirm Delete</h2>
-            <p>Are you sure you want to delete this service?</p>
-            <button id="confirm-delete-btn">Yes, Delete</button>
-            <button id="cancel-delete-btn">Cancel</button>
-        </div>
-    </div>
+<!-- Cart -->
+<div class="overlay" id="cartOverlay"></div>
+<div class="cart-container popup" id="cartPopup">
+  <h2>Your Cart</h2>
+  <ul id="cartItems">
+  </ul>
+  <p class="total">Total: ₹<span id="cartTotal">0.00</span></p>
+  <div class="cart-buttons">
+      <button class="cancel-btn" onclick="clearCart()">Cancel</button>
+      <button class="confirm-btn" onclick="openCheckout()">Confirm</button>
+  </div>
+</div>
+
+<!-- Checkout Popup -->
+<div class="overlay" id="checkoutOverlay"></div>
+<div class="popup" id="checkoutPopup">
+  <h3>Book Your Service</h3>
+
+  <label for="owner-name">Owner Name:</label>
+  <input type="text" id="owner-name" placeholder="Enter your name" required>
+
+  <label for="car-number">Car Number:</label>
+  <input type="text" id="car-number" placeholder="Enter car number" required>
+
+  <label for="contact-number">Contact Number:</label>
+  <input type="tel" id="contact-number" placeholder="Enter contact number" required>
+
+  <label for="service-date">Choose a Date:</label>
+  <input type="date" id="service-date" required>
+
+  <label for="service-time">Choose a Time:</label>
+  <select id="service-time" required>
+      <option value="08:00 AM">08:00 AM</option>
+      <option value="09:00 AM">09:00 AM</option>
+      <option value="10:00 AM">10:00 AM</option>
+      <option value="11:00 AM">11:00 AM</option>
+      <option value="01:00 PM">01:00 PM</option>
+      <option value="02:00 PM">02:00 PM</option>
+      <option value="03:00 PM">03:00 PM</option>
+      <option value="04:00 PM">04:00 PM</option>
+  </select>
+
+  <div class="popup-buttons">
+      <button class="cancel-btn" onclick="closeCheckout()">Cancel</button>
+      <button class="confirm-btn" onclick="confirmBooking()">Confirm</button>
+  </div>
+</div>
+
+
+<!-- Cancel Booking Popup -->
+<div class="overlay" id="cancelOverlay"></div>
+<div class="popup" id="cancelPopup">
+  <h3>Cancel Your Booking</h3>
+  <p>Are you sure you want to cancel this booking?</p>
+  <div class="popup-buttons">
+      <button class="cancel-btn" onclick="closeCancelPopup()">No, Keep It</button>
+      <button class="confirm-btn" onclick="confirmCancellation()">Yes, Cancel</button>
+  </div>
+</div>
+
 
     <!-- Footer (Copied from index.html) -->
     <footer class="bg-gray-900 text-white py-10">
@@ -98,7 +126,7 @@
             <!-- Left: Logo and About -->
             <div>
                 <div class="flex flex-col items-center space-y-2">
-                    <img src="logo.jpg" alt="AutoCure Logo" class="h-[10rem]">
+                    <img src="../assets/logo.jpg" alt="AutoCure Logo" style="height: 10rem; width: auto;">
                     <span class="text-4xl font-bold text-center">AutoCure Hub</span>
                 </div>
                 <p class="mt-3 text-gray-300 text-sm text-center">
@@ -133,19 +161,49 @@
             <!-- Right: Contact Details -->
             <div>
                 <h3 class="text-lg font-semibold text-white mb-4">Contact</h3>
-                <p class="text-gray-300 mb-3"><i class="fas fa-map-marker-alt text-red-500"></i> Your Location Here</p>
-                <p class="text-gray-300 mb-3"><i class="fas fa-envelope text-red-500"></i> contact@autocurehub.com</p>
-                <p class="text-gray-300 mb-3"><i class="fas fa-phone text-red-500"></i> +91 73979 97979</p>
+                <div class="flex items-center gap-2 text-gray-300 mb-3">
+                  <i class="fas fa-map-marker-alt text-red-500"></i>
+                  <a href="https://www.google.com/maps/place/Amitesh+Tower/@22.681196,75.8498471,17z/data=!3m1!4b1!4m6!3m5!1s0x3962fd1a1490196f:0xa8ae079e05e14ea7!8m2!3d22.681196!4d75.852422!16s%2Fg%2F11gmcxn96w?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" 
+                     class="hover:underline text-gray-300">
+                      Location
+                  </a>
+              </div>
+              
+                
+                <div class="flex items-center gap-2 text-gray-300 mb-3">
+                    <i class="fas fa-envelope text-red-500"></i>
+                    <span>contact@autocurehub.com</span>
+                </div>
+                
+                <div class="flex items-center gap-2 text-gray-300 mb-3">
+                    <i class="fas fa-phone text-red-500"></i>
+                    <span>+91 73979 97979</span>
+                </div>
 
                 <h3 class="text-lg font-semibold text-white mt-8 mb-4">FOLLOW US:</h3>
 
                 <!-- Social Icons -->
-                <div class="flex space-x-6 mt-4">
-                    <a href="https://wa.me/1234567890" class="text-green-400 hover:text-green-500"><i class="fab fa-whatsapp fa-2x"></i></a>
-                    <a href="https://www.instagram.com" class="text-pink-400 hover:text-pink-500"><i class="fab fa-instagram fa-2x"></i></a>
-                    <a href="https://www.twitter.com" class="text-blue-400 hover:text-blue-500"><i class="fab fa-twitter fa-2x"></i></a>
-                    <a href="https://www.linkedin.com" class="text-blue-600 hover:text-blue-700"><i class="fab fa-linkedin fa-2x"></i></a>
-                    <a href="https://www.youtube.com" class="text-red-500 hover:text-red-600"><i class="fab fa-youtube fa-2x"></i></a>
+                <div class="flex space-x-6 mt-4"> <!-- Increased space between icons -->
+                  <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="text-green-400 hover:text-green-500">
+                    <i class="fab fa-whatsapp fa-2x"></i>
+                </a>
+                
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-500">
+                    <i class="fab fa-instagram fa-2x"></i>
+                </a>
+                
+                <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-500">
+                    <i class="fab fa-twitter fa-2x"></i>
+                </a>
+                
+                <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-700">
+                    <i class="fab fa-linkedin fa-2x"></i>
+                </a>
+                
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="text-red-500 hover:text-red-600">
+                    <i class="fab fa-youtube fa-2x"></i>
+                </a>
+                
                 </div>
             </div>
         </div>
@@ -156,47 +214,6 @@
         </div>
     </footer>
 
-  
-
-    <!-- Cart Button -->
-    <button id="cartBtn" class="fixed-cart-btn">
-        <i class="fas fa-shopping-cart"></i> Cart <span id="cartCount">0</span>
-    </button>
-
-    <!-- Cart Popup -->
-    <div class="overlay" id="cartOverlay"></div>
-    <div class="popup cart-popup" id="cartPopup">
-        <h3>Your Cart</h3>
-        <ul id="cartItems"></ul>
-        <p class="total">Total: $<span id="cartTotal">0.00</span></p>
-        <div class="popup-buttons">
-            <button class="cancel-btn" onclick="closeCart()">Cancel</button>
-            <button class="checkout-btn" onclick="openCheckout()">Checkout</button>
-        </div>
-    </div>
-
-    <!-- Checkout Popup -->
-    <div class="overlay" id="checkoutOverlay"></div>
-    <div class="popup checkout-popup" id="checkoutPopup">
-        <h3>Book Your Service</h3>
-        <label for="service-date">Choose a Date:</label>
-        <input type="date" id="service-date">
-        <label for="service-time">Choose a Time:</label>
-        <select id="service-time">
-            <option value="08:00 AM">08:00 AM</option>
-            <option value="09:00 AM">09:00 AM</option>
-            <option value="10:00 AM">10:00 AM</option>
-            <option value="11:00 AM">11:00 AM</option>
-            <option value="01:00 PM">01:00 PM</option>
-            <option value="02:00 PM">02:00 PM</option>
-            <option value="03:00 PM">03:00 PM</option>
-            <option value="04:00 PM">04:00 PM</option>
-        </select>
-        <div class="popup-buttons">
-            <button class="cancel-btn" onclick="closeCheckout()">Cancel</button>
-            <button class="confirm-btn" onclick="confirmBooking()">Confirm</button>
-        </div>
-    </div>
 
 
   <!-- Login Modal -->

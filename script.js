@@ -12,8 +12,7 @@ const modals = document.querySelectorAll(".modal");
 const closeBtns = document.querySelectorAll(".close");
 const loginBtn = document.getElementById("loginBtn");
 const signupBtn = document.getElementById("signupBtn");
-const contactBtn = document.getElementById("contactBtn");
-const contactBtn2 = document.getElementById("contactBtn2");
+const contactBtn = document.querySelectorAll(".contact-btn");
 const serviceBtn = document.getElementById("services-button");
 const reviewBtn = document.getElementById("reviewBtn");
 const bookServiceBtn = document.getElementById("bookServiceBtn");
@@ -29,11 +28,16 @@ function closeModal(modalId) {
 // Modal button event listeners
 loginBtn?.addEventListener("click", () => openModal("authModal"));
 signupBtn?.addEventListener("click", () => openModal("signupModal"));
-contactBtn?.addEventListener("click", () => openModal("contactModal"));
-contactBtn2?.addEventListener("click", () => openModal("contactModal"));
 serviceBtn?.addEventListener("click", () => openModal("servicesModal"));
 bookServiceBtn?.addEventListener("click", () => openModal("servicesModal"));
 reviewBtn?.addEventListener("click", () => openModal("ratingModal"));
+
+contactBtn.forEach((btn)=>{
+  btn.addEventListener("click", () => {
+  openModal("contactModal")
+}
+  );
+});
 
 closeBtns.forEach((btn) => {
   btn.onclick = function () {
@@ -520,7 +524,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//porfile page
+//profile page
 document.addEventListener("DOMContentLoaded", function () {
   const profile = document.querySelector("#clientImage");
   const profilePage = document.querySelector("#profileModal");
@@ -535,4 +539,66 @@ document.addEventListener("DOMContentLoaded", function () {
     profileEmail.textContent = user.email;
     profileId.textContent = user.id;
   }
+});
+
+//slider
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.querySelector(".gallery-slider");
+
+  function moveFirstToLast() {
+    if (slider.children.length > 1) {
+      let firstCard = slider.children[0]; // Get the first image
+      slider.style.transition = "transform 0.5s ease-in-out";
+      slider.style.transform = "translateX(-210px)"; // Move left by one card width
+
+      setTimeout(() => {
+        slider.style.transition = "none"; // Disable transition for smooth movement
+        slider.appendChild(firstCard); // Move the first card to the end
+        slider.style.transform = "translateX(0)"; // Reset position
+      }, 500);
+    }
+  }
+
+  // Auto-slide every 2 seconds
+  setInterval(moveFirstToLast, 2000);
+});
+
+//slider
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.querySelector(".reviews-slider");
+
+  function moveFirstToLast() {
+    if (slider.children.length > 1) {
+      let firstCard = slider.children[0]; // Get the first image
+      slider.style.transition = "transform 0.5s ease-in-out";
+      slider.style.transform = "translateX(-210px)"; // Move left by one card width
+
+      setTimeout(() => {
+        slider.style.transition = "none"; // Disable transition for smooth movement
+        slider.appendChild(firstCard); // Move the first card to the end
+        slider.style.transform = "translateX(-100px)"; // Reset position
+      }, 500 );
+    }
+  }
+
+  // Auto-slide every 2 seconds
+  setInterval(moveFirstToLast, 2000);
+});
+
+//location button
+document.querySelectorAll('.location-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        window.open(googleMapsUrl, '_blank');
+      }, error => {
+        alert("Unable to retrieve your location. Please enable location access.");
+      });
+    } else {
+      alert("Geolocation is not supported by your browser.");
+    }
+  });
 });

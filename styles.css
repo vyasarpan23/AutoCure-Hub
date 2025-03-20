@@ -439,3 +439,82 @@ transform: translateY(0); /* Reset on click */
   margin-right: 5px;
 }
 
+#profilePopup {
+  position: absolute;
+  top: 60px; /* Adjust based on your navbar height */
+  right: 70px;
+  z-index: 100;
+}
+
+/* Profile Sidebar */
+#profileSidebar {
+  position: fixed;
+  top: 4.58rem; /* Adjusted to start below the navbar */
+  right: 0;
+  width: 275px; /* Set a proper width */
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  height: calc(100vh - 4rem); /* Adjust height dynamically */
+  overflow-y: auto; /* Enables scrolling if needed */
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(100%); /* Hide sidebar by default */
+}
+
+/* Show the sidebar when active */
+#profileSidebar.active {
+  transform: translateX(0);
+}
+
+/* gallery slider styles */
+.gallery-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.gallery-slider {
+  display: flex;
+  transition: transform 0.5s ease;
+  gap: 10px;
+}
+
+.gallery-card {
+  flex: 0 0 200px;
+  background: white;
+  padding: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  animation: slideIn 15s linear infinite;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Gallery slider styles */
+.gallery-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.gallery-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  gap: 10px;
+}
+
+.gallery-card {
+  flex: 0 0 200px;
+  background: white;
+  padding: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+
