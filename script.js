@@ -16,6 +16,7 @@ const contactBtn = document.querySelectorAll(".contact-btn");
 const serviceBtn = document.getElementById("services-button");
 const reviewBtn = document.getElementById("reviewBtn");
 const bookServiceBtn = document.getElementById("bookServiceBtn");
+const viewProfile = document.querySelectorAll(".profile-page");
 
 function openModal(modalId) {
   document.getElementById(modalId).style.display = "block";
@@ -35,6 +36,14 @@ reviewBtn?.addEventListener("click", () => openModal("ratingModal"));
 contactBtn.forEach((btn)=>{
   btn.addEventListener("click", () => {
   openModal("contactModal")
+}
+  );
+});
+
+viewProfile.forEach((btn)=>{
+  btn.addEventListener("click", () => {
+    alert("button");
+    window.location.href = "./profile/user_profile.html";
 }
   );
 });
