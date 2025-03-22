@@ -42,7 +42,32 @@
                     <img src="../assets/image-person.png" alt="AutoCure Logo" class="h-10 w-10" id="clientImage">
                 </div>
             </div>
-        </div>
+        </div> 
+        <!-- Profile Sidebar -->
+<div id="profileSidebar" class="fixed inset-y-0 right-0 bg-white shadow-lg w-60 p-4 hidden z-50">
+    <!-- Profile Header with Gray Background -->
+    <div class="bg-gray-100 p-4 rounded-t-lg">
+        <img src="../assets/image-person.png" alt="Profile Photo" class="h-20 w-20 mx-auto mb-2 rounded-full" id="sidebarProfileImage">
+        <p class="text-center font-semibold" id="sidebarProfileName">John Doe</p>
+        <p class="text-center text-gray-600 text-sm" id="sidebarProfilePost">Employee</p>
+    </div>
+    <hr class="my-4">
+    <ul>
+        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center">
+            <i class="fas fa-user mr-2"></i> View Profile
+        </li>
+        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center">
+            <i class="fas fa-edit mr-2"></i> Edit Profile
+        </li>
+        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center">
+            <i class="fas fa-cog mr-2"></i> Settings
+        </li>
+        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer flex items-center" id="sidebarLogoutBtn">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+        </li>
+    </ul>
+</div>
+
     </nav>
 
     <!-- Sidebar -->
@@ -53,9 +78,7 @@
             <li><a href="#Employee" class="block py-2 hover:bg-blue-700 rounded">Employee Management</a></li>
             <li><a href="../services/manager-services.html" class="block py-2 hover:bg-blue-700 rounded">Service
                     Management</a></li>
-            <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Reviews & Feedback</a></li>
             <li><a href="#Analytics" class="block py-2 hover:bg-blue-700 rounded">Analytics & Reports</a></li>
-            <li><a href="#" class="block py-2 hover:bg-blue-700 rounded">Settings</a></li>
             <li><a href="#" id="addManagerBtn" class="block py-2 hover:bg-blue-700 rounded">Add Manager</a></li>
 
         </ul>
