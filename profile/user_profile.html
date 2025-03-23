@@ -13,91 +13,7 @@
     <link rel="stylesheet" href="./assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css">
     <link rel="stylesheet" href="../styles.css">    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        
-        .content {
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            padding: 10px;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .profile-card, .info-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .profile-card {
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            justify-content: center;
-        }
-        .profile-card img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-        .profile-card h2 {
-            font-size: 22px;
-            margin-bottom: 5px;
-            margin-top: 15px;
-        }
-        .profile-card .edit {
-            justify-content: center;
-            align-items: center;
-            color: #007bff;
-            cursor: pointer;
-        }
-        .profile-divider {
-        width: 80%; 
-        margin: 20px auto; /* Increased top margin for more space */
-        }
-        .info-section {
-            flex: 3;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .info-card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .info-card ul {
-            list-style: none;
-        }
-        .info-card ul li {
-            padding: 5px 0;
-            display: flex;
-            justify-content: space-between;
-        }
-        #profile-image{
-            justify-content: center;
-            margin: 0 auto 10px;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./user_profile.css">
 </head>
 <body>
 
@@ -260,11 +176,6 @@
     </div>
   </footer>
   
-
-    <script>
-        document.querySelector('.edit').addEventListener('click', function() {
-            alert('Edit functionality can be implemented here!');
-        });
-    </script>
+    <script src="user_profile.js"></script>
 </body>
 </html>

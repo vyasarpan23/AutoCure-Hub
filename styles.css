@@ -468,7 +468,7 @@ transform: translateY(0); /* Reset on click */
 /* Slider container */
 .slider {
   width: 100%;
-  height: 400px; /* Adjust height */
+  height: 300px; /* Adjust height */
   overflow: hidden;
   position: relative;
   display: flex;
@@ -487,7 +487,7 @@ transform: translateY(0); /* Reset on click */
 .slide {
   flex: 0 0 auto;
   width: 400px; /* Set slide width */
-  height: 350px; /* Set slide height */
+  height: 250px; /* Set slide height */
   border-radius: 15px;
   overflow: hidden;
 }

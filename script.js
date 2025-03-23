@@ -210,7 +210,7 @@ function initializeStarRating() {
       }
 
       try {
-        const response = await fetch("http://localhost:8080/submit-review", {
+        const response = await fetch("http://localhost:8080/reviews/submit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
    
 
     try {
-      const response = await fetch(`http://localhost:8080/${endpoint}`, {
+      const response = await fetch(`http://localhost:8080/users/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
@@ -402,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/${endpoint}`, {
+      const response = await fetch(`http://localhost:8080/users/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
@@ -611,3 +611,83 @@ document.querySelectorAll('.location-btn').forEach(button => {
     }
   });
 });
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const servicesContainer = document.querySelector("#services .grid");
+  const servicesButton = document.querySelector("#services-button");
+  const isLoggedIn = window.isLoggedIn; // Assuming this is set globally
+
+  // Fetch services from backend
+  try {
+      const response = await fetch("http://localhost:8080/services");
+      const services = await response.json();
+
+      if (!Array.isArray(services)) throw new Error("Invalid response format");
+
+      servicesContainer.innerHTML = ""; // Clear existing static content
+      let id = 1;
+      services.slice(0, 4).forEach(service => {
+          const imageUrl = `http://localhost:8080/services/image/${id}`; // Fetch image dynamically
+          id++;
+          const serviceCard = document.createElement("div");
+          serviceCard.classList.add("bg-white", "p-6", "shadow-md", "rounded-xl", "service-card");
+
+          serviceCard.innerHTML = `
+                <img src="${imageUrl}" alt="${service.service_name}" class=" p-4 rounded-3xl w-full h-56 w-65  object-cover">
+              <h4 class="font-bold text-xl">${service.service_name}</h4>
+              <p>${service.description}</p>
+              <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 book-now" data-id="${service.id}">Book Now</button>
+          `;
+
+          servicesContainer.appendChild(serviceCard);
+      });
+  } catch (error) {
+      console.error("Error fetching services:", error);
+  }
+
+  // Handle button clicks
+  document.body.addEventListener("click", (event) => {
+      if (event.target.classList.contains("book-now")) {
+          if (!isLoggedIn) {
+              alert("You need to log in to book a service.");
+          } else {
+              window.location.href = "./services/service.html";
+          }
+      }
+  });
+
+  // Handle 'View All Services' button
+  servicesButton.addEventListener("click", () => {
+      if (!isLoggedIn) {
+          alert("You need to log in to view all services.");
+      } else {
+          window.location.href = "./services/service.html";
+      }
+  });
+});
+
+//gallery
+document.addEventListener("DOMContentLoaded", async () => {
+  const galleryContainer = document.querySelector(".slide-track");
+
+  try {
+      const response = await fetch("http://localhost:8080/gallery");
+      const images = await response.json();
+
+      galleryContainer.innerHTML = ""; // Clear existing content
+
+      images.forEach(img => {
+          const imageElement = document.createElement("img");
+          imageElement.src = img.image;
+          imageElement.alt = "Gallery Image";
+          imageElement.classList.add("slide");
+
+          galleryContainer.appendChild(imageElement);
+      });
+  } catch (error) {
+      console.error("Error fetching gallery images:", error);
+  }
+});
+
+
+

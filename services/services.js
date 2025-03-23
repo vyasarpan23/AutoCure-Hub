@@ -1,3 +1,5 @@
+const userId = 1;
+
 document.addEventListener("DOMContentLoaded", () => {
     const servicesGrid = document.querySelector(".services-grid");
     const cartBtn = document.getElementById("cartBtn");
@@ -22,15 +24,36 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error fetching services:", error);
         }
     }
-
-    function renderServices(services) {
+    
+    async function getServiceImageUrl(serviceId) {
+        try {
+            const response = await fetch(`http://localhost:8080/services/image/${serviceId}`);
+    
+            if (!response.ok) {
+                throw new Error("Image not found");
+            }
+    
+            const blob = await response.blob();
+            return URL.createObjectURL(blob); // Convert image blob to URL
+        } catch (error) {
+            console.error(`Error fetching image for service ID ${serviceId}:`, error);
+            return "default-image.jpg"; // Fallback image
+        }
+    }
+    
+    async function renderServices(services) {
         servicesGrid.innerHTML = "";
-        services.forEach(service => {
+    
+        for (const service of services) {
             const serviceCard = document.createElement("div");
             serviceCard.classList.add("service-card");
-            serviceCard.dataset.serviceId = service.id;
-
+            serviceCard.dataset.serviceId = service.service_id;
+    
+            // Fetch image URL asynchronously
+            const imageUrl = await getServiceImageUrl(service.service_id);
+    
             serviceCard.innerHTML = `
+                <img src="${imageUrl}" alt="${service.service_name}" class=" p-4 rounded-3xl w-full h-56 w-65  object-cover">
                 <h3>${service.service_name}</h3>
                 <p>Price: ₹${service.price}</p>
                 <p>${service.description}</p>
@@ -38,13 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="add-to-cart-btn">Add to cart</button>
                 </div>
             `;
-
-            serviceCard.querySelector(".add-to-cart-btn").addEventListener("click", () => {
-                toggleService(service, serviceCard.querySelector(".add-to-cart-btn"));
+    
+            const addToCartBtn = serviceCard.querySelector(".add-to-cart-btn");
+    
+            addToCartBtn.addEventListener("click", () => {
+                toggleService(service, addToCartBtn);
             });
-            
+    
             servicesGrid.appendChild(serviceCard);
-        });
+        }
     }
 
     function toggleService(service, button) {
@@ -83,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateCartCount() {
-        const cartCount = document.getElementById("cartCount");
         cartCount.textContent = selectedServices.size;
     }
     
@@ -95,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
             button.style.backgroundColor = "#1ec66a";
         });
         updateCart();
+        updateCartCount();
         closeCart();
     }
 
@@ -123,14 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
         checkoutPopup.style.display = "none";
     }
 
-    function confirmBooking() {
-        alert("Waiting for the manager's Confirmation \n You will be notified soon.");
-        closeCheckout();
-        clearCart();
-    }
-
     async function confirmBooking() {
         // Get input values
+        
         let ownerName = document.getElementById("owner-name").value.trim();
         let carNumber = document.getElementById("car-number").value.trim();
         let contactNumber = document.getElementById("contact-number").value.trim();
@@ -157,14 +177,18 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     
-        // Prepare data to send
+        let selectedServiceIds = Array.from(selectedServices.keys());
+
         const bookingData = {
+            userId,
             ownerName,
             carNumber,
             contactNumber,
             serviceDate,
-            serviceTime
+            serviceTime,
+            selectedServices: selectedServiceIds
         };
+
     
         try {
             const response = await fetch("http://localhost:8080/bookings", {

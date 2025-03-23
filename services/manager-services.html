@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Services</title>
+    <title>Manger Service Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
@@ -42,6 +42,7 @@
         <button id="add-service-btn" class="bg-blue-800 text-white px-5 py-2 text-lg font-semibold rounded-md hover:bg-blue-700 mb-4">Add Service</button>
         <div class="services-grid">
             <div class="service-card">
+                <img src="../assets/oli.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover">
                 <h3>Periodic Maintenance</h3>
                 <p>Price: ₹5000</p>
                 <p>Regular maintenance to keep your car in top condition.</p>
@@ -51,6 +52,7 @@
                 </div>
             </div>
             <div class="service-card">
+                <img src="../assets/oli.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover">
                 <h3>Dent & Paint</h3>
                 <p>Price: ₹8000</p>
                 <p>Professional dent and paint services for your car.</p>
@@ -60,6 +62,7 @@
                 </div>
             </div>
             <div class="service-card">
+                <img src="../assets/oli.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover">
                 <h3>Bumper Repair</h3>
                 <p>Price: ₹3000</p>
                 <p>Expert bumper repair services to fix any damage.</p>
@@ -69,6 +72,7 @@
                 </div>
             </div>
             <div class="service-card">
+                <img src="../assets/oli.png" alt="Donal Bezos" class="rounded-lg w-full h-56 object-cover">
                 <h3>Accidental Repair</h3>
                 <p>Price: ₹15000</p>
                 <p>Comprehensive repair services for accidental damages.</p>
@@ -80,35 +84,41 @@
         </div>
     </div>
 
-    <!-- Edit Popup -->
-    <div id="edit-popup" class="popup2 hidden">
-        <div class="popup-content">
-            <h2>Edit Service</h2>
-            <label for="service-name">Name:</label>
-            <input type="text" id="service-name">
-            <label for="service-price">Price:</label>
-            <input type="number" id="service-price">
-            <label for="service-description">Description:</label>
-            <textarea id="service-description"></textarea>
-            <button id="save-btn">Save</button>
-            <button class="cancel-btn">Cancel</button>
-        </div>
+    <!-- Edit Service Popup -->
+<div id="edit-popup" class="popup2 hidden">
+    <div class="popup-content">
+        <h2>Edit Service</h2>
+        <label for="service-name">Name:</label>
+        <input type="text" id="service-name">
+        <label for="service-price">Price:</label>
+        <input type="number" id="service-price">
+        <label for="service-description">Description:</label>
+        <textarea id="service-description"></textarea>
+        <label for="service-image">Upload Image:</label>
+        <input type="file" id="service-image" accept="image/*">
+        <img id="service-preview" class="hidden preview-image" alt="Image Preview">
+        <button id="save-btn">Save</button>
+        <button class="cancel-btn">Cancel</button>
     </div>
+</div>
 
-    <!-- Add Service Popup -->
-    <div id="add-popup" class="popup2 hidden ">
-        <div class="popup-content">
-            <h2>Add Service</h2>
-            <label for="new-service-name">Name:</label>
-            <input type="text" id="new-service-name">
-            <label for="new-service-price">Price:</label>
-            <input type="number" id="new-service-price">
-            <label for="new-service-description">Description:</label>
-            <textarea id="new-service-description"></textarea>
-            <button id="add-save-btn">Add</button>
-            <button class="cancel-btn">Cancel</button>
-        </div>
+<!-- Add Service Popup -->
+<div id="add-popup" class="popup2 hidden">
+    <div class="popup-content">
+        <h2>Add Service</h2>
+        <label for="new-service-name">Name:</label>
+        <input type="text" id="new-service-name">
+        <label for="new-service-price">Price:</label>
+        <input type="number" id="new-service-price">
+        <label for="new-service-description">Description:</label>
+        <textarea id="new-service-description"></textarea>
+        <label for="new-service-image">Upload Image:</label>
+        <input type="file" id="new-service-image" accept="image/*">
+        <img id="new-service-preview" class="hidden preview-image" alt="Image Preview">
+        <button id="add-save-btn">Add</button>
+        <button class="cancel-btn">Cancel</button>
     </div>
+</div>
 
     <!-- Confirm Delete Popup -->
     <div id="confirm-popup" class="popup2 hidden">

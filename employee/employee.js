@@ -62,3 +62,201 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("clientImage").addEventListener("click", function () {
   document.getElementById("profileSidebar").classList.toggle("active");
 });
+
+//employee status handler 
+document.addEventListener("DOMContentLoaded", async () => {
+  const employeeStatusBtn = document.getElementById("status-btn");
+  const employeeId = 10;
+
+  async function updateButton(status) {
+    employeeStatusBtn.textContent = status === "Active" ? "Deactivate" : "Activate";
+
+    // Remove both colors before adding the correct one
+    employeeStatusBtn.classList.remove("bg-green-500", "bg-orange-500");
+
+    // Apply new color based on status
+    if (status === "Active") {
+        employeeStatusBtn.classList.add("bg-red-500");  // Active → Green
+    } else {
+        employeeStatusBtn.classList.add("bg-green-500"); // Inactive → Orange
+    }
+}
+
+  employeeStatusBtn.addEventListener("click", async () => {
+    
+      try {
+          await fetch(`http://localhost:8080/employees/${employeeId}/toggle-status`, { method: "PUT" });
+          
+          const updatedStatus = employeeStatusBtn.textContent === "Activate" ? "Active" : "Inactive";
+          updateButton(updatedStatus);
+
+      } catch (error) {
+          console.error("Error updating employee status:", error);
+      }
+  });
+
+});
+
+async function fetchTaskCounts(employeeId) {
+  try {
+      const response = await fetch(`http://localhost:8080/tasks/counts/${employeeId}`);
+      const data = await response.json();
+
+      document.getElementById("assigned-tasks").textContent = data.assigned;
+      document.getElementById("completed-tasks").textContent = data.completed;
+      document.getElementById("pending-tasks").textContent = data.pending;
+
+  } catch (error) {
+      console.error("Error fetching task counts:", error);
+  }
+}
+
+// Fetch task counts when the page loads (Replace `employeeId` with actual logged-in employee's ID)
+document.addEventListener("DOMContentLoaded", () => {
+  const employeeId = 10; // Replace with actual employee ID from session or authentication
+  fetchTaskCounts(employeeId);
+
+});
+
+//notification and task list handler
+document.addEventListener("DOMContentLoaded", async () => {
+  const employeeId = 10; // Replace with actual logged-in employee ID
+  const notificationsList = document.getElementById("notifications-list");
+  const taskTableBody = document.querySelector("#tasks tbody");
+  const viewAllNotiBtn = document.getElementById("view-all-noti");
+  const viewAllTasksBtn = document.getElementById("view-all-tasks");
+  let allTasks = [];
+  let showingAllNoti = false;
+  let showingAllTasks = false;
+
+  async function fetchTasks() {
+      try {
+          const response = await fetch(`http://localhost:8080/tasks/${employeeId}`);
+          const newTasks = await response.json();
+
+          if (JSON.stringify(newTasks) !== JSON.stringify(allTasks)) {
+              allTasks = newTasks;
+              displayNotifications(false);
+              displayTaskList(false);
+          }
+      } catch (error) {
+          console.error("Error fetching tasks:", error);
+      }
+  }
+
+  function displayNotifications(showAll) {
+      notificationsList.innerHTML = "";
+      const tasksToShow = showAll ? allTasks : allTasks.slice(0, 3);
+
+      if (tasksToShow.length === 0) {
+          notificationsList.innerHTML = "<p class='text-gray-500'>No new tasks assigned</p>";
+          viewAllNotiBtn.classList.add("hidden");
+          return;
+      }
+
+      tasksToShow.forEach(task => {
+          const li = document.createElement("li");
+          li.classList.add("bg-gray-100", "p-4", "rounded-lg", "shadow");
+          li.innerHTML = `
+              <p class="text-gray-700 font-semibold">New task assigned: ${task.task_name} for ${task.car_number}</p>
+              <p class="text-gray-500 text-sm">Status: ${task.status}</p>
+          `;
+          notificationsList.appendChild(li);
+      });
+
+      viewAllNotiBtn.classList.toggle("hidden", allTasks.length <= 3);
+  }
+
+  function displayTaskList(showAll) {
+      taskTableBody.innerHTML = "";
+      const tasksToShow = showAll ? allTasks : allTasks.slice(0, 3);
+
+      tasksToShow.forEach(task => {
+          if (task.status === "Completed") return;
+        
+          const row = document.createElement("tr");
+          row.classList.add("border-b");
+          row.innerHTML = `
+              <td class="py-2 px-4">${task.task_name}</td>
+              <td class="py-2 px-4">${task.car_number}</td>
+              <td class="py-2 px-4">
+                  <button class="status-btn px-3 py-1 rounded text-white transition duration-300 ${getStatusColor(task.status)}" 
+                      data-id="${task.id}" data-status="${task.status}">
+                      ${getStatusButton(task.status)}
+                  </button>
+              </td>
+          `;
+          taskTableBody.appendChild(row);
+      });
+
+      viewAllTasksBtn.classList.toggle("hidden", allTasks.length <= 3);
+      addStatusEventListeners();
+  }
+
+  function getStatusButton(status) {
+
+      if (status === "pending") return `<i class="fas fa-clock"></i> Pending`;
+      if (status === "in-progress") return `<i class="fas fa-spinner"></i> In Progress`;
+      if (status === "completed") return `Completed`;
+
+      return "";
+  }
+
+  function getStatusColor(status) {
+    
+      if (status === "pending") return "bg-gray-500 hover:bg-gray-700";
+      if (status === "in-progress") return "bg-yellow-500 hover:bg-yellow-700";
+      if (status === "completed") return "bg-green-500 hover:bg-green-700";
+      return "";
+  }
+
+  function addStatusEventListeners() {
+    document.querySelectorAll(".status-btn").forEach(btn => {
+      btn.addEventListener("click", async (event) => {
+          const btnElement = event.currentTarget; // Ensure correct element
+          const taskId = btnElement.getAttribute("data-id"); // Fetch task ID
+        let currentStatus = btnElement.getAttribute("data-status");
+          
+              let newStatus;
+
+              if (currentStatus === "pending") newStatus = "in-progress";
+              else if (currentStatus === "in-progress") newStatus = "completed";
+              else return;
+
+              try {
+                  await fetch(`http://localhost:8080/tasks/status/${taskId}`, {
+                      method: "PUT",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ status: newStatus })
+                  });
+
+                  allTasks = allTasks.map(task =>
+                      task.id === taskId ? { ...task, status: newStatus } : task
+                  );
+
+                  displayTaskList(showingAllTasks);
+              } catch (error) {
+                  console.error("Error updating task status:", error);
+              }
+          });
+      });
+  }
+
+  viewAllNotiBtn.addEventListener("click", () => {
+      showingAllNoti = !showingAllNoti;
+      displayNotifications(showingAllNoti);
+      viewAllNotiBtn.textContent = showingAllNoti ? "Show Less" : "View All";
+  });
+
+  viewAllTasksBtn.addEventListener("click", () => {
+      showingAllTasks = !showingAllTasks;
+      displayTaskList(showingAllTasks);
+      viewAllTasksBtn.textContent = showingAllTasks ? "Show Less" : "View All";
+  });
+
+  await fetchTasks();
+  setInterval(fetchTasks, 2000);
+});
+
+
+

@@ -74,92 +74,73 @@
 
         <!-- Main Dashboard Area -->
         <main class="flex-1 p-8 ml-64 mt-16">
-            <h2 id="employeeDashboard" class="text-3xl font-semibold text-blue-800 mb-6">Employee Dashboard</h2>
-
+            <h2 id="employeeDashboard" class="text-3xl font-semibold text-blue-800 mb-6">Employee Dashboard
+                <button id="status-btn" class="bg-red-500 text-white text-sm px-2 py-0.5 rounded">Deactive</button>
+            </h2>
+                
             <!-- Task Overview -->
-            <section class="overview grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
-                    <h3 class="text-xl font-semibold text-gray-700">Assigned Tasks</h3>
-                    <p class="text-2xl font-bold text-blue-600">10</p>
-                </div>
-                <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
-                    <h3 class="text-xl font-semibold text-gray-700">Completed Tasks</h3>
-                    <p class="text-2xl font-bold text-green-600">7</p>
-                </div>
-                <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
-                    <h3 class="text-xl font-semibold text-gray-700">Pending Tasks</h3>
-                    <p class="text-2xl font-bold text-yellow-600">3</p>
-                </div>
-            </section>
+<section class="overview grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
+        <h3 class="text-xl font-semibold text-gray-700">Assigned Tasks</h3>
+        <p id="assigned-tasks" class="text-2xl font-bold text-blue-600">0</p>
+    </div>
+    <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
+        <h3 class="text-xl font-semibold text-gray-700">Completed Tasks</h3>
+        <p id="completed-tasks" class="text-2xl font-bold text-green-600">0</p>
+    </div>
+    <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
+        <h3 class="text-xl font-semibold text-gray-700">Pending Tasks</h3>
+        <p id="pending-tasks" class="text-2xl font-bold text-yellow-600">0</p>
+    </div>
+</section>
+
 
             <!-- Notifications Section -->
-            <section id="notifications" class="mb-8">
-                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Notifications</h2>
-                <div class="bg-white shadow-lg rounded-lg p-6">
-                    <ul class="space-y-4">
-                        <li class="bg-gray-100 p-4 rounded-lg shadow">
-                            <p class="text-gray-700 font-semibold">New task assigned: Car Maintenance for MP09AB1234</p>
-                            <p class="text-gray-500 text-sm">2 hours ago</p>
-                        </li>
-                        <li class="bg-gray-100 p-4 rounded-lg shadow">
-                            <p class="text-gray-700 font-semibold">Task completed: Part Replacement for MP09CD5678</p>
-                            <p class="text-gray-500 text-sm">1 day ago</p>
-                        </li>
-                        <li class="bg-gray-100 p-4 rounded-lg shadow">
-                            <p class="text-gray-700 font-semibold">Reminder: Complete the pending tasks by end of the week</p>
-                            <p class="text-gray-500 text-sm">3 days ago</p>
-                        </li>
-                    </ul>
-                </div>
-            </section>
+            <!-- Notifications Section -->
+<section id="notifications" class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-800 mb-4">Notifications</h2>
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <ul id="notifications-list" class="space-y-4">
+            <p class="text-gray-500">Loading notifications...</p>
+        </ul>
+        <!-- View All / Show Less Button -->
+        <div class="flex justify-center mt-4">
+            <button id="view-all-noti" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hidden">
+                View All
+            </button>
+        </div>
+    </div>
+</section>
+
+            
+
 
             <!-- Task List Section -->
-            <section id="tasks" class="mb-8">
-                <h2 class="text-2xl font-semibold text-blue-800 mb-4">Task List</h2>
-                <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-700">Today's Tasks</h3>
-                    <table class="w-full mt-4 table-auto">
-                        <thead>
-                            <tr class="border-b">
-                                <th class="py-2 px-4 text-left">Task</th>
-                                <th class="py-2 px-4 text-left">Car Number</th>
-                                <th class="py-2 px-4 text-left">Owner</th>
-                                <th class="py-2 px-4 text-left">Contact</th>
-                                <th class="py-2 px-4 text-left">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b">
-                                <td class="py-2 px-4">Car Maintenance</td>
-                                <td class="py-2 px-4">MP09AB1234</td>
-                                <td class="py-2 px-4">Rahul Sharma</td>
-                                <td class="py-2 px-4">+91 98765 43210</td>
-                                <td class="py-2 px-4">
-                                    <button class="bg-yellow-500 text-white px-3 py-1 rounded"><i class="fas fa-spinner"></i> In Progress</button>
-                                </td>
-                            </tr>
-                            <tr class="border-b">
-                                <td class="py-2 px-4">Part Replacement</td>
-                                <td class="py-2 px-4">MP09CD5678</td>
-                                <td class="py-2 px-4">Neha Verma</td>
-                                <td class="py-2 px-4">+91 97654 32109</td>
-                                <td class="py-2 px-4">
-                                    <button class="bg-green-500 text-white px-3 py-1 rounded"><i class="fas fa-check"></i> Completed</button>
-                                </td>
-                            </tr>
-                            <tr class="border-b">
-                                <td class="py-2 px-4">Part Replacement</td>
-                                <td class="py-2 px-4">MP09CD6969</td>
-                                <td class="py-2 px-4">Harsh Mandloi</td>
-                                <td class="py-2 px-4">+91 90604 38809</td>
-                                <td class="py-2 px-4">
-                                    <button class="bg-gray-500 text-white px-3 py-1 rounded"><i class="fas fa-clock"></i> To Be Done</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+<section id="tasks" class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-800 mb-4">Task List</h2>
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-xl font-semibold text-gray-700">Today's Tasks</h3>
+        <table class="w-full mt-4 table-auto">
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2 px-4 text-left">Task</th>
+                    <th class="py-2 px-4 text-left">Car Number</th>
+                    <th class="py-2 px-4 text-left">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic rows will be added here by JavaScript -->
+            </tbody>
+        </table>
+        <!-- View All / Show Less Button -->
+        <div class="flex justify-center mt-4">
+            <button id="view-all-tasks" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ">
+                View All
+            </button>
+        </div>
+    </div>
+</section>
+
         </main>
     </div>
 

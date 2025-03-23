@@ -61,53 +61,6 @@
         </ul>
     </aside>
 
-
-
-    -<!-- Manager Signup Modal (Initially Hidden) -->
-    <div id="managerSignupModal"
-        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
-        <div class="bg-white p-6 rounded-lg shadow-2xl w-96 relative z-60">
-            <!-- Close Button -->
-            <button id="closeModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
-
-            <!-- Signup Form -->
-            <h3 class="text-2xl font-bold text-blue-700 mb-4 text-center">Manager Signup</h3>
-            <form class="space-y-4">
-                <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
-                <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
-                <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md"
-                    required>
-
-                <!-- Password Field -->
-                <div class="relative">
-                    <input type="password" name="password" placeholder="Password"
-                        class="password-input w-full p-3 border rounded-md pr-10" required>
-                    <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
-                </div>
-
-                <!-- Confirm Password Field -->
-                <div class="relative">
-                    <input type="password" name="confirmPassword" placeholder="Confirm Password"
-                        class="password-input w-full p-3 border rounded-md pr-10" required>
-                    <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
-                </div>
-
-                <input type="text" name="securityKey" placeholder="Security Key" class="w-full p-3 border rounded-md"
-                    required>
-
-                <button id="managerSignupBtn"
-                    class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
-                    Signup
-                </button>
-            </form>
-        </div>
-    </div>
-
-    </ul>
-    </aside>
-
-
-
     <!-- Main Dashboard Area -->
     <main class="flex-1 p-8">
         <h2 class="text-3xl font-semibold text-blue-800 mb-6">Manager Dashboard</h2>
@@ -116,17 +69,37 @@
         <section id="Dashboard" class="overview grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
                 <h3 class="text-xl font-semibold text-gray-700">Total Employees</h3>
-                <p class="text-2xl font-bold text-blue-600">20</p>
+                <p id="number-of-employees" class="text-2xl font-bold text-blue-600">0</p>
             </div>
             <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
                 <h3 class="text-xl font-semibold text-gray-700">Pending Tasks</h3>
-                <p class="text-2xl font-bold text-yellow-600">5</p>
+                <p id="pending-tasks" class="text-2xl font-bold text-yellow-600">0</p>
             </div>
             <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
                 <h3 class="text-xl font-semibold text-gray-700">Active Projects</h3>
-                <p class="text-2xl font-bold text-green-600">3</p>
+                <p id="active-projects" class="text-2xl font-bold text-green-600">0</p>
             </div>
         </section>
+
+        <!-- Notifications Section -->
+<section id="notifications" class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-800 mb-4">Notifications</h2>
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <ul id="notification-list" class="space-y-4">
+            <!-- Dynamic Notifications will be inserted here -->
+            <p class="text-gray-500">Loading notifications...</p>
+
+        </ul>
+        <!-- Container for buttons -->
+        <div class="flex justify-between mt-4 px-4">
+            <!-- View All Employees button (Right) -->
+            <button id="view-all-noti" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                View All
+            </button>
+        </div>
+    </div>
+</section>
+
 
         <!-- Task Management Section -->
         <section id="Task" class="mb-8">
@@ -136,29 +109,22 @@
                 <table class="w-full mt-4 table-auto">
                     <thead>
                         <tr class="border-b">
+                            <th class="py-2 px-4 text-left">Ownwer Name</th>
+                            <th class="py-2 px-4 text-left">vehicle Number</th>
+                            <th class="py-2 px-4 text-left">Contact Number</th>
                             <th class="py-2 px-4 text-left">Task</th>
-                            <th class="py-2 px-4 text-left">Assigned To</th>
+                            <th class="py-2 px-4 text-left">Employee</th>
+                            <th class="py-2 px-4 text-left">Assign</th>
                             <th class="py-2 px-4 text-left">Status</th>
-                            <th class="py-2 px-4 text-left">Deadline</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="py-2 px-4">Complete Website Design</td>
-                            <td class="py-2 px-4">John Doe</td>
-                            <td class="py-2 px-4 text-yellow-600">Pending</td>
-                            <td class="py-2 px-4">2025-03-10</td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="py-2 px-4">Prepare Report</td>
-                            <td class="py-2 px-4">Jane Smith</td>
-                            <td class="py-2 px-4 text-green-600">Completed</td>
-                            <td class="py-2 px-4">2025-02-20</td>
-                        </tr>
+                    <tbody id="taskTableBody">
+                        <!-- Dynamic tasks will be inserted here -->
                     </tbody>
                 </table>
             </div>
         </section>
+        
 
         <!-- Employee Management Section -->
         <section id="Employee" class="mb-8">
@@ -168,36 +134,22 @@
                 <table class="w-full mt-4 table-auto">
                     <thead>
                         <tr class="border-b">
+                            <th class="py-2 px-4 text-left">Id</th>
                             <th class="py-2 px-4 text-left">Name</th>
-                            <th class="py-2 px-4 text-left">Position</th>
-                            <th class="py-2 px-4 text-left">Status</th>
-                            <th class="py-2 px-4 text-left">Action</th>
+                            <th class="py-2 px-4 text-right">Status</th>
+                            <th class="py-2 px-4 text-right">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="py-2 px-4">John Doe</td>
-                            <td class="py-2 px-4">Developer</td>
-                            <td class="py-2 px-4 text-green-600">Active</td>
-                            <td class="py-2 px-4">
-                                <button class="bg-red-600 text-white p-2 rounded hover:bg-red-700">Remove</button>
-                            </td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="py-2 px-4">Jane Smith</td>
-                            <td class="py-2 px-4">Designer</td>
-                            <td class="py-2 px-4 text-yellow-600">Inactive</td>
-                            <td class="py-2 px-4">
-                                <button class="bg-green-600 text-white p-2 rounded hover:bg-green-700">Activate</button>
-                            </td>
-                        </tr>
+                    <tbody id="employeeTableBody">
+                        <!-- Dynamic Employees Will Be Loaded Here -->
+                    
                     </tbody>
                 </table>
 
                 <!-- Container for buttons -->
                 <div class="flex justify-between mt-4 px-4">
                     <!-- View All Employees button (Right) -->
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <button id="viewAllEmployeesBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                         View All
                     </button>
                     <div class="flex justify-end mt-4 px-4">
@@ -208,64 +160,51 @@
                         </a>
                     </div>
                 </div>
-
-
-
-
-                <!-- Employee Signup Modal (Initially Hidden) -->
-                <div id="employeeSignupModal"
-                    class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
-                    <div class="bg-white p-6 rounded-lg shadow-2xl w-96 relative z-60">
-                        <!-- Close Button -->
-                        <button id="closeEmployeeModal"
-                            class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
-
-                        <!-- Signup Form -->
-                        <h3 class="text-2xl font-bold text-blue-700 mb-4 text-center">Employee Signup</h3>
-                        <form id="employeeSignupForm" class="space-y-4">
-                            <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md"
-                                required>
-                            <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md"
-                                required>
-                            <input type="tel" name="mobile" placeholder="Mobile Number"
-                                class="w-full p-3 border rounded-md" required>
-
-                            <!-- Password Field -->
-                            <div class="relative">
-                                <input type="password" name="password" placeholder="Password"
-                                    class="password-input w-full p-3 border rounded-md pr-10" required>
-                                <span
-                                    class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
-                            </div>
-
-                            <!-- Confirm Password Field -->
-                            <div class="relative">
-                                <input type="password" name="confirmPassword" placeholder="Confirm Password"
-                                    class="password-input w-full p-3 border rounded-md pr-10" required>
-                                <span
-                                    class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
-                            </div>
-
-                            <input type="text" name="securityKey" placeholder="Security Key"
-                                class="w-full p-3 border rounded-md" required>
-
-
-                            <button id="employeeSignupBtn"
-                                class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
-                                Signup
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-
-
-
-
             </div>
         </section>
 
+        <!-- Gallery Management Section -->
+<section id="gallery-management" class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-800 mb-4">Gallery Management</h2>
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <!-- Image List Table -->
+        <table class="w-full mt-4 table-auto">
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2 px-4 text-left">Preview</th>
+                    <th class="py-2 px-4 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="galleryTableBody">
+                <!-- Dynamic Images Will Be Loaded Here -->
+                
+            </tbody>
+        </table>
 
+        <!-- Buttons Container -->
+        <div class="flex justify-between mt-4 px-4">
+            <!-- View All Images button -->
+            <button id="viewAllBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                View All
+            </button>
+            <!-- Add Image button -->
+            <input type="file" id="addImageInput" hidden />
+            <button id="addImageBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Add Image
+            </button>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="imageModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-4 rounded-lg shadow-lg">
+            <img id="modalImage" src="" class="max-w-full max-h-[80vh]" />
+            <button id="closeModal" class="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                Close
+            </button>
+        </div>
+    </div>
+</section>
 
 
         <!-- Analytics Section -->
@@ -300,6 +239,91 @@
             </div>
         </section>
     </main>
+    
+    -<!-- Manager Signup Modal (Initially Hidden) -->
+    <div id="managerSignupModal"
+        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden ">
+        <div class="bg-white p-6 rounded-lg shadow-2xl w-96 relative z-60">
+            <!-- Close Button -->
+            <button id="closeModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
+
+            <!-- Signup Form -->
+            <h3 class="text-2xl font-bold text-blue-700 mb-4 text-center">Manager Signup</h3>
+            <form id="managerSignupForm" class="space-y-4">
+                <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md" required>
+                <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md" required>
+                <input type="tel" name="mobile" placeholder="Mobile Number" class="w-full p-3 border rounded-md"
+                    required>
+
+                <!-- Password Field -->
+                <div class="relative">
+                    <input type="password" name="password" placeholder="Password"
+                        class="password-input w-full p-3 border rounded-md pr-10" required>
+                    <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="relative">
+                    <input type="password" name="confirmPassword" placeholder="Confirm Password"
+                        class="password-input w-full p-3 border rounded-md pr-10" required>
+                    <span class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+                </div>
+
+                <input type="text" name="securityKey" placeholder="Security Key" class="w-full p-3 border rounded-md"
+                    required>
+
+                <button id="managerSignupBtn"
+                    class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
+                    Signup
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Employee Signup Modal (Initially Hidden) -->
+    <div id="employeeSignupModal"
+    class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-2xl w-96 relative z-60">
+        <!-- Close Button -->
+        <button id="closeEmployeeModal"
+            class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
+
+        <!-- Signup Form -->
+        <h3 class="text-2xl font-bold text-blue-700 mb-4 text-center">Employee Signup</h3>
+        <form id="employeeSignupForm" class="space-y-4">
+            <input type="text" name="name" placeholder="Name" class="w-full p-3 border rounded-md"
+                required>
+            <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-md"
+                required>
+            <input type="tel" name="mobile" placeholder="Mobile Number"
+                class="w-full p-3 border rounded-md" required>
+
+            <!-- Password Field -->
+            <div class="relative">
+                <input type="password" name="password" placeholder="Password"
+                    class="password-input w-full p-3 border rounded-md pr-10" required>
+                <span
+                    class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="relative">
+                <input type="password" name="confirmPassword" placeholder="Confirm Password"
+                    class="password-input w-full p-3 border rounded-md pr-10" required>
+                <span
+                    class="toggle-password absolute inset-y-0 right-3 flex items-center cursor-pointer">👁️</span>
+            </div>
+
+            <input type="text" name="securityKey" placeholder="Security Key"
+                class="w-full p-3 border rounded-md" required>
+
+
+            <button id="employeeSignupBtn"
+                class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
+                Signup
+            </button>
+        </form>
+    </div>
     </div>
 
     <!-- Footer -->
@@ -405,7 +429,6 @@
     <!-- Add your custom scripts here -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="manager.js"></script>
-    <script src="../script.js"></script>
 </body>
 
 </html>

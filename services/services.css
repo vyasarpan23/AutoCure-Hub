@@ -504,7 +504,17 @@ button {
     justify-content: space-between; /* Buttons spaced evenly */
 }
 
-
+.preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-top: 10px;
+    display: block;
+    border-radius: 8px;
+}
+.hidden {
+    display: none;
+}
 
 
 

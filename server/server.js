@@ -2,245 +2,199 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const db = require("./db"); // Assuming you have a separate db.js for your MySQL connection
 require("dotenv").config();
 
 const app = express();
 const port = 8080;
-const SECRET_KEY = process.env.JWT_SECRET; // Change for production
+
+// Configure Multer for Image Uploads
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Middleware to verify JWT token
-const authenticateUser = (req, res, next) => {
-  const token = req.headers["authorization"];
-  if (!token) return res.status(403).json({ message: "No token provided" });
 
-  jwt.verify(token.split(" ")[1], SECRET_KEY, (err, decoded) => {
-    if (err) return res.status(401).json({ message: "Unauthorized" });
-    req.userId = decoded.id;
-    next();
-  });
-};
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // **User Signup**
-app.post("/user-signup", async (req, res) => {
-  const { name, email, mobile, password } = req.body;
- console.log(req.body);
-  try {
-    const [existingUser] = await db.query(
-      "SELECT * FROM users WHERE email = ?",
-      [email]
-    );
-    if (existingUser.length > 0) {
-      return res.status(400).json({ message: "Email already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await db.query(
-      "INSERT INTO users (name, email, mobile, password) VALUES (?, ?, ?, ?)",
-      [name, email, mobile, hashedPassword]
-    );
-
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    console.error("Error during signup:", error);
-    res.status(500).json({ message: "Server error. Try again later." });
-  }
-});
-
-// **User Login with JWT**
-app.post("/login", async (req, res) => {
-  const { user_email, user_password } = req.body;
-
-  try {
-    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [
-      user_email,
-    ]);
-    if (users.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "User not found! You need to sign up first" });
-    }
-
-    const user = users[0];
-    const isMatch = await bcrypt.compare(user_password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
-
-    res.json({
-      message: "Login successful",
-      token,
-      user: { id: user.id, name: user.name, email: user.email },
-    });
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ message: "Server error. Try again later." });
-  }
-});
-
-// **Manager Signup**
-app.post("/manager-signup", async (req, res) => {
-  const { name, email, mobile, password, securityKey } = req.body;
- if(securityKey !== SECRET_KEY) {
-  return res.status(400).json({ message: "Invalid security key\n Please select the correct role" });
-}
-
-  try {
-    const [existingManager] = await db.query(
-      "SELECT * FROM managers WHERE email = ?",
-      [email]
-    );
-    if (existingManager.length > 0) {
-      return res.status(400).json({ message: "Email already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await db.query(
-      "INSERT INTO managers (name, email, mobile, password, security_key) VALUES (?, ?, ?, ?, ?)",
-      [name, email, mobile, hashedPassword, securityKey]
-    );
-
-    res.status(201).json({ message: "Manager registered successfully" });
-  } catch (error) {
-    console.error("Error during signup:", error);
-    res.status(500).json({ message: "Server error. Try again later." });
-  }
-});
-
-// **Manager Login
-app.post("/manager-login", async (req, res) => {
-  const { managerId, password ,securityKey} = req.body;
-  
-  if(securityKey !== SECRET_KEY) {
-    return res.status(400).json({ message: "Invalid security key\n Please select the correct role" });
-  }
-
-  try {
-    const [managers] = await db.query("SELECT * FROM managers WHERE manager_id = ?", [
-      managerId,
-    ]);
-    if (managers.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "User not found! You need to sign up first" });
-    }
-
-    const manager = managers[0];
-    const isMatch = await bcrypt.compare(password, manager.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    //const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
-
-    res.json({
-      message: "Login successful",
-      manager: { id: manager.id, name: manager.name, email: manager.email },
-    });
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ message: "Server error. Try again later." });
-  }
-});
-
-// **Employee Signup**
-app.post("/employee-signup", async (req, res) => {
-  const { name, email, mobile, password } = req.body;
-  console.log(req.body);
-  try {
-    const [existingEmployee] = await db.query(
-      "SELECT * FROM employees WHERE email = ?",
-      [email]
-    );
-    if (existingEmployee.length > 0) {
-      return res.status(400).json({ message: "Email already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await db.query(
-      "INSERT INTO employees (name, email, mobile, password) VALUES (?, ?, ?, ?)",
-      [name, email, mobile, hashedPassword]
-    );
-
-    res.status(201).json({ message: "Employee registered successfully" });
-  } catch (error) {
-    console.error("Error during signup:", error);
-    res.status(500).json({ message: "Server error. Try again later." });
-  }
-});
-
-// **Employee Login 
-app.post("/employee-login", async (req, res) => {
-  const { employee_id, employeePassword } = req.body;
-  
-  try {
-    const [employees] = await db.query("SELECT * FROM employees WHERE employee_id = ?", [
-      employee_id,
-    ]);
-    if (employees.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "User not found! You need to sign up first" });
-    }
-
-    const employee = employees[0];
-    const isMatch = await bcrypt.compare(employeePassword, employee.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    //const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
-
-    res.json({
-      message: "Login successful",
-      employee: { id: employee.id, name: employee.name, email: employee.email },
-    });
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ message: "Server error. Try again later." });
-  }
-});
-
-// **Fetch Reviews**
-app.get("/reviews", async (req, res) => {
-  try {
-    const [reviews] = await db.query(
-      "SELECT users.name AS user_name, reviews.rating, reviews.comment FROM reviews JOIN users ON reviews.user_id = users.id ORDER BY reviews.created_at DESC" );
+app.post("/signup", async (req, res) => {
+    const { name, email, mobile, password, role, securityKey } = req.body;
     
-    if (reviews.length === 0) {
-      return res.status(404).json({ message: "No reviews found" });
+    try {
+        
+      const [existingUser] = await db.query(
+        "SELECT * FROM people WHERE email = ?",
+        [email]
+      );
+      if (existingUser.length > 0) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await db.query(
+        "INSERT INTO people (name, email, mobile, password, role) VALUES (?, ?, ?, ?, ?)",
+        [name, email, mobile, hashedPassword, role]
+      );
+
+      if (role === "manager") {
+
+        const [manager] = await db.query("SELECT * FROM people WHERE email = ?", [email]);
+        await db.query("INSERT INTO manager_details (manager_id,security_key) VALUES (?, ?)", [manager[0].id, securityKey]);
+
+      }else  if (role === "employee") {
+
+        const [employee] = await db.query("SELECT * FROM people WHERE email = ?", [email]);
+        await db.query("INSERT INTO employee_details (employee_id, security_key) VALUES (?, ?)", [employee[0].id, securityKey]);
+      }
+  
+      res.status(201).json({ message: "User registered successfully" });
+    } catch (error) {
+      console.error("Error during signup:", error);
+      res.status(500).json({ message: "Server error. Try again later." });
     }
-    res.json(reviews);
-  } catch (err) {
-    console.error("Error fetching reviews:", err);
-    res
-      .status(500)
-      .json({ message: "Error fetching reviews", error: err.message });
-  }
-});
+  });
+  
+  // **User Login**
+  app.post("/login", async (req, res) => {
+    const { role, email, password ,securityKey  } = req.body;
+  
+    try {
 
-// **Submit a Review (Authenticated)**
-app.post("/submit-review", async (req, res) => {
-  const { userId, rating, comment } = req.body;
+        if(role === "manager" ) {
+            const [manager] = await db.query("SELECT * FROM people WHERE email = ?", [email]);
+            const [managerKey] = await db.query("SELECT * FROM manager_details WHERE manager_id = ?", [manager[0].id]);
+           
 
-  try {
-    await db.query(
-      "INSERT INTO reviews (user_id, rating, comment) VALUES (?, ?, ?)",
-      [userId, rating, comment]
-    );
-    res.status(201).json({ message: "Review submitted successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Error submitting review" });
-    console.log(err);
-  }
-});
+            if (securityKey !== managerKey[0].security_key) {
+                return res.status(401).json({ message: "You cannot signup as Manager!" });
+            }
+        }
+        else if(role === "employee") {
+            const [employee] = await db.query("SELECT * FROM people WHERE email = ?", [email]);
+            const [employeeKey] = await db.query("SELECT security_key FROM employee_details WHERE employee_id = ?", [employee[0].id]);
+
+            if (securityKey !== employeeKey[0].security_key) {
+                return res.status(401).json({ message: "You cannot signup as Employee!" });
+            }
+        }
+
+      const [user] = await db.query("SELECT * FROM people WHERE email = ?", [email]);
+
+      if (user.length === 0) {
+        return res.status(401).json({ message: "Email does not exist" });
+      }
+      
+      const validPassword = await bcrypt.compare(password, user[0].password);
+      if (!validPassword) {
+        return res.status(401).json({ message: "Incorrect Password,Try again" });
+      }
+  
+    //   const token = jwt.sign({ id: user[0].id, role: user[0].role }, process.env.JWT_SECRET, {
+    //     expiresIn: "1h",
+    //   });
+      res.status(200).json({ message: "Login successful", user: user[0] });
+    } catch (error) {
+      console.error("Error during login:", error);
+      res.status(500).json({ message: "Server error. Try again later." });
+    }
+  });
+
+// Fetch all services
+app.get("/services", async (req, res) => {
+    try {
+      const [services] = await db.query("SELECT * FROM services");
+  
+      if (services.length === 0) {
+        return res.status(404).json({ message: "No services found" });
+      }
+      res.json(services);
+    } catch (err) {
+      console.error("Error fetching services:", err);
+      res.status(500).json({ message: "Error fetching services", error: err.message });
+    }
+  });
+  
+  // Add a new service
+  app.post("/services", async (req, res) => {
+    const { name, price, description, manager_id } = req.body;
+    try {
+      const [result] = await db.query(
+        "INSERT INTO services (service_name, price, description, manager_id) VALUES (?, ?, ?, ?)",
+        [name, price, description, manager_id]
+      );
+      res.status(201).json({ message: "Service added successfully!", id: result.insertId });
+    } catch (err) {
+      console.error("Error adding service:", err);
+      res.status(500).json({ message: "Error adding service", error: err.message });
+    }
+  });
+  
+  // Update a service
+  app.put("/services/:id", async (req, res) => {
+    const { id } = req.params;
+    const { name, price, description, manager_id } = req.body;
+    try {
+      const [result] = await db.query(
+        "UPDATE services SET service_name=?, price=?, description=?, manager_id=? WHERE service_id=?",
+        [name, price, description, manager_id, id]
+      );
+      res.json({ message: "Service updated successfully!" });
+    } catch (err) {
+      console.error("Error updating service:", err);
+      res.status(500).json({ message: "Error updating service", error: err.message });
+    }
+  });
+  
+  // Delete a service
+  app.delete("/services/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      await db.query("DELETE FROM services WHERE service_id=?", [id]);
+      res.json({ message: "Service deleted successfully!" });
+    } catch (err) {
+      console.error("Error deleting service:", err);
+      res.status(500).json({ message: "Error deleting service", error: err.message });
+    }
+  });
+  
+  app.get("/reviews", async (req, res) => {
+    try {
+      const [reviews] = await db.query(
+        "SELECT people.name AS user_name, reviews.rating, reviews.comment FROM reviews JOIN people ON reviews.user_id = people.id ORDER BY reviews.created_at DESC" );
+      
+      if (reviews.length === 0) {
+        return res.status(404).json({ message: "No reviews found" });
+      }
+      res.json(reviews);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      res
+        .status(500)
+        .json({ message: "Error fetching reviews", error: err.message });
+    }
+  });
+  
+  // **Submit a Review (Authenticated)**
+  app.post("/submit-review", async (req, res) => {
+    const { userId, rating, comment } = req.body;
+    try {
+      await db.query(
+        "INSERT INTO reviews (user_id, rating, comment) VALUES (?, ?, ?)",
+        [userId, rating, comment]
+      );
+      res.status(201).json({ message: "Review submitted successfully" });
+    } catch (err) {
+      res.status(500).json({ message: "Error submitting review" });
+      console.log(err);
+    }
+  });
 
 // **Start Server**
 app.listen(port, () => {
