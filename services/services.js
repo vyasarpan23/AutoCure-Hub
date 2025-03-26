@@ -1,5 +1,12 @@
 const userId = 1;
 
+window.addEventListener("load", () => {
+
+    const horn = new Audio("../assets/sounds/horn.mp3");
+    horn.play();
+  // Ensures it plays only once per page load
+  });
+
 document.addEventListener("DOMContentLoaded", () => {
     const servicesGrid = document.querySelector(".services-grid");
     const cartBtn = document.getElementById("cartBtn");

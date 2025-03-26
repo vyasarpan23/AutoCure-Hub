@@ -1,3 +1,10 @@
+window.addEventListener("load", () => {
+
+  const horn = new Audio("../assets/sounds/horn.mp3");
+  horn.play();
+// Ensures it plays only once per page load
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   // Mobile Menu Toggle
   const menuToggle = document.getElementById("menuToggle");
@@ -114,7 +121,9 @@ async function fetchTaskCounts(employeeId) {
 // Fetch task counts when the page loads (Replace `employeeId` with actual logged-in employee's ID)
 document.addEventListener("DOMContentLoaded", () => {
   const employeeId = 10; // Replace with actual employee ID from session or authentication
-  fetchTaskCounts(employeeId);
+   setInterval(()=>{
+     fetchTaskCounts(employeeId);
+   },2000);
 
 });
 
@@ -128,6 +137,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let allTasks = [];
   let showingAllNoti = false;
   let showingAllTasks = false;
+  let newNotification = 0;
 
   async function fetchTasks() {
       try {
@@ -138,11 +148,23 @@ document.addEventListener("DOMContentLoaded", async () => {
               allTasks = newTasks;
               displayNotifications(false);
               displayTaskList(false);
+              playNotificationSound();
           }
       } catch (error) {
           console.error("Error fetching tasks:", error);
       }
   }
+
+  // Play notification sound
+  function playNotificationSound() {
+    if (allTasks.length <= newNotification) {
+      newNotification = allTasks.length;
+      return;
+    }
+    const audio = new Audio("../assets/sounds/notification.mp3");
+    audio.play();
+    newNotification = allTasks.length;
+}
 
   function displayNotifications(showAll) {
       notificationsList.innerHTML = "";
@@ -220,7 +242,10 @@ document.addEventListener("DOMContentLoaded", async () => {
               let newStatus;
 
               if (currentStatus === "pending") newStatus = "in-progress";
-              else if (currentStatus === "in-progress") newStatus = "completed";
+              else if (currentStatus === "in-progress") {
+                if(!confirm("Well Done \n You have completed your work\nBy clicking ok your taskwill be remove from the task list")){return;}
+                newStatus = "completed"
+              }
               else return;
 
               try {

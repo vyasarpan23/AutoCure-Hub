@@ -110,7 +110,6 @@
     <div class="bg-white shadow-lg rounded-lg p-6">
         <ul id="notification-list" class="space-y-4">
             <!-- Dynamic Notifications will be inserted here -->
-            <p class="text-gray-500">Loading notifications...</p>
 
         </ul>
         <!-- Container for buttons -->
@@ -229,38 +228,35 @@
     </div>
 </section>
 
+<section id="CustomerDetails">
+    <h2 class="text-2xl font-semibold text-blue-800 mb-4">Customer Details</h2>
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-xl font-semibold text-gray-700">Customer List</h3>
+        <table class="w-full mt-4 table-auto">
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2 px-4 text-left">S.no</th>
+                    <th class="py-2 px-4 text-left">Name</th>
+                    <th class="py-2 px-4 text-left">Review</th>
+                    <th class="py-2 px-4 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="customerTableBody">
+                <!-- Customers will be populated dynamically -->
+            </tbody>
+        </table>
+    </div>
+</section>
 
-        <!-- Analytics Section -->
-        <section id="Analytics">
-            <h2 class="text-2xl font-semibold text-blue-800 mb-4">Analytics & Reports</h2>
-            <div class="bg-white shadow-lg rounded-lg p-6">
-                <h3 class="text-xl font-semibold text-gray-700">Work Done This Week/Month</h3>
-                <table class="w-full mt-4 table-auto">
-                    <thead>
-                        <tr class="border-b">
-                            <th class="py-2 px-4 text-left">Date</th>
-                            <th class="py-2 px-4 text-left">Task</th>
-                            <th class="py-2 px-4 text-left">Assigned To</th>
-                            <th class="py-2 px-4 text-left">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="py-2 px-4">2025-02-10</td>
-                            <td class="py-2 px-4">Complete Website Design</td>
-                            <td class="py-2 px-4">John Doe</td>
-                            <td class="py-2 px-4 text-green-600">Completed</td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="py-2 px-4">2025-02-12</td>
-                            <td class="py-2 px-4">Prepare Report</td>
-                            <td class="py-2 px-4">Jane Smith</td>
-                            <td class="py-2 px-4 text-green-600">Completed</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+<!-- Customer Details Popup -->
+<div id="customerPopup" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+    <div id="popupContent" class="bg-white p-6 rounded shadow-lg w-96 relative">
+        <h2 class="text-xl font-bold mb-4">Customer Details</h2>
+        <div id="customerDetails"></div>
+        <button id="closePopup" class="close-popup bg-red-600 text-white px-4 py-2 mt-4 rounded">Close</button>
+    </div>
+</div>
+
     </main>
     
     -<!-- Manager Signup Modal (Initially Hidden) -->

@@ -2,6 +2,17 @@
 let isLoggedIn = false;
 let user = {};
 
+window.addEventListener("load", () => {
+  const horn = new Audio("./assets/sounds/horn.mp3");
+  horn.muted = true;
+  horn.play().then(() => {
+      horn.muted = false;
+  }).catch(error => {
+      console.log("Autoplay blocked:", error);
+  });
+});
+
+
 // Dark Mode Toggle
 document.getElementById('darkModeToggle').addEventListener('click', function() {
   document.body.classList.toggle('dark-mode');
@@ -13,10 +24,17 @@ const closeBtns = document.querySelectorAll(".close");
 const loginBtn = document.getElementById("loginBtn");
 const signupBtn = document.getElementById("signupBtn");
 const contactBtn = document.querySelectorAll(".contact-btn");
-const serviceBtn = document.getElementById("services-button");
 const reviewBtn = document.getElementById("reviewBtn");
 const bookServiceBtn = document.getElementById("bookServiceBtn");
 const viewProfile = document.querySelectorAll(".profile-page");
+
+bookServiceBtn.addEventListener("click",()=>{
+  if (!isLoggedIn) {
+    alert("You need to log in to view all services.");
+} else {
+    window.location.href = './services/services.html';
+}
+});
 
 function openModal(modalId) {
   document.getElementById(modalId).style.display = "block";
@@ -29,8 +47,6 @@ function closeModal(modalId) {
 // Modal button event listeners
 loginBtn?.addEventListener("click", () => openModal("authModal"));
 signupBtn?.addEventListener("click", () => openModal("signupModal"));
-serviceBtn?.addEventListener("click", () => openModal("servicesModal"));
-bookServiceBtn?.addEventListener("click", () => openModal("servicesModal"));
 reviewBtn?.addEventListener("click", () => openModal("ratingModal"));
 
 contactBtn.forEach((btn)=>{
@@ -614,8 +630,8 @@ document.querySelectorAll('.location-btn').forEach(button => {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const servicesContainer = document.querySelector("#services .grid");
-  const servicesButton = document.querySelector("#services-button");
-  const isLoggedIn = window.isLoggedIn; // Assuming this is set globally
+  const servicesButton = document.querySelector("#view-all-services");
+  // Assuming this is set globally
 
   // Fetch services from backend
   try {
@@ -651,7 +667,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (!isLoggedIn) {
               alert("You need to log in to book a service.");
           } else {
-              window.location.href = "./services/service.html";
+              window.location.href = "./services/services.html";
           }
       }
   });
@@ -661,7 +677,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!isLoggedIn) {
           alert("You need to log in to view all services.");
       } else {
-          window.location.href = "./services/service.html";
+          window.location.href = "./services/services.html";
       }
   });
 });

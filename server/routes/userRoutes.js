@@ -44,7 +44,7 @@ router.post("/signup", async (req, res) => {
   // **User Login**
   router.post("/login", async (req, res) => {
     const { role, email, password ,securityKey  } = req.body;
-  
+ 
     try {
 
         if(role === "manager" ) {
@@ -86,6 +86,101 @@ router.post("/signup", async (req, res) => {
     }
   });
 
-  
+  // Get user details along with their current bookings, booking history, and service status
+router.get('/:id', async (req, res) => {
+  try {
+      const userId = req.params.id;
+      
+      // Fetch user personal details
+      const [user] = await db.query("SELECT id, name, email, mobile, role, user_image FROM people WHERE id = ?", [userId]);
+      if (!user.length) {
+          return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Fetch current bookings (bookings with future dates or not yet completed)
+      const [currentBookings] = await db.query(
+          "SELECT b.booking_id, b.car_number, b.contact_number, b.booking_date, b.booking_time, bs.status, s.service_name " +
+          "FROM bookings b " +
+          "JOIN booking_services bs ON b.booking_id = bs.booking_id " +
+          "JOIN services s ON bs.service_id = s.service_id " +
+          "WHERE b.user_id = ? AND bs.status IN ('pending', 'confirmed', 'in progress') " +
+          "ORDER BY b.booking_date DESC", [userId]
+      );
+      
+      // Fetch booking history (completed or cancelled bookings)
+      const [bookingHistory] = await db.query(
+          "SELECT b.booking_id, b.car_number, b.contact_number, b.booking_date, b.booking_time, bs.status, s.service_name " +
+          "FROM bookings b " +
+          "JOIN booking_services bs ON b.booking_id = bs.booking_id " +
+          "JOIN services s ON bs.service_id = s.service_id " +
+          "WHERE b.user_id = ? AND bs.status IN ('completed', 'cancelled') " +
+          "ORDER BY b.booking_date DESC", [userId]
+      );
+      
+      return res.json({
+          user: user[0],
+          currentBookings,
+          bookingHistory
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
+router.get("/customer/:id", async (req, res) => {
+  try {
+      const customerId = req.params.id;
+
+      // Fetch customer personal details
+      const [customer] = await db.query(
+          "SELECT id, name, email, mobile, role, user_image FROM people WHERE id = ?",
+          [customerId]
+      );
+      if (!customer.length) {
+          return res.status(404).json({ message: "Customer not found" });
+      }
+
+      // Fetch reviews
+      const [reviews] = await db.query(
+          "SELECT rating FROM reviews WHERE user_id = ?",
+          [customerId]
+      );
+      
+      // Fetch current bookings
+      const [currentBookings] = await db.query(
+          "SELECT b.booking_id, b.car_number, b.contact_number, b.booking_date, b.booking_time, bs.status, s.service_name " +
+          "FROM bookings b " +
+          "JOIN booking_services bs ON b.booking_id = bs.booking_id " +
+          "JOIN services s ON bs.service_id = s.service_id " +
+          "WHERE b.user_id = ? AND bs.status IN ('pending', 'confirmed', 'in progress') " +
+          "ORDER BY b.booking_date DESC",
+          [customerId]
+      );
+
+      // Fetch booking history
+      const [bookingHistory] = await db.query(
+          "SELECT b.booking_id, b.car_number, b.contact_number, b.booking_date, b.booking_time, bs.status, s.service_name " +
+          "FROM bookings b " +
+          "JOIN booking_services bs ON b.booking_id = bs.booking_id " +
+          "JOIN services s ON bs.service_id = s.service_id " +
+          "WHERE b.user_id = ? AND bs.status IN ('completed', 'cancelled') " +
+          "ORDER BY b.booking_date DESC",
+          [customerId]
+      );
+
+      res.json({
+          customer: customer[0],
+          reviews: reviews.map(r => r.rating ) || ["No Reviews"],
+          currentBookings,
+          bookingHistory
+      });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 
 module.exports = router;
