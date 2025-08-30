@@ -1,9 +1,15 @@
+const params = new URLSearchParams(window.location.search);
+const employeeId = params.get("userId");
+
+
 window.addEventListener("load", () => {
 
   const horn = new Audio("../assets/sounds/horn.mp3");
   horn.play();
 // Ensures it plays only once per page load
 });
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
   // Mobile Menu Toggle
@@ -73,7 +79,6 @@ document.getElementById("clientImage").addEventListener("click", function () {
 //employee status handler 
 document.addEventListener("DOMContentLoaded", async () => {
   const employeeStatusBtn = document.getElementById("status-btn");
-  const employeeId = 10;
 
   async function updateButton(status) {
     employeeStatusBtn.textContent = status === "Active" ? "Deactivate" : "Activate";
@@ -119,8 +124,7 @@ async function fetchTaskCounts(employeeId) {
 }
 
 // Fetch task counts when the page loads (Replace `employeeId` with actual logged-in employee's ID)
-document.addEventListener("DOMContentLoaded", () => {
-  const employeeId = 10; // Replace with actual employee ID from session or authentication
+document.addEventListener("DOMContentLoaded", () => { 
    setInterval(()=>{
      fetchTaskCounts(employeeId);
    },2000);
@@ -129,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //notification and task list handler
 document.addEventListener("DOMContentLoaded", async () => {
-  const employeeId = 10; // Replace with actual logged-in employee ID
+  
   const notificationsList = document.getElementById("notifications-list");
   const taskTableBody = document.querySelector("#tasks tbody");
   const viewAllNotiBtn = document.getElementById("view-all-noti");

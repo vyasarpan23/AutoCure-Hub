@@ -1,4 +1,7 @@
-let managerId = 6;
+
+const params = new URLSearchParams(window.location.search);
+const managerId = params.get("userId");
+  
 
 window.addEventListener("load", () => {
 

@@ -1,22 +1,30 @@
 // Simulate login status
 let isLoggedIn = false;
-let user = {};
+let user = null;
+
+if (user) {
+  isLoggedIn = true;
+}
 
 window.addEventListener("load", () => {
   const horn = new Audio("./assets/sounds/horn.mp3");
   horn.muted = true;
-  horn.play().then(() => {
+  horn
+    .play()
+    .then(() => {
       horn.muted = false;
-  }).catch(error => {
+    })
+    .catch((error) => {
       console.log("Autoplay blocked:", error);
-  });
+    });
 });
-
 
 // Dark Mode Toggle
-document.getElementById('darkModeToggle').addEventListener('click', function() {
-  document.body.classList.toggle('dark-mode');
-});
+document
+  .getElementById("darkModeToggle")
+  .addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
+  });
 
 // Modal Handling
 const modals = document.querySelectorAll(".modal");
@@ -28,12 +36,12 @@ const reviewBtn = document.getElementById("reviewBtn");
 const bookServiceBtn = document.getElementById("bookServiceBtn");
 const viewProfile = document.querySelectorAll(".profile-page");
 
-bookServiceBtn.addEventListener("click",()=>{
+bookServiceBtn.addEventListener("click", () => {
   if (!isLoggedIn) {
     alert("You need to log in to view all services.");
-} else {
-    window.location.href = './services/services.html';
-}
+  } else {
+    window.location.href = "./services/services.html";
+  }
 });
 
 function openModal(modalId) {
@@ -49,19 +57,17 @@ loginBtn?.addEventListener("click", () => openModal("authModal"));
 signupBtn?.addEventListener("click", () => openModal("signupModal"));
 reviewBtn?.addEventListener("click", () => openModal("ratingModal"));
 
-contactBtn.forEach((btn)=>{
+contactBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
-  openModal("contactModal")
-}
-  );
+    openModal("contactModal");
+  });
 });
 
-viewProfile.forEach((btn)=>{
+viewProfile.forEach((btn) => {
   btn.addEventListener("click", () => {
     alert("button");
     window.location.href = "./profile/user_profile.html";
-}
-  );
+  });
 });
 
 closeBtns.forEach((btn) => {
@@ -188,7 +194,6 @@ function initializeStarRating() {
 
       slider.innerHTML = ""; // Clear existing reviews
 
-
       reviews2.map((review) => {
         const card = createReviewCard(
           review.user_name,
@@ -248,7 +253,7 @@ function initializeStarRating() {
         alert("Error submitting review. Please try again.");
       }
     });
-    
+
   const reviewForm = document.getElementById("ratingModal");
   reviewForm.addEventListener("keydown", function (event) {
     const submitReview = document.getElementById("submitRating");
@@ -363,8 +368,6 @@ document.addEventListener("DOMContentLoaded", function () {
       requestBody[key] = value;
     });
 
-   
-
     try {
       const response = await fetch(`http://localhost:8080/users/${endpoint}`, {
         method: "POST",
@@ -382,8 +385,8 @@ document.addEventListener("DOMContentLoaded", function () {
         isLoggedIn = true;
 
         if (redirect) {
-          window.location.href = redirect;
-        }else{
+          window.location.href = redirect + user.id;
+        } else {
           isLoggedIn = true;
           loginBtn.classList.add("hidden");
           signupBtn.classList.add("hidden");
@@ -442,31 +445,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Event Listeners
   if (loginForm) {
-    loginForm.addEventListener("submit", (event) => handleLogin(event, "login", null ,"user"));
+    loginForm.addEventListener("submit", (event) =>
+      handleLogin(event, "login", null, "user")
+    );
   }
 
   if (employeeLoginForm) {
-    employeeLoginForm.addEventListener("submit", (event) => 
-      handleLogin(event, "login" , "./employee/employee.html", "employee")
-  );
+    employeeLoginForm.addEventListener("submit", (event) =>
+      handleLogin(
+        event,
+        "login",
+        "./employee/employee.html?userId=",
+        "employee"
+      )
+    );
   }
 
   if (managerLoginForm) {
     managerLoginForm.addEventListener("submit", (event) =>
-      handleLogin(event, "login", "./manager/manager.html", "manager")
+      handleLogin(event, "login", "./manager/manager.html?userId=", "manager")
     );
   }
 
   if (signupForm) {
-    signupForm.addEventListener("submit", (event) => handleSignup(event, "signup" , "user"));
+    signupForm.addEventListener("submit", (event) =>
+      handleSignup(event, "signup", "user")
+    );
   }
 
   if (managerSignupForm) {
-    managerSignupForm.addEventListener("submit", (event) => handleSignup(event, "signup", "manager"));
+    managerSignupForm.addEventListener("submit", (event) =>
+      handleSignup(event, "signup", "manager")
+    );
   }
 
   if (employeeSignupForm) {
-    employeeSignupForm.addEventListener("submit", (event) => handleSignup(event, "signup", "employee"));
+    employeeSignupForm.addEventListener("submit", (event) =>
+      handleSignup(event, "signup", "employee")
+    );
   }
 
   if (openSignupModalLink) {
@@ -485,7 +501,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
 
 //password eye button
 document.addEventListener("DOMContentLoaded", function () {
@@ -538,14 +553,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Add event listener for logout button
   logoutBtn.addEventListener("click", function () {
     // Perform logout actions here
-   if(confirm("Are you sure you want to logout!")){
+    if (confirm("Are you sure you want to logout!")) {
       isLoggedIn = false;
       alert("Logged out successfully!");
+      user = null; 
+      
       loginBtn.classList.remove("hidden");
       signupBtn.classList.remove("hidden");
       logoutBtn.classList.add("hidden");
       clientImage.classList.add("hidden");
-   }
+     
+    }
   });
 });
 
@@ -602,7 +620,7 @@ document.addEventListener("DOMContentLoaded", function () {
         slider.style.transition = "none"; // Disable transition for smooth movement
         slider.appendChild(firstCard); // Move the first card to the end
         slider.style.transform = "translateX(-100px)"; // Reset position
-      }, 500 );
+      }, 500);
     }
   }
 
@@ -611,17 +629,22 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //location button
-document.querySelectorAll('.location-btn').forEach(button => {
-  button.addEventListener('click', () => {
+document.querySelectorAll(".location-btn").forEach((button) => {
+  button.addEventListener("click", () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-        window.open(googleMapsUrl, '_blank');
-      }, error => {
-        alert("Unable to retrieve your location. Please enable location access.");
-      });
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+          window.open(googleMapsUrl, "_blank");
+        },
+        (error) => {
+          alert(
+            "Unable to retrieve your location. Please enable location access."
+          );
+        }
+      );
     } else {
       alert("Geolocation is not supported by your browser.");
     }
@@ -635,50 +658,56 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Fetch services from backend
   try {
-      const response = await fetch("http://localhost:8080/services");
-      const services = await response.json();
+    const response = await fetch("http://localhost:8080/services");
+    const services = await response.json();
 
-      if (!Array.isArray(services)) throw new Error("Invalid response format");
+    if (!Array.isArray(services)) throw new Error("Invalid response format");
 
-      servicesContainer.innerHTML = ""; // Clear existing static content
-      let id = 1;
-      services.slice(0, 4).forEach(service => {
-          const imageUrl = `http://localhost:8080/services/image/${id}`; // Fetch image dynamically
-          id++;
-          const serviceCard = document.createElement("div");
-          serviceCard.classList.add("bg-white", "p-6", "shadow-md", "rounded-xl", "service-card");
+    servicesContainer.innerHTML = ""; // Clear existing static content
+    let id = 1;
+    services.slice(0, 4).forEach((service) => {
+      const imageUrl = `http://localhost:8080/services/image/${id}`; // Fetch image dynamically
+      id++;
+      const serviceCard = document.createElement("div");
+      serviceCard.classList.add(
+        "bg-white",
+        "p-6",
+        "shadow-md",
+        "rounded-xl",
+        "service-card"
+      );
 
-          serviceCard.innerHTML = `
+      serviceCard.innerHTML = `
                 <img src="${imageUrl}" alt="${service.service_name}" class=" p-4 rounded-3xl w-full h-56 w-65  object-cover">
               <h4 class="font-bold text-xl">${service.service_name}</h4>
               <p>${service.description}</p>
               <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 book-now" data-id="${service.id}">Book Now</button>
           `;
 
-          servicesContainer.appendChild(serviceCard);
-      });
+      servicesContainer.appendChild(serviceCard);
+    });
   } catch (error) {
-      console.error("Error fetching services:", error);
+    console.error("Error fetching services:", error);
   }
 
   // Handle button clicks
   document.body.addEventListener("click", (event) => {
-      if (event.target.classList.contains("book-now")) {
-          if (!isLoggedIn) {
-              alert("You need to log in to book a service.");
-          } else {
-              window.location.href = "./services/services.html";
-          }
+    if (event.target.classList.contains("book-now")) {
+      if (!isLoggedIn) {
+        alert("You need to log in to book a service.");
+      } else {
+        window.location.href = "./services/services.html";
       }
+    }
   });
 
   // Handle 'View All Services' button
   servicesButton.addEventListener("click", () => {
-      if (!isLoggedIn) {
-          alert("You need to log in to view all services.");
-      } else {
-          window.location.href = "./services/services.html";
-      }
+    if (!isLoggedIn) {
+      alert("You need to log in to view all services.");
+    } else {
+      window.location.href = "./services/services.html";
+    }
   });
 });
 
@@ -687,23 +716,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   const galleryContainer = document.querySelector(".slide-track");
 
   try {
-      const response = await fetch("http://localhost:8080/gallery");
-      const images = await response.json();
+    const response = await fetch("http://localhost:8080/gallery");
+    const images = await response.json();
 
-      galleryContainer.innerHTML = ""; // Clear existing content
+    galleryContainer.innerHTML = ""; // Clear existing content
 
-      images.forEach(img => {
-          const imageElement = document.createElement("img");
-          imageElement.src = img.image;
-          imageElement.alt = "Gallery Image";
-          imageElement.classList.add("slide");
+    images.forEach((img) => {
+      const imageElement = document.createElement("img");
+      imageElement.src = img.image;
+      imageElement.alt = "Gallery Image";
+      imageElement.classList.add("slide");
 
-          galleryContainer.appendChild(imageElement);
-      });
+      galleryContainer.appendChild(imageElement);
+    });
   } catch (error) {
-      console.error("Error fetching gallery images:", error);
+    console.error("Error fetching gallery images:", error);
   }
 });
-
-
-
