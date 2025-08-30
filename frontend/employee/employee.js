@@ -1,6 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const employeeId = params.get("userId");
-
+const link = "http://localhost:8080/";
 
 window.addEventListener("load", () => {
 
@@ -97,8 +97,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   employeeStatusBtn.addEventListener("click", async () => {
     
       try {
-          await fetch(`http://localhost:8080/employees/${employeeId}/toggle-status`, { method: "PUT" });
-          
+          await fetch(`${link}employees/${employeeId}/toggle-status`, { method: "PUT" });
+
           const updatedStatus = employeeStatusBtn.textContent === "Activate" ? "Active" : "Inactive";
           updateButton(updatedStatus);
 
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function fetchTaskCounts(employeeId) {
   try {
-      const response = await fetch(`http://localhost:8080/tasks/counts/${employeeId}`);
+      const response = await fetch(`${link}tasks/counts/${employeeId}`);
       const data = await response.json();
 
       document.getElementById("assigned-tasks").textContent = data.assigned;
@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchTasks() {
       try {
-          const response = await fetch(`http://localhost:8080/tasks/${employeeId}`);
+          const response = await fetch(`${link}tasks/${employeeId}`);
           const newTasks = await response.json();
 
           if (JSON.stringify(newTasks) !== JSON.stringify(allTasks)) {
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               else return;
 
               try {
-                  await fetch(`http://localhost:8080/tasks/status/${taskId}`, {
+                  await fetch(`${link}tasks/status/${taskId}`, {
                       method: "PUT",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ status: newStatus })

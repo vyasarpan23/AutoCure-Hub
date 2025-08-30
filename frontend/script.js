@@ -1,6 +1,7 @@
 // Simulate login status
 let isLoggedIn = false;
 let user = null;
+const link = "http://localhost:8080/";
 
 if (user) {
   isLoggedIn = true;
@@ -189,7 +190,7 @@ function initializeStarRating() {
   async function fetchReviews() {
     const slider = document.querySelector(".reviews-slider");
     try {
-      const response = await fetch("http://localhost:8080/reviews");
+      const response = await fetch(`${link}reviews`);
       const reviews2 = await response.json();
 
       slider.innerHTML = ""; // Clear existing reviews
@@ -231,7 +232,7 @@ function initializeStarRating() {
       }
 
       try {
-        const response = await fetch("http://localhost:8080/reviews/submit", {
+        const response = await fetch(`${link}reviews/submit`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -369,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     try {
-      const response = await fetch(`http://localhost:8080/users/${endpoint}`, {
+      const response = await fetch(`${link}users/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
@@ -421,7 +422,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/users/${endpoint}`, {
+      const response = await fetch(`${link}users/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
@@ -658,7 +659,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Fetch services from backend
   try {
-    const response = await fetch("http://localhost:8080/services");
+    const response = await fetch(`${link}services`);
     const services = await response.json();
 
     if (!Array.isArray(services)) throw new Error("Invalid response format");
@@ -666,7 +667,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     servicesContainer.innerHTML = ""; // Clear existing static content
     let id = 1;
     services.slice(0, 4).forEach((service) => {
-      const imageUrl = `http://localhost:8080/services/image/${id}`; // Fetch image dynamically
+      const imageUrl = `${link}services/image/${id}`; // Fetch image dynamically
       id++;
       const serviceCard = document.createElement("div");
       serviceCard.classList.add(
@@ -716,7 +717,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const galleryContainer = document.querySelector(".slide-track");
 
   try {
-    const response = await fetch("http://localhost:8080/gallery");
+    const response = await fetch(`${link}gallery`);
     const images = await response.json();
 
     galleryContainer.innerHTML = ""; // Clear existing content

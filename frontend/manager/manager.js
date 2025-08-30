@@ -1,7 +1,8 @@
 
 const params = new URLSearchParams(window.location.search);
 const managerId = params.get("userId");
-  
+
+const link = "http://localhost:8080/";
 
 window.addEventListener("load", () => {
 
@@ -143,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/users/${endpoint}`, {
+      const response = await fetch(`${link}users/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
@@ -194,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchGalleryImages() {
     try {
-      const response = await fetch("http://localhost:8080/gallery");
+      const response = await fetch(`${link}gallery`);
       allImages = await response.json();
       displayImages(false); // Initially show only 3 images
     } catch (error) {
@@ -234,7 +235,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       btn.addEventListener("click", async (event) => {
         const imageId = event.target.dataset.id;
         try {
-          await fetch(`http://localhost:8080/gallery/${imageId}`, {
+          await fetch(`${link}gallery/${imageId}`, {
             method: "DELETE",
           });
           allImages = allImages.filter((img) => img.id !== imageId);
@@ -267,7 +268,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
           const response = await fetch(
-            `http://localhost:8080/gallery/${imageId}`,
+            `${link}gallery/${imageId}`,
             {
               method: "PUT",
               body: formData,
@@ -308,7 +309,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     formData.append("image", file);
 
     try {
-      const response = await fetch("http://localhost:8080/gallery", {
+      const response = await fetch(`${link}gallery`, {
         method: "POST",
         body: formData,
       });
@@ -334,7 +335,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchEmployees() {
     try {
-      const response = await fetch("http://localhost:8080/employees");
+      const response = await fetch(`${link}employees`);
       allEmployees = await response.json();
       numberOfemp.innerHTML = allEmployees.length;
       displayEmployees(false);
@@ -380,7 +381,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (confirm("Are you sure you want to remove this employee?")) {
           const employeeId = event.target.dataset.id;
           try {
-            await fetch(`http://localhost:8080/employees/${employeeId}`, {
+            await fetch(`${link}employees/${employeeId}`, {
               method: "DELETE",
             });
             allEmployees = allEmployees.filter((emp) => emp.id !== employeeId);
@@ -400,7 +401,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const employeeId = event.target.dataset.id;
         try {
           const response = await fetch(
-            `http://localhost:8080/employees/details/${employeeId}`
+            `${link}employees/details/${employeeId}`
           );
           const employee = await response.json();
           showEmployeePopup(employee);
@@ -463,7 +464,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchTasks() {
     try {
-      const response = await fetch("http://localhost:8080/tasks");
+      const response = await fetch(`${link}tasks`);
       const tasks = await response.json();
       displayTasks(tasks);
     } catch (error) {
@@ -473,7 +474,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchEmployees() {
     try {
-      const response = await fetch("http://localhost:8080/tasks/employees");
+      const response = await fetch(`${link}tasks/employees`);
       return await response.json();
     } catch (error) {
       console.error("Error fetching employees:", error);
@@ -544,7 +545,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           
 
           try {
-            await fetch(`http://localhost:8080/tasks/${taskId}`, {
+            await fetch(`${link}tasks/${taskId}`, {
               method: "DELETE",
             });
             socket.send(JSON.stringify({ type: "update" }));
@@ -553,7 +554,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
           
           try {
-            await fetch(`http://localhost:8080/bookings/status/${taskId}`, {
+            await fetch(`${link}bookings/status/${taskId}`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ status }),
@@ -574,7 +575,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const employeeId = event.target.value;
 
         try {
-          await fetch(`http://localhost:8080/tasks/assign/${taskId}`, {
+          await fetch(`${link}tasks/assign/${taskId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ employeeId }),
@@ -592,7 +593,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const status = event.target.value;
 
         try {
-          await fetch(`http://localhost:8080/tasks/status/${taskId}`, {
+          await fetch(`${link}tasks/status/${taskId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status }),
@@ -608,7 +609,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchTaskCounts() {
     try {
-      const response = await fetch("http://localhost:8080/tasks/counts");
+      const response = await fetch(`${link}tasks/counts`);
       const data = await response.json();
 
       document.getElementById("pending-tasks").textContent = data.pending;
@@ -637,7 +638,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to fetch notifications from the backend
   function fetchNotifications() {
-    fetch("http://localhost:8080/notifications")
+    fetch(`${link}notifications`)
       .then((response) => response.json())
       .then((data) => {
         if (JSON.stringify(notifications) !== JSON.stringify(data)) {
@@ -725,7 +726,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Confirm booking
   function confirmBooking(bookingId, managerId, serviceName) {
-    fetch(`http://localhost:8080/notifications/confirm/${bookingId}`, {
+    fetch(`${link}notifications/confirm/${bookingId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -753,7 +754,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const newDate = prompt("Enter new date (YYYY-MM-DD):");
     const newTime = prompt("Enter new time (HH:MM):");
     if (newDate && newTime) {
-      fetch(`http://localhost:8080/notifications/change-time/${bookingId}`, {
+      fetch(`${link}notifications/change-time/${bookingId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(
@@ -786,7 +787,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Function to fetch customers from the backend
   function fetchCustomers() {
-      fetch("http://localhost:8080/bookings/customers")
+      fetch(`${link}bookings/customers`)
           .then(response => response.json())
           .then(data => {
               if (JSON.stringify(customers) !== JSON.stringify(data)) {
@@ -829,7 +830,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Fetch customer details and show in popup
   function fetchCustomerDetails(customerId) {
-      fetch(`http://localhost:8080/users/customer/${customerId}`)
+      fetch(`${link}users/customer/${customerId}`)
           .then(response => response.json())
           .then(customer => {
             customerDetails.innerHTML = `
@@ -871,7 +872,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Block customer
   function blockCustomer(customerId) {
-      fetch(`http://localhost:8080/users/block/${customerId}`, { method: "POST" })
+      fetch(`${link}users/block/${customerId}`, { method: "POST" })
           .then(response => response.text())
           .then(() => fetchCustomers());
   }
